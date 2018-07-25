@@ -13,6 +13,8 @@ import java.io.File;
 
 public class Main extends Application {
 
+    private Circle marker;
+
     @Override
     public void start(Stage stage) {
         String currentPath = new File(System.getProperty("user.dir")).toURI().toString();
@@ -24,9 +26,12 @@ public class Main extends Application {
         container.getChildren().add(background);
         container.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                Circle circle = new Circle(event.getX(), event.getY(), 1);
-                circle.setFill(Color.valueOf("#becada"));
-                container.getChildren().add(circle);
+                container.getChildren().remove(marker);
+
+                marker = new Circle(event.getX(), event.getY(), 2);
+                marker.setFill(Color.valueOf("#13437b"));
+
+                container.getChildren().add(marker);
             }
         });
 
@@ -34,7 +39,7 @@ public class Main extends Application {
             Database database = new Database();
 
             for (Integer[] coordinate : database.getAllCoordinates()) {
-                Circle circle = new Circle(coordinate[0], coordinate[1], 1);
+                Circle circle = new Circle(coordinate[0], coordinate[1], 2);
                 circle.setFill(Color.valueOf("#becada"));
                 container.getChildren().add(circle);
             }
