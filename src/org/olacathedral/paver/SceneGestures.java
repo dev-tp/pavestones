@@ -15,7 +15,7 @@ class SceneGestures {
     private DragContext sceneDragContext;
     private PannableCanvas canvas;
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<>() {
+    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
             if (!event.isSecondaryButtonDown()) { // right mouse button => panning
@@ -31,7 +31,7 @@ class SceneGestures {
         }
     };
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<>() {
+    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
             if (!event.isSecondaryButtonDown()) { // right mouse button => panning
@@ -53,7 +53,7 @@ class SceneGestures {
     /**
      * Mouse wheel handler: zoom to pivot point
      */
-    private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<>() {
+    private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
 
         @Override
         public void handle(ScrollEvent event) {

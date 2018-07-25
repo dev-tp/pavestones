@@ -17,7 +17,7 @@ class NodeGestures {
         nodeDragContext = new DragContext();
     }
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<>() {
+    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
             if (!event.isPrimaryButtonDown()) { // left mouse button => dragging
@@ -34,7 +34,7 @@ class NodeGestures {
         }
     };
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<>() {
+    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
             if (!event.isPrimaryButtonDown()) { // left mouse button => dragging

@@ -66,6 +66,10 @@ public class Main extends Application {
 
         canvas.getChildren().addAll(label1, label2, label3, circle1, rect1);
 
+        canvas.setOnMouseClicked(event -> {
+            canvas.getChildren().add(new Circle(event.getX(), event.getY(), 50));
+        });
+
         group.getChildren().add(canvas);
 
         // create scene which can be dragged and zoomed
