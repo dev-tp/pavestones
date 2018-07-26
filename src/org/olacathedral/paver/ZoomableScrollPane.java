@@ -6,12 +6,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 class ZoomableScrollPane extends ScrollPane {
     private static final double ZOOM_RATE = 0.02;
 
-    private double scaleValue = 1.0;
+    private double scale;
     private Node target;
     private Node zoomNode;
 
@@ -19,6 +20,7 @@ class ZoomableScrollPane extends ScrollPane {
         super();
 
         this.target = target;
+        scale = 1.0;
         zoomNode = new Group(target);
 
         setContent(outerNode(zoomNode));
@@ -50,8 +52,8 @@ class ZoomableScrollPane extends ScrollPane {
     }
 
     private void updateScale() {
-        target.setScaleX(scaleValue);
-        target.setScaleY(scaleValue);
+        target.setScaleX(scale);
+        target.setScaleY(scale);
     }
 
     private void onScroll(double wheelDelta, Point2D mousePoint) {
@@ -64,7 +66,16 @@ class ZoomableScrollPane extends ScrollPane {
         double valX = getHvalue() * (innerBounds.getWidth() - viewportBounds.getWidth());
         double valY = getVvalue() * (innerBounds.getHeight() - viewportBounds.getHeight());
 
-        scaleValue = scaleValue * zoomFactor;
+        Pane layout = (Pane) target;
+
+        if (layout.getHeight() * scale * zoomFactor < getScene().getHeight()) {
+            if (wheelDelta > 0) {
+                scale = scale * zoomFactor;
+            }
+        } else {
+            scale = scale * zoomFactor;
+        }
+
         updateScale();
         layout(); // refresh ScrollPane scroll positions & target bounds
 
@@ -80,5 +91,10 @@ class ZoomableScrollPane extends ScrollPane {
 
         setHvalue((valX + adjustment.getX()) / (updatedInnerBounds.getWidth() - viewportBounds.getWidth()));
         setVvalue((valY + adjustment.getY()) / (updatedInnerBounds.getHeight() - viewportBounds.getHeight()));
+    }
+
+    void setScale(double scale) {
+        this.scale = scale;
+        updateScale();
     }
 }
