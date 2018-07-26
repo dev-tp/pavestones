@@ -16,26 +16,24 @@ public class Main extends Application {
         stage.setY((screenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
+    private static void setStage(Stage stage, Scene scene, String title, int minWidth, int minHeight) {
+        stage.setScene(scene);
+        stage.setMinWidth(minWidth);
+        stage.setMinHeight(minHeight);
+        stage.setTitle(title);
+        stage.show();
+    }
+
     @Override
     public void start(Stage stage) {
         LoginScene loginScene = new LoginScene();
 
         loginScene.getLoginButton().setOnAction(event -> {
-            stage.setScene(new Scene(new Pane(), 1280, 720));
-            stage.setTitle("Cathedral Map");
-            stage.setMinWidth(1280);
-            stage.setMinHeight(720);
-
+            setStage(stage, new Scene(new Pane()), "Paving Stones", 1280, 720);
             centerStage(stage);
-
-            stage.show();
         });
 
-        stage.setScene(loginScene);
-        stage.setTitle("Login");
-        stage.setMinWidth(480);
-        stage.setMinHeight(720);
-        stage.show();
+        setStage(stage, loginScene, "Login", 480, 720);
     }
 
     public static void main(String[] args) {
