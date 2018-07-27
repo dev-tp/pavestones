@@ -16,7 +16,7 @@ class SearchScene extends CustomScene {
     private BorderPane container;
 
     SearchScene(Stage stage) {
-        super(new BorderPane(), stage, "Search for Pave Stone", 1280, 720);
+        super(new BorderPane(), stage, "Search for Pave Stone");
         container = (BorderPane) getRoot();
         load();
     }

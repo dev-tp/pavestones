@@ -14,7 +14,7 @@ class ResultScene extends CustomScene {
     private CustomScene previousScene;
 
     ResultScene(Stage stage, CustomScene previousScene, int id) {
-        super(new BorderPane(), stage, "Result",1280, 720);
+        super(new BorderPane(), stage, "Result");
 
         container = (BorderPane) getRoot();
         this.previousScene = previousScene;

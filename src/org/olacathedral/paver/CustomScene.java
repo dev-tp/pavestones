@@ -22,6 +22,10 @@ public abstract class CustomScene extends Scene {
         this.title = title;
     }
 
+    CustomScene(Parent parent, Stage stage, String title) {
+        this(parent, stage, title, 1280, 720);
+    }
+
     protected abstract void load();
 
     void centerStage() {
