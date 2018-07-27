@@ -13,14 +13,13 @@ class ZoomableScrollPane extends ScrollPane {
     private static final double ZOOM_RATE = 0.02;
 
     private double scale;
-    private Node target;
+    private Pane target;
     private Node zoomNode;
 
-    ZoomableScrollPane(Node target) {
+    ZoomableScrollPane(Pane target) {
         super();
 
         this.target = target;
-        scale = 1.0;
         zoomNode = new Group(target);
 
         setContent(outerNode(zoomNode));
@@ -66,9 +65,7 @@ class ZoomableScrollPane extends ScrollPane {
         double valX = getHvalue() * (innerBounds.getWidth() - viewportBounds.getWidth());
         double valY = getVvalue() * (innerBounds.getHeight() - viewportBounds.getHeight());
 
-        Pane layout = (Pane) target;
-
-        if (layout.getHeight() * scale * zoomFactor < getScene().getHeight()) {
+        if (target.getHeight() * scale * zoomFactor < getHeight()) {
             if (wheelDelta > 0) {
                 scale = scale * zoomFactor;
             }
@@ -93,8 +90,11 @@ class ZoomableScrollPane extends ScrollPane {
         setVvalue((valY + adjustment.getY()) / (updatedInnerBounds.getHeight() - viewportBounds.getHeight()));
     }
 
-    void setScale(double scale) {
-        this.scale = scale;
+    /**
+     * Fit node's height with ScrollPane's height. Call this only when the stage has loaded.
+     */
+    void setToFit() {
+        scale = getHeight() / target.getHeight();
         updateScale();
     }
 }

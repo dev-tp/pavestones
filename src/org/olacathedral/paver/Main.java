@@ -49,10 +49,11 @@ public class Main extends Application {
         }
 
         ZoomableScrollPane scrollPane = new ZoomableScrollPane(container);
-        scrollPane.setScale(0.1);
 
         stage.setScene(new Scene(scrollPane, 800, 600));
         stage.show();
+
+        scrollPane.setToFit();
     }
 
     public static void main(String[] args) {
