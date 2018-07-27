@@ -2,38 +2,39 @@ package org.olacathedral.paver;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
-class LoginScene extends Scene {
+class LoginScene extends CustomScene {
 
     private VBox container;
-    private Button loginButton;
 
-    LoginScene() {
-        super(new VBox(), 480, 720);
+    LoginScene(Stage stage) {
+        super(new VBox(), stage, "Login", 480, 720);
         container = (VBox) getRoot();
         load();
     }
 
-    Button getLoginButton() {
-        return loginButton;
-    }
-
-    private void load() {
+    @Override
+    protected void load() {
         container.setAlignment(Pos.CENTER);
 
         GridPane grid = new GridPane();
 
         TextField usernameTextField = new TextField();
         PasswordField passwordField = new PasswordField();
-        loginButton = new Button("Login");
+        Button loginButton = new Button("Login");
 
         loginButton.setMinWidth(100);
+        loginButton.setOnAction(event -> {
+            CustomScene scene = new SearchScene(getStage());
+            scene.show();
+            scene.centerStage();
+        });
 
         grid.add(new Label("Username"), 0, 0);
         grid.add(usernameTextField, 1, 0);

@@ -4,24 +4,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
-class SearchScene extends Scene {
+class SearchScene extends CustomScene {
 
     private BorderPane container;
 
-    SearchScene() {
-        super(new BorderPane(), 1280, 720);
+    SearchScene(Stage stage) {
+        super(new BorderPane(), stage, "Search for Pave Stone", 1280, 720);
         container = (BorderPane) getRoot();
         load();
     }
 
-    private void load() {
+    @Override
+    protected void load() {
         HBox searchContainer = new HBox();
         searchContainer.setAlignment(Pos.CENTER);
         searchContainer.setPadding(new Insets(10, 0, 10, 0));
@@ -49,7 +50,7 @@ class SearchScene extends Scene {
         viewButtonContainer.setAlignment(Pos.CENTER);
         viewButtonContainer.setPadding(new Insets(10, 0, 10, 0));
 
-        Button viewButton = new Button("View Selection");
+        Button viewButton = new Button("View on Map");
         viewButton.setMinWidth(100);
         viewButton.setOnAction(event -> {
             Donor donor = listView.getSelectionModel().getSelectedItem();
