@@ -55,7 +55,8 @@ class SearchScene extends CustomScene {
         viewButton.setOnAction(event -> {
             Donor donor = listView.getSelectionModel().getSelectedItem();
             if (donor != null) {
-                System.out.println(donor.getId());
+                CustomScene scene = new ResultScene(getStage(), this, donor.getId());
+                scene.show();
             }
         });
         viewButtonContainer.getChildren().add(viewButton);
