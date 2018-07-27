@@ -1,11 +1,14 @@
 package org.olacathedral.paver;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -51,10 +54,16 @@ class MainScene extends Scene {
 
         container.getChildren().add(box);
 
-        // Pane listView = new Pane();
-        // listView.setStyle("-fx-background-color: #fff");
-        // StackPane.setMargin(listView, new Insets(60, 80, 80, 80));
+        ObservableList<Donor> observableList = FXCollections.observableArrayList(
+                new Donor(1, "Person 1", "Cathedral", 0, 0),
+                new Donor(2, "Person 2", "", 10, 10),
+                new Donor(3, "Person 3", "", 20, 20)
+        );
+        ListView<Donor> listView = new ListView<>(observableList);
+        listView.setCellFactory((item) -> new CustomListCell());
 
-        // container.getChildren().add(listView);
+        StackPane.setMargin(listView, new Insets(60, 80, 80, 80));
+
+        container.getChildren().add(listView);
     }
 }
