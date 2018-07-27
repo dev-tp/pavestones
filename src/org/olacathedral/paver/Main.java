@@ -28,7 +28,7 @@ public class Main extends Application {
         LoginScene loginScene = new LoginScene();
 
         loginScene.getLoginButton().setOnAction(event -> {
-            setStage(stage, new MainScene(), "Paving Stones", 1280, 720);
+            setStage(stage, new SearchScene(), "Search Paving Stones", 1280, 720);
             centerStage(stage);
         });
 

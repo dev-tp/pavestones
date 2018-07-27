@@ -32,7 +32,6 @@ public class CustomListCell extends ListCell<Donor> {
             String alias = donor.getAlias();
             donorInfoLabel.setText(donor.getFullName() + (alias.equals("") ? "" : " (" + alias + ")"));
             coordinateLabel.setText("x: " + donor.getX() + ", y: " + donor.getY());
-            container.setOnMouseClicked(event -> System.out.println("Donor ID: " + donor.getId()));
             setGraphic(container);
         }
     }
