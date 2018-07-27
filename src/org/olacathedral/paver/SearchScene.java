@@ -46,9 +46,9 @@ class SearchScene extends CustomScene {
 
         container.setCenter(listView);
 
-        HBox viewButtonContainer = new HBox();
-        viewButtonContainer.setAlignment(Pos.CENTER);
-        viewButtonContainer.setPadding(new Insets(10, 0, 10, 0));
+        HBox actionsContainer = new HBox();
+        actionsContainer.setAlignment(Pos.CENTER);
+        actionsContainer.setPadding(new Insets(10, 0, 10, 0));
 
         Button viewButton = new Button("View on Map");
         viewButton.setMinWidth(100);
@@ -59,8 +59,19 @@ class SearchScene extends CustomScene {
                 scene.show();
             }
         });
-        viewButtonContainer.getChildren().add(viewButton);
+        HBox.setMargin(viewButton, new Insets(0, 10, 0, 0));
 
-        container.setBottom(viewButtonContainer);
+        actionsContainer.getChildren().add(viewButton);
+
+        Button addNewDonorButton = new Button("Add New");
+        addNewDonorButton.setMinWidth(100);
+        addNewDonorButton.setOnAction(event -> {
+            CustomScene scene = new AddDonorScene(getStage(), this);
+            scene.show();
+        });
+
+        actionsContainer.getChildren().add(addNewDonorButton);
+
+        container.setBottom(actionsContainer);
     }
 }
