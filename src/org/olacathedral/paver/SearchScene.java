@@ -63,14 +63,14 @@ class SearchScene extends CustomScene {
 
         actionsContainer.getChildren().add(viewButton);
 
-        Button addNewDonorButton = new Button("Add New");
-        addNewDonorButton.setMinWidth(100);
-        addNewDonorButton.setOnAction(event -> {
-            CustomScene scene = new AddDonorScene(getStage(), this);
+        Button addNewPaveStoneButton = new Button("Add New");
+        addNewPaveStoneButton.setMinWidth(100);
+        addNewPaveStoneButton.setOnAction(event -> {
+            CustomScene scene = new AddPaveStoneScene(getStage(), this);
             scene.show();
         });
 
-        actionsContainer.getChildren().add(addNewDonorButton);
+        actionsContainer.getChildren().add(addNewPaveStoneButton);
 
         container.setBottom(actionsContainer);
     }

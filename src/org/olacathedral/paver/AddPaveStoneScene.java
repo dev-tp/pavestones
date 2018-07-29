@@ -11,12 +11,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AddDonorScene extends CustomScene {
+public class AddPaveStoneScene extends CustomScene {
 
     private BorderPane container;
     private CustomScene previousScene;
 
-    AddDonorScene(Stage stage, CustomScene previousScene) {
+    AddPaveStoneScene(Stage stage, CustomScene previousScene) {
         super(new BorderPane(), stage, "Add New Entry", 1280, 720);
 
         container = (BorderPane) getRoot();
@@ -50,10 +50,10 @@ public class AddDonorScene extends CustomScene {
         organizationField.setPromptText("Organization (Optional)");
         HBox.setMargin(organizationField, margin10Right);
 
-        Button addDonorButton = new Button("Add");
-        addDonorButton.setMinWidth(100);
-        addDonorButton.setOnAction(event -> previousScene.show());
-        HBox.setMargin(addDonorButton, margin10Right);
+        Button addButton = new Button("Add");
+        addButton.setMinWidth(100);
+        addButton.setOnAction(event -> previousScene.show());
+        HBox.setMargin(addButton, margin10Right);
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setMinWidth(100);
@@ -61,7 +61,7 @@ public class AddDonorScene extends CustomScene {
 
         inputFields.setAlignment(Pos.CENTER);
         inputFields.setPadding(new Insets(10, 0, 10, 0));
-        inputFields.getChildren().addAll(firstNameField, lastNameField, organizationField, addDonorButton, cancelButton);
+        inputFields.getChildren().addAll(firstNameField, lastNameField, organizationField, addButton, cancelButton);
 
         HBox coordinatesWrapper = new HBox();
 
