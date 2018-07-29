@@ -40,8 +40,8 @@ class SearchScene extends CustomScene {
 
         container.setTop(searchContainer);
 
-        ObservableList<Donor> observableList = FXCollections.observableArrayList();
-        ListView<Donor> listView = new ListView<>(observableList);
+        ObservableList<PaveStone> observableList = FXCollections.observableArrayList();
+        ListView<PaveStone> listView = new ListView<>(observableList);
         listView.setCellFactory(cell -> new CustomListCell());
 
         container.setCenter(listView);
@@ -53,9 +53,9 @@ class SearchScene extends CustomScene {
         Button viewButton = new Button("View on Map");
         viewButton.setMinWidth(100);
         viewButton.setOnAction(event -> {
-            Donor donor = listView.getSelectionModel().getSelectedItem();
-            if (donor != null) {
-                CustomScene scene = new ResultScene(getStage(), this, donor.getId());
+            PaveStone paveStone = listView.getSelectionModel().getSelectedItem();
+            if (paveStone != null) {
+                CustomScene scene = new ResultScene(getStage(), this, paveStone.getId());
                 scene.show();
             }
         });

@@ -10,10 +10,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
-public class CustomListCell extends ListCell<Donor> {
+public class CustomListCell extends ListCell<PaveStone> {
 
     private Label coordinateLabel;
-    private Label donorInfoLabel;
+    private Label infoLabel;
     private Label editLabel;
     private Label deleteLabel;
     private HBox container;
@@ -23,16 +23,16 @@ public class CustomListCell extends ListCell<Donor> {
 
         container = new HBox();
 
-        VBox donorInfoContainer = new VBox();
-        donorInfoContainer.setPadding(new Insets(0, 0, 0, 10));
+        VBox donorInfoWrapper = new VBox();
+        donorInfoWrapper.setPadding(new Insets(0, 0, 0, 10));
 
-        donorInfoLabel = new Label();
-        donorInfoLabel.setStyle("-fx-font-weight: bold");
+        infoLabel = new Label();
+        infoLabel.setStyle("-fx-font-weight: bold");
         coordinateLabel = new Label();
 
-        donorInfoContainer.getChildren().addAll(donorInfoLabel, coordinateLabel);
+        donorInfoWrapper.getChildren().addAll(infoLabel, coordinateLabel);
 
-        container.getChildren().add(donorInfoContainer);
+        container.getChildren().add(donorInfoWrapper);
 
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -53,15 +53,15 @@ public class CustomListCell extends ListCell<Donor> {
     }
 
     @Override
-    public void updateItem(Donor donor, boolean empty) {
-        super.updateItem(donor, empty);
+    public void updateItem(PaveStone paveStone, boolean empty) {
+        super.updateItem(paveStone, empty);
 
         if (!empty) {
-            String alias = donor.getAlias();
-            donorInfoLabel.setText(donor.getFullName() + (alias.equals("") ? "" : " (" + alias + ")"));
-            coordinateLabel.setText("x: " + donor.getX() + ", y: " + donor.getY());
-            editLabel.setOnMouseClicked(event -> System.out.println("Edit: " + donor.getId()));
-            deleteLabel.setOnMouseClicked(event -> System.out.println("Delete: " + donor.getId()));
+            String donor = paveStone.getDonor();
+            infoLabel.setText(paveStone.getDedicatedTo() + (donor.equals("") ? "" : " (" + donor + ")"));
+            coordinateLabel.setText("x: " + paveStone.getX() + ", y: " + paveStone.getY());
+            editLabel.setOnMouseClicked(event -> System.out.println("Edit: " + paveStone.getId()));
+            deleteLabel.setOnMouseClicked(event -> System.out.println("Delete: " + paveStone.getId()));
             setGraphic(container);
         }
     }
