@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 class ZoomableScrollPane extends ScrollPane {
     private static final double ZOOM_RATE = 0.02;
 
-    private double scale;
+    private double scale = 1.0;
     private Pane target;
     private Node zoomNode;
 
@@ -94,7 +94,9 @@ class ZoomableScrollPane extends ScrollPane {
      * Fit node's height with ScrollPane's height. Call this only when the stage has loaded.
      */
     void setToFit() {
-        scale = getHeight() / target.getHeight();
-        updateScale();
+        if (getScene() != null) {
+            scale = getHeight() / target.getHeight();
+            updateScale();
+        }
     }
 }
