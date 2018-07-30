@@ -9,7 +9,12 @@ import java.util.ArrayList;
 
 class Database {
 
-    private static final String DATABASE_URL = "jdbc:mysql://localhost/pavingstones";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost/pavingstones?" +
+            "useUnicode=true&" +
+            "useJDBCCompliantTimeZoneShift=true&" +
+            "useLegacyDatetimeCode=false&" +
+            "serverTimezone=UTC";
+
     private static final String USER = "";
     private static final String PASSWORD = "";
 
@@ -20,21 +25,24 @@ class Database {
         connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
     }
 
-    ArrayList<Integer[]> getAllCoordinates() throws SQLException {
+    ArrayList<PaveStone> getAllPaveStones() throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT x, y FROM donors");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM pavestones");
 
-        ArrayList<Integer[]> coordinates = new ArrayList<>();
+        ArrayList<PaveStone> paveStones = new ArrayList<>();
 
         while (resultSet.next()) {
-            Integer[] coordinate = new Integer[2];
-
-            coordinate[0] = resultSet.getInt(1);
-            coordinate[1] = resultSet.getInt(2);
-
-            coordinates.add(coordinate);
+            paveStones.add(new PaveStone(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4),
+                    resultSet.getInt(5),
+                    resultSet.getString(6),
+                    resultSet.getDate(7)
+            ));
         }
 
-        return coordinates;
+        return paveStones;
     }
 }
