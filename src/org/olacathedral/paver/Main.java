@@ -15,8 +15,8 @@ public class Main extends Application {
         try {
             Database database = new Database();
 
-            for (Integer[] coordinate : database.getAllCoordinates()) {
-                Circle circle = new Circle(coordinate[0], coordinate[1], 2);
+            for (PaveStone paveStone : database.getAllPaveStones()) {
+                Circle circle = new Circle(paveStone.getX(), paveStone.getY(), 2);
                 circle.setFill(Color.valueOf("#becada"));
                 map.getBackgroundPane().getChildren().add(circle);
             }
