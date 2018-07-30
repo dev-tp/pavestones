@@ -55,7 +55,7 @@ class SearchScene extends CustomScene {
         viewButton.setOnAction(event -> {
             PaveStone paveStone = listView.getSelectionModel().getSelectedItem();
             if (paveStone != null) {
-                CustomScene scene = new ResultScene(getStage(), this, paveStone.getId());
+                CustomScene scene = new ResultScene(getStage(), this, paveStone);
                 scene.show();
             }
         });
