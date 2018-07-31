@@ -56,14 +56,7 @@ class ZoomableScrollPane extends ScrollPane {
     }
 
     private void onScroll(double wheelDelta, Point2D mousePoint) {
-        double zoomFactor = Math.exp(wheelDelta * ZOOM_RATE);
-
-        Bounds innerBounds = zoomNode.getLayoutBounds();
-        Bounds viewportBounds = getViewportBounds();
-
-        // calculate pixel offsets from [0, 1] range
-        double valX = getHvalue() * (innerBounds.getWidth() - viewportBounds.getWidth());
-        double valY = getVvalue() * (innerBounds.getHeight() - viewportBounds.getHeight());
+        double zoomFactor = Math.exp((Double.compare(wheelDelta, 0) < 0 ? -1.0 : 1.0) * ZOOM_RATE);
 
         if (target.getHeight() * scale * zoomFactor < getHeight()) {
             if (wheelDelta > 0) {
@@ -75,6 +68,13 @@ class ZoomableScrollPane extends ScrollPane {
 
         updateScale();
         layout(); // refresh ScrollPane scroll positions & target bounds
+
+        Bounds innerBounds = zoomNode.getLayoutBounds();
+        Bounds viewportBounds = getViewportBounds();
+
+        // calculate pixel offsets from [0, 1] range
+        double valX = getHvalue() * (innerBounds.getWidth() - viewportBounds.getWidth());
+        double valY = getVvalue() * (innerBounds.getHeight() - viewportBounds.getHeight());
 
         // convert target coordinates to zoomTarget coordinates
         Point2D posInZoomTarget = target.parentToLocal(zoomNode.parentToLocal(mousePoint));
