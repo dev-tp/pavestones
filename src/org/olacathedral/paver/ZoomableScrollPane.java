@@ -10,11 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 class ZoomableScrollPane extends ScrollPane {
+
     private static final double ZOOM_RATE = 0.02;
 
-    private double scale = 1.0;
     private Pane target;
     private Node zoomNode;
+
+    double scale = 1.0;
 
     ZoomableScrollPane(Pane target) {
         super();
@@ -50,7 +52,7 @@ class ZoomableScrollPane extends ScrollPane {
         return vBox;
     }
 
-    private void updateScale() {
+    void updateScale() {
         target.setScaleX(scale);
         target.setScaleY(scale);
     }

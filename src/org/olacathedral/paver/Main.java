@@ -29,6 +29,15 @@ public class Main extends Application {
         stage.show();
 
         map.setToFit();
+        map.focusOnPaveStone(new PaveStone(
+                0,
+                "",
+                "",
+                (int) (map.getBackgroundPane().getWidth() / 2),
+                (int) (map.getBackgroundPane().getHeight() / 2),
+                "",
+                null
+        ));
     }
 
     public static void main(String[] args) {

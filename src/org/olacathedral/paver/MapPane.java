@@ -42,4 +42,13 @@ class MapPane extends ZoomableScrollPane {
     Pane getBackgroundPane() {
         return backgroundPane;
     }
+
+    void focusOnPaveStone(PaveStone paveStone) {
+        setHvalue(paveStone.getX() / backgroundPane.getWidth());
+        setVvalue(paveStone.getY() / backgroundPane.getHeight());
+
+        scale = 1.0;
+
+        updateScale();
+    }
 }
