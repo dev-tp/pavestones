@@ -17,7 +17,7 @@ class MapPane extends ZoomableScrollPane {
         super(pane);
 
         String currentPath = new File(System.getProperty("user.dir")).toURI().toString();
-        ImageView backgroundImageView = new ImageView(currentPath + "resources/images/Cathedral.png");
+        ImageView backgroundImageView = new ImageView(currentPath + "resources/images/cathedral-monochrome.png");
 
         pane.setPrefSize(backgroundImageView.getImage().getWidth(), backgroundImageView.getImage().getHeight());
         pane.getChildren().add(backgroundImageView);
