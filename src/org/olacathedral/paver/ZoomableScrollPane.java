@@ -60,7 +60,7 @@ class ZoomableScrollPane extends ScrollPane {
     private void onScroll(double wheelDelta, Point2D mousePoint) {
         double zoomFactor = Math.exp((Double.compare(wheelDelta, 0) < 0 ? -4.0 : 4.0) * ZOOM_RATE);
 
-        if (target.getHeight() * scale * zoomFactor < getHeight()) {
+        if (target.getWidth() * scale * zoomFactor < getWidth()) {
             if (wheelDelta > 0) {
                 scale = scale * zoomFactor;
             }
@@ -97,7 +97,7 @@ class ZoomableScrollPane extends ScrollPane {
      */
     void setToFit() {
         if (getScene() != null) {
-            scale = getHeight() / target.getHeight();
+            scale = getWidth() / target.getWidth();
             updateScale();
         }
     }
