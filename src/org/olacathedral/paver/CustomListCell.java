@@ -82,7 +82,10 @@ class CustomListCell extends ListCell<PaveStone> {
                 alert.setContentText("Are you sure you want to delete \"" + paveStone.getDedicatedTo() + "\"?");
                 alert.showAndWait().ifPresent(buttonType -> {
                     if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                        System.out.println("Delete: " + paveStone.getId());
+                        SearchScene.database.deletePaveStone(paveStone);
+                        SearchScene.database.getAllPaveStones().remove(paveStone);
+
+                        ((SearchScene) getScene()).update();
                     }
                 });
             });

@@ -11,13 +11,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 class SearchScene extends CustomScene {
 
-    static ArrayList<PaveStone> paveStones;
+    static Database database;
 
     private BorderPane container;
+    private ListView<PaveStone> listView;
 
     SearchScene(Stage stage) {
         super(new BorderPane(), stage, "Search for Pave Stone");
@@ -46,15 +45,10 @@ class SearchScene extends CustomScene {
 
         ObservableList<PaveStone> observableList = FXCollections.observableArrayList();
 
-        try {
-            Database database = new Database();
-            paveStones = database.getAllPaveStones();
-            observableList.addAll(paveStones);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        database = new Database();
+        observableList.addAll(database.getAllPaveStones());
 
-        ListView<PaveStone> listView = new ListView<>(observableList);
+        listView = new ListView<>(observableList);
         listView.setCellFactory(cell -> new CustomListCell(getStage(), this));
 
         container.setCenter(listView);
@@ -87,5 +81,9 @@ class SearchScene extends CustomScene {
         actionsContainer.getChildren().add(addNewPaveStoneButton);
 
         container.setBottom(actionsContainer);
+    }
+
+    void update() {
+        listView.getItems().setAll(database.getAllPaveStones());
     }
 }

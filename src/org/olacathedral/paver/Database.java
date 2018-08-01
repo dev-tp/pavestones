@@ -1,10 +1,6 @@
 package org.olacathedral.paver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 class Database {
@@ -18,29 +14,68 @@ class Database {
     private static final String USER = "";
     private static final String PASSWORD = "";
 
+    private ArrayList<PaveStone> paveStones;
     private Connection connection;
 
-    Database() throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+    Database() {
+        paveStones = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException exception) {
+            System.err.println("com.mysql.cj.jdbc.Driver not found.");
+        }
+
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+        } catch (SQLException exception) {
+            System.err.println("Could not establish a connection with server at " + DATABASE_URL + ".");
+        } /* finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+            }
+        } */
     }
 
-    ArrayList<PaveStone> getAllPaveStones() throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM pavestones");
+    void deletePaveStone(PaveStone paveStone) {
+        try {
+            String query = "DELETE FROM pavestones WHERE id = ?";
 
-        ArrayList<PaveStone> paveStones = new ArrayList<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, paveStone.getId());
 
-        while (resultSet.next()) {
-            paveStones.add(new PaveStone(
-                    resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4),
-                    resultSet.getInt(5),
-                    resultSet.getString(6),
-                    resultSet.getDate(7)
-            ));
+            preparedStatement.execute();
+
+        } catch (SQLException sqlException) {
+            System.err.println("Could not delete PaveStone with ID: " + paveStone.getId());
+        }
+    }
+
+    ArrayList<PaveStone> getAllPaveStones() {
+        if (connection != null && paveStones.size() == 0) {
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM pavestones");
+
+                while (resultSet.next()) {
+                    paveStones.add(new PaveStone(
+                            resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getInt(5),
+                            resultSet.getString(6),
+                            resultSet.getDate(7)
+                    ));
+                }
+
+            } catch (SQLException sqlException) {
+                System.err.println("Could not retrieve all PaveStones from database.");
+            }
         }
 
         return paveStones;
