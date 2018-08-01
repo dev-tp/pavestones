@@ -29,10 +29,7 @@ class ResultScene extends CustomScene {
 
     @Override
     protected void load() {
-        Pane map = new Pane();
-        map.setStyle("-fx-background-color: #000");
-
-        container.setCenter(map);
+        container.setCenter(new StaticMapPane(paveStone, container.getWidth(), container.getHeight()));
 
         VBox bottomView = new VBox();
         bottomView.setPadding(new Insets(0, 0, 10, 0));
