@@ -23,7 +23,7 @@ class MapPane extends ZoomableScrollPane {
         pane.getChildren().add(backgroundImageView);
 
         marker = new Circle(paveStone.getX(), paveStone.getY(), 2.0);
-        marker.setFill(Color.valueOf("#ffde7b"));
+        marker.setFill(Color.valueOf("#f00"));
 
         pane.getChildren().add(marker);
 
