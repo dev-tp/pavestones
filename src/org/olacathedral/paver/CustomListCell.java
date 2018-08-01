@@ -65,7 +65,7 @@ class CustomListCell extends ListCell<PaveStone> {
         if (!empty) {
             String donor = paveStone.getDonor();
             infoLabel.setText(paveStone.getDedicatedTo() + (donor.equals("") ? "" : " (" + donor + ")"));
-            coordinateLabel.setText("x: " + paveStone.getX() + ", y: " + paveStone.getY());
+            coordinateLabel.setText("x: " + (int) paveStone.getX() + ", y: " + (int) paveStone.getY());
 
             editLabel.setOnMouseClicked(event -> {
                 EditPaveStoneScene scene = new EditPaveStoneScene(stage, previousScene, paveStone, true);

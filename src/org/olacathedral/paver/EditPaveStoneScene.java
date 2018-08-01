@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -14,8 +13,13 @@ import javafx.stage.Stage;
 class EditPaveStoneScene extends CustomScene {
 
     private boolean editMode;
+    private double oldX;
+    private double oldY;
+
     private BorderPane container;
     private CustomScene previousScene;
+    private Label xLabel;
+    private Label yLabel;
     private PaveStone paveStone;
     private MapPane map;
 
@@ -31,7 +35,10 @@ class EditPaveStoneScene extends CustomScene {
         this.paveStone = paveStone;
         this.previousScene = previousScene;
 
-        map = editMode ? new MapPane(paveStone) : new MapPane();
+        map = new MapPane(paveStone);
+
+        oldX = paveStone.getX();
+        oldY = paveStone.getY();
 
         load();
     }
@@ -83,7 +90,11 @@ class EditPaveStoneScene extends CustomScene {
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setMinWidth(100);
-        cancelButton.setOnAction(event -> previousScene.show());
+        cancelButton.setOnAction(event -> {
+            paveStone.setX(oldX);
+            paveStone.setY(oldY);
+            previousScene.show();
+        });
 
         inputFields.setAlignment(Pos.CENTER);
         inputFields.setPadding(new Insets(10, 0, 10, 0));
@@ -107,10 +118,10 @@ class EditPaveStoneScene extends CustomScene {
         labels[1] = new Label();
         labels[1].setText("y: ");
 
-        Label xLabel = new Label(paveStone.getX() == -1 ? "-" : paveStone.getX() + "");
+        xLabel = new Label(paveStone.getX() == -1 ? "-" : (int) paveStone.getX() + "");
         xLabel.setMinWidth(100);
 
-        Label yLabel = new Label(paveStone.getY() == -1 ? "-" : paveStone.getY() + "");
+        yLabel = new Label(paveStone.getY() == -1 ? "-" : (int) paveStone.getY() + "");
         yLabel.setMinWidth(100);
 
         coordinatesWrapper.setAlignment(Pos.CENTER);
@@ -121,5 +132,10 @@ class EditPaveStoneScene extends CustomScene {
 
         container.setBottom(bottomView);
         container.requestFocus();
+    }
+
+    void updateCoordinateLabels() {
+        xLabel.setText("" + (int) paveStone.getX());
+        yLabel.setText("" + (int) paveStone.getY());
     }
 }

@@ -5,9 +5,9 @@ import java.util.Date;
 class PaveStone {
 
     private Date dateSubmitted;
+    private double x;
+    private double y;
     private int id;
-    private int x;
-    private int y;
     private String comments;
     private String dedicatedTo;
     private String donor;
@@ -16,7 +16,7 @@ class PaveStone {
         this(-1, "", "", -1, -1, "", null);
     }
 
-    PaveStone(int id, String donor, String dedicatedTo, int x, int y, String comments, Date dateSubmitted) {
+    PaveStone(int id, String donor, String dedicatedTo, double x, double y, String comments, Date dateSubmitted) {
         this.comments = comments;
         this.dateSubmitted = dateSubmitted;
         this.dedicatedTo = dedicatedTo;
@@ -30,16 +30,16 @@ class PaveStone {
         return dateSubmitted;
     }
 
-    int getId() {
-        return id;
-    }
-
-    int getX() {
+    double getX() {
         return x;
     }
 
-    int getY() {
+    double getY() {
         return y;
+    }
+
+    int getId() {
+        return id;
     }
 
     String getComments() {
@@ -52,5 +52,13 @@ class PaveStone {
 
     String getDonor() {
         return donor;
+    }
+
+    void setX(double x) {
+        this.x = x;
+    }
+
+    void setY(double y) {
+        this.y = y;
     }
 }

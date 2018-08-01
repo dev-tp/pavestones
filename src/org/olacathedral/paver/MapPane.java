@@ -22,24 +22,23 @@ class MapPane extends ZoomableScrollPane {
         pane.setPrefSize(backgroundImageView.getImage().getWidth(), backgroundImageView.getImage().getHeight());
         pane.getChildren().add(backgroundImageView);
 
-        marker = new Circle();
-        marker.setRadius(2.0);
+        marker = new Circle(paveStone.getX(), paveStone.getY(), 2.0);
         marker.setFill(Color.valueOf("#ffde7b"));
 
-        if (paveStone != null) {
-            marker.setCenterX(paveStone.getX());
-            marker.setCenterY(paveStone.getY());
-
-            // Tooltip.install(marker, new Tooltip(paveStone.getDedicatedTo()));
-
-            pane.getChildren().add(marker);
-        }
+        pane.getChildren().add(marker);
 
         pane.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 pane.getChildren().remove(marker);
+
+                paveStone.setX(event.getX());
+                paveStone.setY(event.getY());
+
+                ((EditPaveStoneScene) getScene()).updateCoordinateLabels();
+
                 marker.setCenterX(event.getX());
                 marker.setCenterY(event.getY());
+
                 pane.getChildren().add(marker);
             }
         });
@@ -49,10 +48,6 @@ class MapPane extends ZoomableScrollPane {
 
     MapPane(PaveStone paveStone) {
         this(new Pane(), paveStone);
-    }
-
-    MapPane() {
-        this(new Pane(), null);
     }
 
     Pane getBackgroundPane() {
