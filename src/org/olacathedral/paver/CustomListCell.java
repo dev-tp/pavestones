@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -73,6 +74,15 @@ class CustomListCell extends ListCell<PaveStone> {
             });
 
             deleteLabel.setOnMouseClicked(event -> System.out.println("Delete: " + paveStone.getId()));
+
+            container.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if (event.getClickCount() == 2) {
+                        CustomScene scene = new ResultScene(stage, previousScene, paveStone);
+                        scene.show();
+                    }
+                }
+            });
 
             setGraphic(container);
         }
