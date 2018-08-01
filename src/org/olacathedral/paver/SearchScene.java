@@ -66,8 +66,9 @@ class SearchScene extends CustomScene {
         Button addNewPaveStoneButton = new Button("Add New");
         addNewPaveStoneButton.setMinWidth(100);
         addNewPaveStoneButton.setOnAction(event -> {
-            CustomScene scene = new EditPaveStoneScene(getStage(), this, new PaveStone());
+            EditPaveStoneScene scene = new EditPaveStoneScene(getStage(), this, new PaveStone());
             scene.show();
+            scene.fitMap();
         });
 
         actionsContainer.getChildren().add(addNewPaveStoneButton);

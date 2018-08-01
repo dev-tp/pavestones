@@ -68,8 +68,9 @@ class CustomListCell extends ListCell<PaveStone> {
             coordinateLabel.setText("x: " + paveStone.getX() + ", y: " + paveStone.getY());
 
             editLabel.setOnMouseClicked(event -> {
-                CustomScene scene = new EditPaveStoneScene(stage, previousScene, paveStone, true);
+                EditPaveStoneScene scene = new EditPaveStoneScene(stage, previousScene, paveStone, true);
                 scene.show();
+                scene.focusOnPaveStone();
             });
 
             deleteLabel.setOnMouseClicked(event -> {

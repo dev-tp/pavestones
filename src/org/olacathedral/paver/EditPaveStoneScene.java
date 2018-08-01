@@ -18,13 +18,14 @@ class EditPaveStoneScene extends CustomScene {
     private BorderPane container;
     private CustomScene previousScene;
     private PaveStone paveStone;
+    private MapPane map;
 
     EditPaveStoneScene(Stage stage, CustomScene previousScene, PaveStone paveStone) {
         this(stage, previousScene, paveStone, false);
     }
 
     EditPaveStoneScene(Stage stage, CustomScene previousScene, PaveStone paveStone, boolean editMode) {
-        super(new BorderPane(), stage, "Add New Entry", 1280, 720);
+        super(new BorderPane(), stage, editMode ? "Edit " + paveStone.getDedicatedTo() : "Create New Entry", 1280, 720);
 
         container = (BorderPane) getRoot();
         this.editMode = editMode;
@@ -34,11 +35,18 @@ class EditPaveStoneScene extends CustomScene {
         load();
     }
 
+    void fitMap() {
+        map.setToFit();
+        map.setVvalue(0.05);
+    }
+
+    void focusOnPaveStone() {
+        map.focusOnPaveStone(paveStone);
+    }
+
     @Override
     protected void load() {
-        Pane map = new Pane();
-        map.setStyle("-fx-background-color: #000");
-
+        map = new MapPane();
         container.setCenter(map);
 
         VBox bottomView = new VBox();
