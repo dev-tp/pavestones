@@ -11,7 +11,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 class SearchScene extends CustomScene {
+
+    static ArrayList<PaveStone> paveStones;
 
     private BorderPane container;
 
@@ -41,6 +45,15 @@ class SearchScene extends CustomScene {
         container.setTop(searchContainer);
 
         ObservableList<PaveStone> observableList = FXCollections.observableArrayList();
+
+        try {
+            Database database = new Database();
+            paveStones = database.getAllPaveStones();
+            observableList.addAll(paveStones);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         ListView<PaveStone> listView = new ListView<>(observableList);
         listView.setCellFactory(cell -> new CustomListCell(getStage(), this));
 

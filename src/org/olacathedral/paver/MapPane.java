@@ -24,7 +24,7 @@ class MapPane extends ZoomableScrollPane {
 
         marker = new Circle();
         marker.setRadius(2.0);
-        marker.setFill(Color.valueOf("#13437b"));
+        marker.setFill(Color.valueOf("#ffde7b"));
 
         if (paveStone != null) {
             marker.setCenterX(paveStone.getX());

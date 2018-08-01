@@ -2,14 +2,13 @@ package org.olacathedral.paver;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 class EditPaveStoneScene extends CustomScene {
@@ -48,6 +47,17 @@ class EditPaveStoneScene extends CustomScene {
 
     @Override
     protected void load() {
+        for (PaveStone paveStone : SearchScene.paveStones) {
+            if (this.paveStone != paveStone) {
+                Circle marker = new Circle(paveStone.getX(), paveStone.getY(), 2.0);
+                marker.setFill(Paint.valueOf("#becada"));
+
+                Tooltip.install(marker, new Tooltip(paveStone.getDedicatedTo()));
+
+                map.getBackgroundPane().getChildren().add(marker);
+            }
+        }
+
         container.setCenter(map);
 
         VBox bottomView = new VBox();
