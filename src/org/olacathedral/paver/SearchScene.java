@@ -42,7 +42,7 @@ class SearchScene extends CustomScene {
 
         ObservableList<PaveStone> observableList = FXCollections.observableArrayList();
         ListView<PaveStone> listView = new ListView<>(observableList);
-        listView.setCellFactory(cell -> new CustomListCell());
+        listView.setCellFactory(cell -> new CustomListCell(getStage(), this));
 
         container.setCenter(listView);
 
@@ -66,7 +66,7 @@ class SearchScene extends CustomScene {
         Button addNewPaveStoneButton = new Button("Add New");
         addNewPaveStoneButton.setMinWidth(100);
         addNewPaveStoneButton.setOnAction(event -> {
-            CustomScene scene = new AddPaveStoneScene(getStage(), this);
+            CustomScene scene = new EditPaveStoneScene(getStage(), this, new PaveStone());
             scene.show();
         });
 

@@ -9,17 +9,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
-public class CustomListCell extends ListCell<PaveStone> {
+class CustomListCell extends ListCell<PaveStone> {
 
+    private CustomScene previousScene;
     private Label coordinateLabel;
     private Label infoLabel;
     private Label editLabel;
     private Label deleteLabel;
     private HBox container;
+    private Stage stage;
 
-    CustomListCell() {
+    CustomListCell(Stage stage, CustomScene previousScene) {
         super();
+
+        this.previousScene = previousScene;
+        this.stage = stage;
 
         container = new HBox();
 
@@ -60,8 +66,14 @@ public class CustomListCell extends ListCell<PaveStone> {
             String donor = paveStone.getDonor();
             infoLabel.setText(paveStone.getDedicatedTo() + (donor.equals("") ? "" : " (" + donor + ")"));
             coordinateLabel.setText("x: " + paveStone.getX() + ", y: " + paveStone.getY());
-            editLabel.setOnMouseClicked(event -> System.out.println("Edit: " + paveStone.getId()));
+
+            editLabel.setOnMouseClicked(event -> {
+                CustomScene scene = new EditPaveStoneScene(stage, previousScene, paveStone, true);
+                scene.show();
+            });
+
             deleteLabel.setOnMouseClicked(event -> System.out.println("Delete: " + paveStone.getId()));
+
             setGraphic(container);
         }
     }
