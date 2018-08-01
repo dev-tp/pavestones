@@ -1,5 +1,6 @@
 .DS_Store
 .idea/tasks.xml
+.idea/uiDesigner.xml
 .idea/workspace.xml
 *.iws
 out
