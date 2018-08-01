@@ -25,7 +25,7 @@ class StaticMapPane extends StackPane {
 
         String resourcesDir = new File(System.getProperty("user.dir")).toURI().toString() + "resources/images/";
 
-        ImageView backgroundView = new ImageView(resourcesDir + "cathedral-color.png");
+        ImageView backgroundView = new ImageView(resourcesDir + "cathedral-monochrome.png");
         backgroundView.setViewport(new Rectangle2D(x, y, width, height));
 
         Pane backgroundContainer = new Pane();
@@ -50,7 +50,7 @@ class StaticMapPane extends StackPane {
 
         getChildren().add(backgroundContainer);
 
-        ImageView referenceView = new ImageView(resourcesDir + "cathedral-color-reference.png");
+        ImageView referenceView = new ImageView(resourcesDir + "cathedral-monochrome-reference.png");
 
         double referenceImageWidth = referenceView.getImage().getWidth();
         double referenceImageHeight = referenceView.getImage().getHeight();
