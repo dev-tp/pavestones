@@ -23,7 +23,7 @@ class StaticMapPane extends StackPane {
         double x = paveStone.getX() - width / 2;
         double y = paveStone.getY() - height / 2;
 
-        String resourcesDir = new File(System.getProperty("user.dir")).toURI().toString() + "resources/";
+        String resourcesDir = new File(System.getProperty("user.dir")).toURI().toString() + "resources/images/";
 
         ImageView backgroundView = new ImageView(resourcesDir + "cathedral.png");
         backgroundView.setViewport(new Rectangle2D(x, y, width, height));
