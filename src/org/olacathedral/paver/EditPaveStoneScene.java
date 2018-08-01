@@ -32,6 +32,8 @@ class EditPaveStoneScene extends CustomScene {
         this.paveStone = paveStone;
         this.previousScene = previousScene;
 
+        map = editMode ? new MapPane(paveStone) : new MapPane();
+
         load();
     }
 
@@ -46,7 +48,6 @@ class EditPaveStoneScene extends CustomScene {
 
     @Override
     protected void load() {
-        map = new MapPane();
         container.setCenter(map);
 
         VBox bottomView = new VBox();

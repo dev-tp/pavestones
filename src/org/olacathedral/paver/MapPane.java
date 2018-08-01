@@ -13,7 +13,7 @@ class MapPane extends ZoomableScrollPane {
     private Circle marker;
     private Pane backgroundPane;
 
-    private MapPane(Pane pane) {
+    private MapPane(Pane pane, PaveStone paveStone) {
         super(pane);
 
         String currentPath = new File(System.getProperty("user.dir")).toURI().toString();
@@ -21,13 +21,25 @@ class MapPane extends ZoomableScrollPane {
 
         pane.setPrefSize(backgroundImageView.getImage().getWidth(), backgroundImageView.getImage().getHeight());
         pane.getChildren().add(backgroundImageView);
+
+        marker = new Circle();
+        marker.setRadius(2.0);
+        marker.setFill(Color.valueOf("#13437b"));
+
+        if (paveStone != null) {
+            marker.setCenterX(paveStone.getX());
+            marker.setCenterY(paveStone.getY());
+
+            // Tooltip.install(marker, new Tooltip(paveStone.getDedicatedTo()));
+
+            pane.getChildren().add(marker);
+        }
+
         pane.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 pane.getChildren().remove(marker);
-
-                marker = new Circle(event.getX(), event.getY(), 2);
-                marker.setFill(Color.valueOf("#13437b"));
-
+                marker.setCenterX(event.getX());
+                marker.setCenterY(event.getY());
                 pane.getChildren().add(marker);
             }
         });
@@ -35,8 +47,12 @@ class MapPane extends ZoomableScrollPane {
         this.backgroundPane = pane;
     }
 
+    MapPane(PaveStone paveStone) {
+        this(new Pane(), paveStone);
+    }
+
     MapPane() {
-        this(new Pane());
+        this(new Pane(), null);
     }
 
     Pane getBackgroundPane() {
