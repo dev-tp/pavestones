@@ -54,6 +54,8 @@ class Database {
 
             preparedStatement.execute();
 
+            paveStone.setDateSubmitted(System.currentTimeMillis());
+
             paveStones.add(paveStone);
             SearchScene.update();
 
@@ -93,7 +95,7 @@ class Database {
                             resultSet.getInt(4),
                             resultSet.getInt(5),
                             resultSet.getString(6),
-                            resultSet.getDate(7)
+                            resultSet.getTimestamp(7)
                     ));
                 }
 

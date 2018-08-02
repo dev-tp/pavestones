@@ -1,16 +1,16 @@
 package org.olacathedral.paver;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 class PaveStone {
 
-    private Date dateSubmitted;
     private double x;
     private double y;
     private int id;
     private String comments;
     private String dedicatedTo;
     private String donor;
+    private Timestamp dateSubmitted;
 
     PaveStone() {
         this(-1, "", "", -1, -1, "", null);
@@ -26,7 +26,7 @@ class PaveStone {
         y = paveStone.y;
     }
 
-    PaveStone(int id, String donor, String dedicatedTo, double x, double y, String comments, Date dateSubmitted) {
+    PaveStone(int id, String donor, String dedicatedTo, double x, double y, String comments, Timestamp dateSubmitted) {
         this.comments = comments;
         this.dateSubmitted = dateSubmitted;
         this.dedicatedTo = dedicatedTo;
@@ -36,7 +36,7 @@ class PaveStone {
         this.y = y;
     }
 
-    Date getDateSubmitted() {
+    Timestamp getDateSubmitted() {
         return dateSubmitted;
     }
 
@@ -66,6 +66,14 @@ class PaveStone {
 
     void setComments(String comments) {
         this.comments = comments;
+    }
+
+    void setDateSubmitted(long time) {
+        if (dateSubmitted != null) {
+            dateSubmitted.setTime(time);
+        } else {
+            dateSubmitted = new Timestamp(time);
+        }
     }
 
     void setDedicatedTo(String dedicatedTo) {

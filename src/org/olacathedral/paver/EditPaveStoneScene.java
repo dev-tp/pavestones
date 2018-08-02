@@ -10,6 +10,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
+
 class EditPaveStoneScene extends CustomScene {
 
     private boolean editMode;
@@ -158,6 +160,18 @@ class EditPaveStoneScene extends CustomScene {
         coordinatesWrapper.setAlignment(Pos.CENTER);
         commentSectionWrapper.setPadding(new Insets(0, 0, 10, 0));
         coordinatesWrapper.getChildren().addAll(labels[0], xLabel, labels[1], yLabel);
+
+        if (paveStone.getDateSubmitted() != null) {
+            HBox dateSubmittedWrapper = new HBox();
+            dateSubmittedWrapper.setAlignment(Pos.CENTER);
+            dateSubmittedWrapper.setPadding(new Insets(10, 0, 0, 0));
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, Y h:m a");
+            String timestamp = simpleDateFormat.format(paveStone.getDateSubmitted().getTime());
+            dateSubmittedWrapper.getChildren().add(new Label("Date Submitted: " + timestamp));
+
+            bottomView.getChildren().add(dateSubmittedWrapper);
+        }
 
         bottomView.getChildren().addAll(inputFields, commentSectionWrapper, coordinatesWrapper);
 

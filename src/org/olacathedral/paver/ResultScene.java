@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -76,10 +75,10 @@ class ResultScene extends CustomScene {
         labels[1] = new Label();
         labels[1].setText("y: ");
 
-        Label xLabel = new Label("" + paveStone.getX());
+        Label xLabel = new Label("" + (int) paveStone.getX());
         xLabel.setMinWidth(100);
 
-        Label yLabel = new Label("" + paveStone.getY());
+        Label yLabel = new Label("" + (int) paveStone.getY());
         yLabel.setMinWidth(100);
 
         coordinatesWrapper.setAlignment(Pos.CENTER);
