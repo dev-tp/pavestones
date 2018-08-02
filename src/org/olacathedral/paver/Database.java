@@ -54,6 +54,9 @@ class Database {
 
             preparedStatement.execute();
 
+            paveStones.add(paveStone);
+            SearchScene.update();
+
         } catch (SQLException sqlException) {
             System.err.println("Could not add pave stone dedicated to: " + paveStone.getDedicatedTo());
         }
@@ -67,6 +70,9 @@ class Database {
             preparedStatement.setInt(1, paveStone.getId());
 
             preparedStatement.execute();
+
+            paveStones.remove(paveStone);
+            SearchScene.update();
 
         } catch (SQLException sqlException) {
             System.err.println("Could not delete PaveStone with ID: " + paveStone.getId());

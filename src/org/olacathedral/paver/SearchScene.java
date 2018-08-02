@@ -13,8 +13,9 @@ import javafx.stage.Stage;
 
 class SearchScene extends CustomScene {
 
+    private static ListView<PaveStone> listView;
+
     private BorderPane container;
-    private ListView<PaveStone> listView;
 
     SearchScene(Stage stage) {
         super(new BorderPane(), stage, "Search for Pave Stone");
@@ -80,7 +81,7 @@ class SearchScene extends CustomScene {
         container.setBottom(actionsContainer);
     }
 
-    void update() {
+    static void update() {
         listView.getItems().setAll(Main.database.getAllPaveStones());
     }
 }

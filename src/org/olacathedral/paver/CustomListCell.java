@@ -106,7 +106,7 @@ class CustomListCell extends ListCell<PaveStone> {
                         Main.database.deletePaveStone(paveStone);
                         Main.database.getAllPaveStones().remove(paveStone);
 
-                        ((SearchScene) getScene()).update();
+                        SearchScene.update();
                     }
                 });
             });
