@@ -2,6 +2,7 @@ package org.olacathedral.paver;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -76,10 +77,30 @@ class CustomListCell extends ListCell<PaveStone> {
             deleteLabel.setOnMouseClicked(event -> {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.getButtonTypes().remove(0);
-                alert.getButtonTypes().add(new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE));
+
+                ButtonType okayButtonType = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+                alert.getButtonTypes().add(okayButtonType);
+
                 alert.getButtonTypes().add(new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE));
                 alert.setHeaderText("You are about to delete an entry.");
-                alert.setContentText("Are you sure you want to delete \"" + paveStone.getDedicatedTo() + "\"?");
+
+                VBox container = new VBox();
+
+                Label contentLabel = new Label("Are you sure you want to delete \"" + paveStone.getDedicatedTo() + "\"?");
+                VBox.setMargin(contentLabel, new Insets(0, 0, 10, 0));
+
+                Node yesButton = alert.getDialogPane().lookupButton(okayButtonType);
+                yesButton.setDisable(true);
+
+                TextField responseField = new TextField();
+                responseField.setPromptText("Type name(s) here to confirm");
+                responseField.setOnKeyReleased(keyEvent -> yesButton.setDisable(!paveStone.getDedicatedTo().equals(responseField.getText())));
+
+                container.getChildren().addAll(contentLabel, responseField);
+                container.requestFocus();
+
+                alert.getDialogPane().setContent(container);
+
                 alert.showAndWait().ifPresent(buttonType -> {
                     if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                         SearchScene.database.deletePaveStone(paveStone);
