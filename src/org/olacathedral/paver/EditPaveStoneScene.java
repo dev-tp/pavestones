@@ -85,7 +85,6 @@ class EditPaveStoneScene extends CustomScene {
 
         Button button = new Button(editMode ? "Update" : "Add");
         button.setMinWidth(100);
-        button.setOnAction(event -> previousScene.show());
         HBox.setMargin(button, margin10Right);
 
         Button cancelButton = new Button("Cancel");
@@ -108,6 +107,39 @@ class EditPaveStoneScene extends CustomScene {
         commentSection.setPrefHeight(50);
         commentSection.setPrefWidth(830);
         commentSectionWrapper.getChildren().add(commentSection);
+
+        button.setOnAction(event -> {
+            paveStone.setDonor(donorTextField.getText());
+
+            if (paveStone.getDonor().equals("")) {
+                donorTextField.requestFocus();
+                return;
+            }
+
+            paveStone.setDedicatedTo(dedicatedToField.getText());
+
+            if (paveStone.getDedicatedTo().equals("")) {
+                dedicatedToField.requestFocus();
+                return;
+            }
+
+            try {
+                paveStone.setX(Double.parseDouble(xLabel.getText()));
+                paveStone.setY(Double.parseDouble(yLabel.getText()));
+            } catch (NumberFormatException exception) {
+                return;
+            }
+
+            paveStone.setComments(commentSection.getText());
+
+            if (editMode) {
+                SearchScene.database.updatePaveStone(paveStone);
+            } else {
+                SearchScene.database.addPaveStone(paveStone);
+            }
+
+            previousScene.show();
+        });
 
         HBox coordinatesWrapper = new HBox();
 

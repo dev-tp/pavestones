@@ -54,6 +54,18 @@ class PaveStone {
         return donor;
     }
 
+    void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    void setDedicatedTo(String dedicatedTo) {
+        this.dedicatedTo = dedicatedTo;
+    }
+
+    void setDonor(String donor) {
+        this.donor = donor;
+    }
+
     void setX(double x) {
         this.x = x;
     }

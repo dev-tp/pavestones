@@ -41,6 +41,23 @@ class Database {
         } */
     }
 
+    void addPaveStone(PaveStone paveStone) {
+        try {
+            String query = "INSERT INTO pavestones (donor, dedicated_to, x, y, comments) VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, paveStone.getDonor());
+            preparedStatement.setString(2, paveStone.getDedicatedTo());
+            preparedStatement.setInt(3, (int) paveStone.getX());
+            preparedStatement.setInt(4, (int) paveStone.getY());
+            preparedStatement.setString(5, paveStone.getComments());
+            preparedStatement.execute();
+
+        } catch (SQLException sqlException) {
+            System.err.println("Could not add pave stone dedicated to: " + paveStone.getDedicatedTo());
+        }
+    }
+
     void deletePaveStone(PaveStone paveStone) {
         try {
             String query = "DELETE FROM pavestones WHERE id = ?";
@@ -79,5 +96,9 @@ class Database {
         }
 
         return paveStones;
+    }
+
+    void updatePaveStone(PaveStone paveStone) {
+
     }
 }
