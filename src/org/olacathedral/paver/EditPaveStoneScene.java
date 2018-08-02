@@ -54,7 +54,7 @@ class EditPaveStoneScene extends CustomScene {
 
     @Override
     protected void load() {
-        for (PaveStone paveStone : SearchScene.database.getAllPaveStones()) {
+        for (PaveStone paveStone : Main.database.getAllPaveStones()) {
             if (this.paveStone != paveStone) {
                 Circle marker = new Circle(paveStone.getX(), paveStone.getY(), 2.0);
                 marker.setFill(Paint.valueOf("#becada"));
@@ -133,9 +133,9 @@ class EditPaveStoneScene extends CustomScene {
             paveStone.setComments(commentSection.getText());
 
             if (editMode) {
-                SearchScene.database.updatePaveStone(paveStone);
+                Main.database.updatePaveStone(paveStone);
             } else {
-                SearchScene.database.addPaveStone(paveStone);
+                Main.database.addPaveStone(paveStone);
             }
 
             previousScene.show();

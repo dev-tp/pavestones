@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 
 class SearchScene extends CustomScene {
 
-    static Database database;
-
     private BorderPane container;
     private ListView<PaveStone> listView;
 
@@ -45,8 +43,7 @@ class SearchScene extends CustomScene {
 
         ObservableList<PaveStone> observableList = FXCollections.observableArrayList();
 
-        database = new Database();
-        observableList.addAll(database.getAllPaveStones());
+        observableList.addAll(Main.database.getAllPaveStones());
 
         listView = new ListView<>(observableList);
         listView.setCellFactory(cell -> new CustomListCell(getStage(), this));
@@ -84,6 +81,6 @@ class SearchScene extends CustomScene {
     }
 
     void update() {
-        listView.getItems().setAll(database.getAllPaveStones());
+        listView.getItems().setAll(Main.database.getAllPaveStones());
     }
 }
