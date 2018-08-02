@@ -51,6 +51,7 @@ class Database {
             preparedStatement.setInt(3, (int) paveStone.getX());
             preparedStatement.setInt(4, (int) paveStone.getY());
             preparedStatement.setString(5, paveStone.getComments());
+
             preparedStatement.execute();
 
         } catch (SQLException sqlException) {
@@ -99,6 +100,21 @@ class Database {
     }
 
     void updatePaveStone(PaveStone paveStone) {
+        try {
+            String query = "UPDATE pavestones SET donor = ?, dedicated_to = ?, x = ?, y = ?, comments = ? WHERE id = ?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, paveStone.getDonor());
+            preparedStatement.setString(2, paveStone.getDedicatedTo());
+            preparedStatement.setInt(3, (int) paveStone.getX());
+            preparedStatement.setInt(4, (int) paveStone.getY());
+            preparedStatement.setString(5, paveStone.getComments());
+            preparedStatement.setInt(6, paveStone.getId());
+
+            preparedStatement.execute();
+
+        } catch (SQLException sqlException) {
+            System.err.println("Could not update PaveStone with ID: " + paveStone.getId());
+        }
     }
 }

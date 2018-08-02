@@ -13,13 +13,11 @@ import javafx.stage.Stage;
 class EditPaveStoneScene extends CustomScene {
 
     private boolean editMode;
-    private double oldX;
-    private double oldY;
-
     private BorderPane container;
     private CustomScene previousScene;
     private Label xLabel;
     private Label yLabel;
+    private PaveStone backup;
     private PaveStone paveStone;
     private MapPane map;
 
@@ -35,10 +33,8 @@ class EditPaveStoneScene extends CustomScene {
         this.paveStone = paveStone;
         this.previousScene = previousScene;
 
+        backup = new PaveStone(paveStone);
         map = new MapPane(paveStone);
-
-        oldX = paveStone.getX();
-        oldY = paveStone.getY();
 
         load();
     }
@@ -90,8 +86,11 @@ class EditPaveStoneScene extends CustomScene {
         Button cancelButton = new Button("Cancel");
         cancelButton.setMinWidth(100);
         cancelButton.setOnAction(event -> {
-            paveStone.setX(oldX);
-            paveStone.setY(oldY);
+            paveStone.setDonor(backup.getDonor());
+            paveStone.setDedicatedTo(backup.getDedicatedTo());
+            paveStone.setX(backup.getX());
+            paveStone.setY(backup.getY());
+
             previousScene.show();
         });
 

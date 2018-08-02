@@ -16,6 +16,16 @@ class PaveStone {
         this(-1, "", "", -1, -1, "", null);
     }
 
+    PaveStone(PaveStone paveStone) {
+        comments = paveStone.comments;
+        dateSubmitted = paveStone.dateSubmitted;
+        dedicatedTo = paveStone.dedicatedTo;
+        donor = paveStone.donor;
+        id = paveStone.id;
+        x = paveStone.x;
+        y = paveStone.y;
+    }
+
     PaveStone(int id, String donor, String dedicatedTo, double x, double y, String comments, Date dateSubmitted) {
         this.comments = comments;
         this.dateSubmitted = dateSubmitted;
