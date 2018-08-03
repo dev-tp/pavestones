@@ -104,8 +104,6 @@ class CustomListCell extends ListCell<PaveStone> {
                 alert.showAndWait().ifPresent(buttonType -> {
                     if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                         Main.database.deletePaveStone(paveStone);
-                        Main.database.getAllPaveStones().remove(paveStone);
-
                         SearchScene.update();
                     }
                 });

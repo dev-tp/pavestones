@@ -84,11 +84,28 @@ class PaveStone {
         this.donor = donor;
     }
 
+    void setId(int id) {
+        this.id = id;
+    }
+
     void setX(double x) {
         this.x = x;
     }
 
     void setY(double y) {
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PaveStone paveStone = (PaveStone) o;
+        return id == paveStone.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

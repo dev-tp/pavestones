@@ -45,14 +45,20 @@ class Database {
         try {
             String query = "INSERT INTO pavestones (donor, dedicated_to, x, y, comments) VALUES (?, ?, ?, ?, ?)";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, paveStone.getDonor());
             preparedStatement.setString(2, paveStone.getDedicatedTo());
             preparedStatement.setInt(3, (int) paveStone.getX());
             preparedStatement.setInt(4, (int) paveStone.getY());
             preparedStatement.setString(5, paveStone.getComments());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
+
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                paveStone.setId(resultSet.getInt(1));
+            }
 
             paveStone.setDateSubmitted(System.currentTimeMillis());
 
