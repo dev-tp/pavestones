@@ -121,6 +121,8 @@ class CustomListCell extends ListCell<PaveStone> {
             });
 
             setGraphic(container);
+        } else {
+            setGraphic(null);
         }
     }
 }

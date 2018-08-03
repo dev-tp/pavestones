@@ -85,7 +85,7 @@ class Database {
         if (connection != null && paveStones.size() == 0) {
             try {
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM pavestones");
+                ResultSet resultSet = statement.executeQuery("SELECT id, donor, dedicated_to, x, y, comments, date_submitted FROM pavestones");
 
                 while (resultSet.next()) {
                     paveStones.add(new PaveStone(
@@ -102,6 +102,37 @@ class Database {
             } catch (SQLException sqlException) {
                 System.err.println("Could not retrieve all PaveStones from database.");
             }
+        }
+
+        return paveStones;
+    }
+
+    ArrayList<PaveStone> search(String term) {
+        ArrayList<PaveStone> paveStones = new ArrayList<>();
+
+        try {
+            String query = "SELECT id, donor, dedicated_to, x, y, comments, date_submitted FROM pavestones WHERE donor LIKE ? OR dedicated_to LIKE ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%" + term + "%");
+            preparedStatement.setString(2, "%" + term + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                paveStones.add(new PaveStone(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5),
+                        resultSet.getString(6),
+                        resultSet.getTimestamp(7)
+                ));
+            }
+
+        } catch (SQLException sqlException) {
+            System.err.println("Something went wrong while searching for term: " + term);
         }
 
         return paveStones;

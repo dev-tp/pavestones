@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 class SearchScene extends CustomScene {
 
-    private static ListView<PaveStone> listView;
+    private static ObservableList<PaveStone> observableList;
 
     private BorderPane container;
 
@@ -30,23 +30,30 @@ class SearchScene extends CustomScene {
         searchContainer.setPadding(new Insets(10, 0, 10, 0));
 
         TextField searchTextField = new TextField();
+        searchTextField.setPromptText("Search by name(s)");
         searchTextField.setMinWidth(300);
-        searchTextField.setOnAction(event -> System.out.println(searchTextField.getText()));
+        searchTextField.setOnAction(event -> updateWithSearchResults(searchTextField.getText()));
+        searchTextField.setOnKeyReleased(event -> {
+            if (searchTextField.getText().length() == 0) {
+                update();
+            } /* else {
+                updateWithSearchResults(searchTextField.getText());
+            } */
+        });
         HBox.setMargin(searchTextField, new Insets(0, 10, 0, 0));
 
         Button searchButton = new Button("Search");
         searchButton.setMinWidth(100);
-        searchButton.setOnAction(event -> System.out.println(searchTextField.getText()));
+        searchButton.setOnAction(event -> updateWithSearchResults(searchTextField.getText()));
 
         searchContainer.getChildren().addAll(searchTextField, searchButton);
 
         container.setTop(searchContainer);
 
-        ObservableList<PaveStone> observableList = FXCollections.observableArrayList();
+        observableList = FXCollections.observableArrayList();
+        observableList.setAll(Main.database.getAllPaveStones());
 
-        observableList.addAll(Main.database.getAllPaveStones());
-
-        listView = new ListView<>(observableList);
+        ListView<PaveStone> listView = new ListView<>(observableList);
         listView.setCellFactory(cell -> new CustomListCell(getStage(), this));
 
         container.setCenter(listView);
@@ -79,9 +86,16 @@ class SearchScene extends CustomScene {
         actionsContainer.getChildren().add(addNewPaveStoneButton);
 
         container.setBottom(actionsContainer);
+        container.requestFocus();
     }
 
     static void update() {
-        listView.getItems().setAll(Main.database.getAllPaveStones());
+        observableList.clear();
+        observableList.setAll(Main.database.getAllPaveStones());
+    }
+
+    private void updateWithSearchResults(String term) {
+        observableList.clear();
+        observableList.setAll(Main.database.search(term));
     }
 }
