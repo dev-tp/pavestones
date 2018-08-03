@@ -2,6 +2,8 @@ package org.olacathedral.paver;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -46,7 +48,26 @@ class ResultScene extends CustomScene {
 
         Button printButton = new Button("Print");
         printButton.setMinWidth(100);
-        printButton.setOnAction(event -> previousScene.show());
+        printButton.setOnAction(event -> {
+            PrinterJob printerJob = PrinterJob.createPrinterJob();
+
+            if (printerJob != null) {
+                printerJob.getJobSettings().setJobName("Pave Stone for " + paveStone.getDedicatedTo());
+                PageLayout pageLayout = printerJob.getJobSettings().getPageLayout();
+
+                double printableWidth = pageLayout.getPrintableWidth();
+                double printableHeight = pageLayout.getPrintableHeight();
+
+                System.out.println(printerJob.getJobStatus().toString());
+
+                if (printerJob.printPage(new PrintoutTemplate(paveStone, printableWidth, printableHeight))) {
+                    System.out.println(printerJob.getJobStatus().toString());
+                    printerJob.endJob();
+                } else {
+                    System.err.println(printerJob.getJobStatus().toString());
+                }
+            }
+        });
         HBox.setMargin(printButton, margin10Right);
 
         Button goBackButton = new Button("Go Back");
