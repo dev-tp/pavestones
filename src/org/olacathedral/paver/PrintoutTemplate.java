@@ -37,7 +37,8 @@ class PrintoutTemplate extends VBox {
 
         getChildren().add(header);
 
-        StaticMapPane map = new StaticMapPane(paveStone, width, 404.0);
+        StaticMapPane map = new StaticMapPane(paveStone, width - 10.0, 404.0);
+        map.setStyle("-fx-border-color: #000");
         setMargin(map, margin10Bottom);
 
         getChildren().add(map);
