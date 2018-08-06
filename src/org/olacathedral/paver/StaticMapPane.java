@@ -6,7 +6,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.io.File;
@@ -38,13 +37,10 @@ class StaticMapPane extends StackPane {
             backgroundView.setViewport(new Rectangle2D(x, y, this.width, this.height));
         });
 
-        Circle marker = new Circle(paveStone.getX() - x, paveStone.getY() - y, 2.0);
-        marker.setFill(Paint.valueOf("#f00"));
-
+        PaveStone marker = new PaveStone(paveStone);
+        marker.setX(paveStone.getX() - x);
+        marker.setY(paveStone.getY() - y);
         backgroundContainer.getChildren().add(marker);
-
-        backgroundView.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
-        backgroundContainer.setOnMouseClicked(event -> System.out.println(event.getX() + " " + event.getY()));
 
         getChildren().add(backgroundContainer);
 

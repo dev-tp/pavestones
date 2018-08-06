@@ -1,11 +1,13 @@
 package org.olacathedral.paver;
 
+import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+
 import java.sql.Timestamp;
 
-class PaveStone {
+class PaveStone extends Circle {
 
-    private double x;
-    private double y;
     private int id;
     private String comments;
     private String dedicatedTo;
@@ -22,8 +24,13 @@ class PaveStone {
         dedicatedTo = paveStone.dedicatedTo;
         donor = paveStone.donor;
         id = paveStone.id;
-        x = paveStone.x;
-        y = paveStone.y;
+
+        setFill(Paint.valueOf("#f00"));
+        setRadius(2.0);
+        setX(paveStone.getX());
+        setY(paveStone.getY());
+
+        Tooltip.install(this, new Tooltip(paveStone.dedicatedTo));
     }
 
     PaveStone(int id, String donor, String dedicatedTo, double x, double y, String comments, Timestamp dateSubmitted) {
@@ -32,8 +39,13 @@ class PaveStone {
         this.dedicatedTo = dedicatedTo;
         this.donor = donor;
         this.id = id;
-        this.x = x;
-        this.y = y;
+
+        setFill(Paint.valueOf("#f00"));
+        setRadius(2.0);
+        setCenterX(x);
+        setCenterY(y);
+
+        Tooltip.install(this, new Tooltip(dedicatedTo));
     }
 
     Timestamp getDateSubmitted() {
@@ -41,14 +53,14 @@ class PaveStone {
     }
 
     double getX() {
-        return x;
+        return getCenterX();
     }
 
     double getY() {
-        return y;
+        return getCenterY();
     }
 
-    int getId() {
+    int getPsId() {
         return id;
     }
 
@@ -89,11 +101,11 @@ class PaveStone {
     }
 
     void setX(double x) {
-        this.x = x;
+        setCenterX(x);
     }
 
     void setY(double y) {
-        this.y = y;
+        setCenterY(y);
     }
 
     @Override
@@ -101,7 +113,7 @@ class PaveStone {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PaveStone paveStone = (PaveStone) o;
-        return id == paveStone.getId();
+        return id == paveStone.id;
     }
 
     @Override

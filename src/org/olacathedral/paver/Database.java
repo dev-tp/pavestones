@@ -75,7 +75,7 @@ class Database {
             String query = "DELETE FROM pavestones WHERE id = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, paveStone.getId());
+            preparedStatement.setInt(1, paveStone.getPsId());
 
             preparedStatement.execute();
 
@@ -83,7 +83,7 @@ class Database {
             SearchScene.update();
 
         } catch (SQLException sqlException) {
-            System.err.println("Could not delete PaveStone with ID: " + paveStone.getId());
+            System.err.println("Could not delete PaveStone with ID: " + paveStone.getPsId());
         }
     }
 
@@ -154,7 +154,7 @@ class Database {
             preparedStatement.setInt(3, (int) paveStone.getX());
             preparedStatement.setInt(4, (int) paveStone.getY());
             preparedStatement.setString(5, paveStone.getComments());
-            preparedStatement.setInt(6, paveStone.getId());
+            preparedStatement.setInt(6, paveStone.getPsId());
 
             preparedStatement.execute();
 

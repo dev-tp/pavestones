@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.text.SimpleDateFormat;
@@ -52,14 +51,15 @@ class EditPaveStoneScene extends CustomScene {
 
     @Override
     protected void load() {
-        for (PaveStone paveStone : Main.database.getAllPaveStones()) {
-            if (this.paveStone != paveStone) {
-                Circle marker = new Circle(paveStone.getX(), paveStone.getY(), 2.0);
-                marker.setFill(Paint.valueOf("#becada"));
-
-                Tooltip.install(marker, new Tooltip(paveStone.getDedicatedTo()));
-
-                map.getBackgroundPane().getChildren().add(marker);
+        for (PaveStone marker : Main.database.getAllPaveStones()) {
+            try {
+                if (marker != paveStone) {
+                    marker.setFill(Paint.valueOf("#becada"));
+                    map.getBackgroundPane().getChildren().add(marker);
+                }
+            } catch (IllegalArgumentException exception) {
+                System.out.println(marker);
+                System.out.println(paveStone);
             }
         }
 
