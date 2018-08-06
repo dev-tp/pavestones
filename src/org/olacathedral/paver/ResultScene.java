@@ -58,14 +58,13 @@ class ResultScene extends CustomScene {
                 double printableWidth = pageLayout.getPrintableWidth();
                 double printableHeight = pageLayout.getPrintableHeight();
 
-                System.out.println(printerJob.getJobStatus().toString());
-
                 if (printerJob.printPage(new PrintoutTemplate(paveStone, printableWidth, printableHeight))) {
-                    System.out.println(printerJob.getJobStatus().toString());
                     printerJob.endJob();
                 } else {
                     System.err.println(printerJob.getJobStatus().toString());
                 }
+            } else {
+                System.err.println("Could not create printer job.");
             }
         });
         HBox.setMargin(printButton, margin10Right);

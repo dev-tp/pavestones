@@ -31,9 +31,7 @@ class StaticMapPane extends StackPane {
         Pane backgroundContainer = new Pane();
         backgroundContainer.getChildren().add(backgroundView);
 
-        backgroundContainer.widthProperty().addListener((observable, oldValue, newValue) -> {
-            this.width = newValue.doubleValue();
-        });
+        backgroundContainer.widthProperty().addListener((observable, oldValue, newValue) -> this.width = newValue.doubleValue());
 
         backgroundContainer.heightProperty().addListener((observable, oldValue, newValue) -> {
             this.height = newValue.doubleValue();
@@ -51,9 +49,11 @@ class StaticMapPane extends StackPane {
         getChildren().add(backgroundContainer);
 
         ImageView referenceView = new ImageView(resourcesDir + "cathedral-monochrome-reference.png");
+        referenceView.setFitWidth(referenceView.getImage().getWidth() / referenceView.getImage().getHeight() * 160.0);
+        referenceView.setFitHeight(160.0);
 
-        double referenceImageWidth = referenceView.getImage().getWidth();
-        double referenceImageHeight = referenceView.getImage().getHeight();
+        double referenceImageWidth = referenceView.getFitWidth();
+        double referenceImageHeight = referenceView.getFitHeight();
 
         Pane referenceViewContainer = new Pane();
         referenceViewContainer.setPrefSize(referenceImageWidth, referenceImageHeight);
@@ -71,8 +71,8 @@ class StaticMapPane extends StackPane {
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(referenceViewContainer);
-        AnchorPane.setBottomAnchor(referenceViewContainer, 10.0);
-        AnchorPane.setRightAnchor(referenceViewContainer, 10.0);
+        AnchorPane.setBottomAnchor(referenceViewContainer, 4.0);
+        AnchorPane.setRightAnchor(referenceViewContainer, 4.0);
 
         getChildren().add(anchorPane);
     }
