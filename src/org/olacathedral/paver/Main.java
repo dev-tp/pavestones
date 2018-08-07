@@ -8,9 +8,13 @@ public class Main extends Application {
     static Database database;
 
     @Override
-    public void start(Stage stage) {
+    public void init() {
         database = new Database();
+        database.getAllPaveStones();
+    }
 
+    @Override
+    public void start(Stage stage) {
         LoginScene loginScene = new LoginScene(stage);
         loginScene.show();
     }

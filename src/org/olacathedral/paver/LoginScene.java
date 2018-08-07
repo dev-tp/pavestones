@@ -1,5 +1,7 @@
 package org.olacathedral.paver;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,9 +10,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 class LoginScene extends CustomScene {
 
+    private TextField usernameTextField;
+    private PasswordField passwordField;
     private VBox container;
 
     LoginScene(Stage stage) {
@@ -19,22 +25,30 @@ class LoginScene extends CustomScene {
         load();
     }
 
+    private static byte[] fromHex(String hex) {
+        byte[] bytes = new byte[hex.length() / 2];
+
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+        }
+
+        return bytes;
+    }
+
     @Override
     protected void load() {
         container.setAlignment(Pos.CENTER);
 
         GridPane grid = new GridPane();
 
-        TextField usernameTextField = new TextField();
-        PasswordField passwordField = new PasswordField();
-        Button loginButton = new Button("Login");
+        usernameTextField = new TextField();
 
+        passwordField = new PasswordField();
+        passwordField.setOnAction(event -> login());
+
+        Button loginButton = new Button("Login");
         loginButton.setMinWidth(100);
-        loginButton.setOnAction(event -> {
-            CustomScene scene = new SearchScene(getStage());
-            scene.show();
-            scene.centerStage();
-        });
+        loginButton.setOnAction(event -> login());
 
         grid.add(new Label("Username"), 0, 0);
         grid.add(usernameTextField, 1, 0);
@@ -62,5 +76,53 @@ class LoginScene extends CustomScene {
         grid.setPadding(new Insets(0, 40, 0, 40));
 
         container.getChildren().add(grid);
+    }
+
+    private void login() {
+        String passwordHash = Main.database.getPassword(usernameTextField.getText());
+
+        if (passwordHash != null) {
+            if (validatePassword(passwordField.getText(), passwordHash)) {
+                CustomScene scene = new SearchScene(getStage());
+                scene.show();
+                scene.centerStage();
+            } else {
+                passwordField.setText("");
+            }
+        }
+    }
+
+    private static boolean validatePassword(String originalPassword, String storedPassword) {
+        String[] parts = storedPassword.split(":");
+        int iterations = Integer.parseInt(parts[0]);
+        byte[] salt = fromHex(parts[1]);
+        byte[] hash = fromHex(parts[2]);
+
+        PBEKeySpec keySpec = new PBEKeySpec(originalPassword.toCharArray(), salt, iterations, hash.length * 8);
+        SecretKeyFactory secretKeyFactory;
+
+        try {
+            secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        } catch (NoSuchAlgorithmException exception) {
+            System.err.println("PBKDF2WithHmacSHA1 is not available.");
+            return false;
+        }
+
+        byte[] testHash;
+
+        try {
+            testHash = secretKeyFactory.generateSecret(keySpec).getEncoded();
+        } catch (InvalidKeySpecException exception) {
+            System.err.println("Invalid PBE key specification.");
+            return false;
+        }
+
+        int diff = hash.length ^ testHash.length;
+
+        for (int i = 0; i < hash.length && i < testHash.length; i++) {
+            diff |= hash[i] ^ testHash[i];
+        }
+
+        return diff == 0;
     }
 }

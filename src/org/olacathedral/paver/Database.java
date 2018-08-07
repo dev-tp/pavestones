@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 class Database {
 
-    private static final String DATABASE_URL = "jdbc:mysql://localhost/pavingstones?" +
+    private static final String DATABASE_URL = "jdbc:mysql://localhost/pavestones?" +
             "useUnicode=true&" +
             "useJDBCCompliantTimeZoneShift=true&" +
             "useLegacyDatetimeCode=false&" +
@@ -30,15 +30,8 @@ class Database {
             connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
         } catch (SQLException exception) {
             System.err.println("Could not establish a connection with server at " + DATABASE_URL + ".");
-        } /* finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
-        } */
+            System.exit(1);
+        }
     }
 
     void addPaveStone(PaveStone paveStone) {
@@ -88,7 +81,7 @@ class Database {
     }
 
     ArrayList<PaveStone> getAllPaveStones() {
-        if (connection != null && paveStones.size() == 0) {
+        if (paveStones.size() == 0) {
             try {
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT id, donor, dedicated_to, x, y, comments, date_submitted FROM pavestones");
@@ -111,6 +104,26 @@ class Database {
         }
 
         return paveStones;
+    }
+
+    String getPassword(String username) {
+        try {
+            String query = "SELECT password FROM users WHERE username = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+
+        } catch (SQLException sqlException) {
+            System.err.println("Could not retrieve password hash for username: " + username);
+        }
+
+        return null;
     }
 
     ArrayList<PaveStone> search(String term) {
