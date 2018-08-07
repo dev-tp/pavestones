@@ -166,7 +166,7 @@ class EditPaveStoneScene extends CustomScene {
             dateSubmittedWrapper.setAlignment(Pos.CENTER);
             dateSubmittedWrapper.setPadding(new Insets(10, 0, 0, 0));
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, Y h:m a");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, MMMM d, Y h:mm a");
             String timestamp = simpleDateFormat.format(paveStone.getDateSubmitted().getTime());
             dateSubmittedWrapper.getChildren().add(new Label("Date Submitted: " + timestamp));
 
