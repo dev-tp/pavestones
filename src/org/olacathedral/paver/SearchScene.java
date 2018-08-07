@@ -75,15 +75,17 @@ class SearchScene extends CustomScene {
 
         actionsContainer.getChildren().add(viewButton);
 
-        Button addNewPaveStoneButton = new Button("Add New");
-        addNewPaveStoneButton.setMinWidth(100);
-        addNewPaveStoneButton.setOnAction(event -> {
-            EditPaveStoneScene scene = new EditPaveStoneScene(getStage(), this, new PaveStone());
-            scene.show();
-            scene.fitMap();
-        });
+        if (LoginScene.admin) {
+            Button addNewPaveStoneButton = new Button("Add New");
+            addNewPaveStoneButton.setMinWidth(100);
+            addNewPaveStoneButton.setOnAction(event -> {
+                EditPaveStoneScene scene = new EditPaveStoneScene(getStage(), this, new PaveStone());
+                scene.show();
+                scene.fitMap();
+            });
 
-        actionsContainer.getChildren().add(addNewPaveStoneButton);
+            actionsContainer.getChildren().add(addNewPaveStoneButton);
+        }
 
         container.setBottom(actionsContainer);
         container.requestFocus();

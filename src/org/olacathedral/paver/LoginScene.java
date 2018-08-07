@@ -15,6 +15,8 @@ import javax.crypto.spec.PBEKeySpec;
 
 class LoginScene extends CustomScene {
 
+    static boolean admin;
+
     private TextField usernameTextField;
     private PasswordField passwordField;
     private VBox container;
@@ -79,10 +81,12 @@ class LoginScene extends CustomScene {
     }
 
     private void login() {
-        String passwordHash = Main.database.getPassword(usernameTextField.getText());
+        User user = Main.database.getPassword(usernameTextField.getText());
 
-        if (passwordHash != null) {
-            if (validatePassword(passwordField.getText(), passwordHash)) {
+        if (user != null) {
+            if (validatePassword(passwordField.getText(), user.getPassword())) {
+                admin = user.isAdmin();
+
                 CustomScene scene = new SearchScene(getStage());
                 scene.show();
                 scene.centerStage();
@@ -124,5 +128,24 @@ class LoginScene extends CustomScene {
         }
 
         return diff == 0;
+    }
+}
+
+class User {
+
+    private boolean admin;
+    private String password;
+
+    User(String password, boolean admin) {
+        this.password = password;
+        this.admin = admin;
+    }
+
+    boolean isAdmin() {
+        return admin;
+    }
+
+    String getPassword() {
+        return password;
     }
 }

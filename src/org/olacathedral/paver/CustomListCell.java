@@ -46,17 +46,18 @@ class CustomListCell extends ListCell<PaveStone> {
 
         container.getChildren().add(spacer);
 
-        // Only display this in admin mode
-        editLabel = new Label("Edit");
-        deleteLabel = new Label("Delete");
-        deleteLabel.setTextFill(Paint.valueOf("#f00"));
-        deleteLabel.setPadding(new Insets(2, 0, 0, 0));
+        if (LoginScene.admin) {
+            editLabel = new Label("Edit");
+            deleteLabel = new Label("Delete");
+            deleteLabel.setTextFill(Paint.valueOf("#f00"));
+            deleteLabel.setPadding(new Insets(2, 0, 0, 0));
 
-        VBox editContainer = new VBox();
-        editContainer.setAlignment(Pos.CENTER_LEFT);
-        editContainer.getChildren().addAll(editLabel, deleteLabel);
+            VBox editContainer = new VBox();
+            editContainer.setAlignment(Pos.CENTER_LEFT);
+            editContainer.getChildren().addAll(editLabel, deleteLabel);
 
-        container.getChildren().add(editContainer);
+            container.getChildren().add(editContainer);
+        }
     }
 
     @Override
@@ -68,46 +69,50 @@ class CustomListCell extends ListCell<PaveStone> {
             infoLabel.setText(paveStone.getDedicatedTo() + (donor.equals("") ? "" : " (" + donor + ")"));
             coordinateLabel.setText("x: " + (int) paveStone.getX() + ", y: " + (int) paveStone.getY());
 
-            editLabel.setOnMouseClicked(event -> {
-                EditPaveStoneScene scene = new EditPaveStoneScene(stage, previousScene, paveStone, true);
-                scene.show();
-                scene.focusOnPaveStone();
-            });
-
-            deleteLabel.setOnMouseClicked(event -> {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.getButtonTypes().remove(0);
-
-                ButtonType okayButtonType = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-                alert.getButtonTypes().add(okayButtonType);
-
-                alert.getButtonTypes().add(new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE));
-                alert.setHeaderText("You are about to delete an entry.");
-
-                VBox container = new VBox();
-
-                Label contentLabel = new Label("Are you sure you want to delete \"" + paveStone.getDedicatedTo() + "\"?");
-                VBox.setMargin(contentLabel, new Insets(0, 0, 10, 0));
-
-                Node yesButton = alert.getDialogPane().lookupButton(okayButtonType);
-                yesButton.setDisable(true);
-
-                TextField responseField = new TextField();
-                responseField.setPromptText("Type name(s) here to confirm");
-                responseField.setOnKeyReleased(keyEvent -> yesButton.setDisable(!paveStone.getDedicatedTo().equals(responseField.getText())));
-
-                container.getChildren().addAll(contentLabel, responseField);
-                container.requestFocus();
-
-                alert.getDialogPane().setContent(container);
-
-                alert.showAndWait().ifPresent(buttonType -> {
-                    if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                        Main.database.deletePaveStone(paveStone);
-                        SearchScene.update();
-                    }
+            if (LoginScene.admin) {
+                editLabel.setOnMouseClicked(event -> {
+                    EditPaveStoneScene scene = new EditPaveStoneScene(stage, previousScene, paveStone, true);
+                    scene.show();
+                    scene.focusOnPaveStone();
                 });
-            });
+
+                deleteLabel.setOnMouseClicked(event -> {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.getButtonTypes().remove(0);
+
+                    ButtonType okayButtonType = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+                    alert.getButtonTypes().add(okayButtonType);
+
+                    alert.getButtonTypes().add(new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE));
+                    alert.setHeaderText("You are about to delete an entry.");
+
+                    VBox container = new VBox();
+
+                    Label contentLabel = new Label("Are you sure you want to delete \"" +
+                            paveStone.getDedicatedTo() + "\"?");
+                    VBox.setMargin(contentLabel, new Insets(0, 0, 10, 0));
+
+                    Node yesButton = alert.getDialogPane().lookupButton(okayButtonType);
+                    yesButton.setDisable(true);
+
+                    TextField responseField = new TextField();
+                    responseField.setPromptText("Type name(s) here to confirm");
+                    responseField.setOnKeyReleased(keyEvent -> yesButton.setDisable(!paveStone.getDedicatedTo().equals(
+                            responseField.getText())));
+
+                    container.getChildren().addAll(contentLabel, responseField);
+                    container.requestFocus();
+
+                    alert.getDialogPane().setContent(container);
+
+                    alert.showAndWait().ifPresent(buttonType -> {
+                        if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                            Main.database.deletePaveStone(paveStone);
+                            SearchScene.update();
+                        }
+                    });
+                });
+            }
 
             container.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.PRIMARY) {

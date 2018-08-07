@@ -77,14 +77,22 @@ class ResultScene extends CustomScene {
         inputFields.setPadding(new Insets(10, 0, 10, 0));
         inputFields.getChildren().addAll(donorLabel, dedicatedToField, printButton, goBackButton);
 
-        HBox commentSectionWrapper = new HBox();
-        commentSectionWrapper.setAlignment(Pos.CENTER);
+        bottomView.getChildren().add(inputFields);
 
-        ScrollPane commentSectionScrollPane = new ScrollPane();
-        commentSectionScrollPane.setPrefHeight(50);
-        commentSectionScrollPane.setPrefWidth(830);
-        commentSectionScrollPane.setContent(new Label(paveStone.getComments()));
-        commentSectionWrapper.getChildren().add(commentSectionScrollPane);
+        if (LoginScene.admin) {
+            HBox commentSectionWrapper = new HBox();
+            commentSectionWrapper.setAlignment(Pos.CENTER);
+            commentSectionWrapper.setPadding(new Insets(0, 0, 10, 0));
+
+            ScrollPane commentSectionScrollPane = new ScrollPane();
+            commentSectionScrollPane.setPrefHeight(50);
+            commentSectionScrollPane.setPrefWidth(830);
+            commentSectionScrollPane.setContent(new Label(paveStone.getComments()));
+
+            commentSectionWrapper.getChildren().add(commentSectionScrollPane);
+
+            bottomView.getChildren().add(commentSectionWrapper);
+        }
 
         HBox coordinatesWrapper = new HBox();
 
@@ -102,10 +110,9 @@ class ResultScene extends CustomScene {
         yLabel.setMinWidth(100);
 
         coordinatesWrapper.setAlignment(Pos.CENTER);
-        commentSectionWrapper.setPadding(new Insets(0, 0, 10, 0));
         coordinatesWrapper.getChildren().addAll(labels[0], xLabel, labels[1], yLabel);
 
-        bottomView.getChildren().addAll(inputFields, commentSectionWrapper, coordinatesWrapper);
+        bottomView.getChildren().add(coordinatesWrapper);
 
         container.setBottom(bottomView);
         container.requestFocus();

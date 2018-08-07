@@ -106,9 +106,9 @@ class Database {
         return paveStones;
     }
 
-    String getPassword(String username) {
+    User getPassword(String username) {
         try {
-            String query = "SELECT password FROM users WHERE username = ?";
+            String query = "SELECT password, admin FROM users WHERE username = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
@@ -116,7 +116,7 @@ class Database {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getString(1);
+                return new User(resultSet.getString(1), resultSet.getBoolean(2));
             }
 
         } catch (SQLException sqlException) {
