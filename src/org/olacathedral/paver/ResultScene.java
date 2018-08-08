@@ -53,15 +53,18 @@ class ResultScene extends CustomScene {
 
             if (printerJob != null) {
                 printerJob.getJobSettings().setJobName("Pave Stone for " + paveStone.getDedicatedTo());
-                PageLayout pageLayout = printerJob.getJobSettings().getPageLayout();
 
-                double printableWidth = pageLayout.getPrintableWidth();
-                double printableHeight = pageLayout.getPrintableHeight();
+                if (printerJob.showPrintDialog(getStage())) {
+                    PageLayout pageLayout = printerJob.getJobSettings().getPageLayout();
 
-                if (printerJob.printPage(new PrintoutTemplate(paveStone, printableWidth, printableHeight))) {
-                    printerJob.endJob();
-                } else {
-                    System.err.println(printerJob.getJobStatus().toString());
+                    double printableWidth = pageLayout.getPrintableWidth();
+                    double printableHeight = pageLayout.getPrintableHeight();
+
+                    if (printerJob.printPage(new PrintoutTemplate(paveStone, printableWidth, printableHeight))) {
+                        printerJob.endJob();
+                    } else {
+                        System.err.println(printerJob.getJobStatus().toString());
+                    }
                 }
             } else {
                 System.err.println("Could not create printer job.");
