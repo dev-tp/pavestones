@@ -2,5 +2,6 @@
 .idea/tasks.xml
 .idea/uiDesigner.xml
 .idea/workspace.xml
+*.db
 *.iws
 out
