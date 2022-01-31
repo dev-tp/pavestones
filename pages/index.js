@@ -3,9 +3,11 @@ import Head from 'next/head';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
+import Form from '../components/Form';
 import Marker from '../components/Marker';
 
 export default function Home() {
+  const [form, setForm] = React.useState({ open: false });
   const [insertMode, setInsertMode] = React.useState(false);
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
@@ -25,6 +27,18 @@ export default function Home() {
 
     setMarkers(randomMarkers);
   }, []);
+
+  React.useEffect(() => {
+    function handleKeyUp(event) {
+      if (insertMode && event.key === 'Enter') {
+        setForm({ open: true });
+      }
+    }
+
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => window.removeEventListener('keyup', handleKeyUp);
+  }, [insertMode, setForm]);
 
   return (
     <div
@@ -68,9 +82,26 @@ export default function Home() {
             transform: 'translate(-50%)',
           }}
         >
-          Hit Enter to lock point and fill information
+          Hit Enter key to lock marker and fill information
         </Typography>
       )}
+      <Form
+        onCancel={(event) => {
+          event.stopPropagation();
+          setForm({ open: false });
+          setMarker(null);
+        }}
+        onSave={(event) => {
+          event.stopPropagation();
+
+          setMarkers([...markers, marker]);
+          setMarker(null);
+
+          setInsertMode(false);
+          setForm({ open: false });
+        }}
+        open={form.open}
+      />
       <img src="/images/cathedral-color.png" alt="background" />
       {markers}
       {marker}
