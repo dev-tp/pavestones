@@ -70,7 +70,7 @@ export default function Home() {
           top: 10,
         }}
       >
-        {insertMode ? 'Regular' : 'Insert'} Mode
+        {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
       {insertMode && (
         <Typography
