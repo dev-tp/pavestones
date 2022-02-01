@@ -44,7 +44,9 @@ export default function Home() {
     <div
       onClick={(event) => {
         if (insertMode) {
-          setMarker(<Marker x={event.pageX - 6} y={event.pageY - 6} />);
+          setMarker(
+            <Marker x={event.pageX - 6} y={event.pageY - 6} insertMode />
+          );
         }
       }}
     >
@@ -94,7 +96,10 @@ export default function Home() {
         onSave={(event) => {
           event.stopPropagation();
 
-          setMarkers([...markers, marker]);
+          setMarkers([
+            ...markers,
+            <Marker x={marker.props.x} y={marker.props.y} />,
+          ]);
           setMarker(null);
 
           setInsertMode(false);
