@@ -14,7 +14,7 @@ export default function Home() {
 
   const ref = React.useRef(null);
 
-  React.useEffect(() => panZoom(ref.current), []);
+  React.useEffect(() => panZoom(ref.current).moveTo(-7000 / 2, -5500 / 2), []);
 
   React.useEffect(() => {
     function handleKeyUp(event) {
