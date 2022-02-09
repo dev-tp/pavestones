@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button';
-import Head from 'next/head';
+import panZoom from 'panzoom';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
@@ -12,68 +12,64 @@ export default function Home() {
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
 
-  React.useEffect(() => {
-    const randomMarkers = [];
+  const ref = React.useRef(null);
 
-    for (let i = 0; i < 100; i++) {
-      randomMarkers.push(
-        <Marker
-          key={i}
-          x={Math.floor(Math.random() * document.body.scrollWidth)}
-          y={Math.floor(Math.random() * document.body.scrollHeight)}
-        />
-      );
-    }
-
-    setMarkers(randomMarkers);
-  }, []);
+  React.useEffect(() => panZoom(ref.current), []);
 
   React.useEffect(() => {
     function handleKeyUp(event) {
-      if (insertMode && event.key === 'Enter') {
-        setForm({ open: true });
+      if (insertMode) {
+        if (event.key === 'Enter') {
+          setForm({ open: true });
+        } else if (event.key === 'Escape') {
+          setInsertMode(false);
+          setMarker(null);
+        }
       }
     }
 
     window.addEventListener('keyup', handleKeyUp);
 
     return () => window.removeEventListener('keyup', handleKeyUp);
-  }, [insertMode, setForm]);
+  }, [insertMode, setForm, setMarker]);
 
   return (
-    <div
-      onClick={(event) => {
-        if (insertMode) {
-          setMarker(
-            <Marker x={event.pageX - 6} y={event.pageY - 6} insertMode />
-          );
-        }
-      }}
-    >
-      <Head>
-        <link rel="icon" href="/icons/icon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Paver</title>
-      </Head>
+    <div>
       <Button
-        onClick={(event) => {
-          event.stopPropagation();
-
-          if (insertMode) {
-            setMarker(null);
-          }
-
+        onClick={() => {
+          if (insertMode) setMarker(null);
           setInsertMode(!insertMode);
         }}
-        style={{
-          color: '#fff',
-          left: 10,
-          position: 'fixed',
-          top: 10,
-        }}
+        style={{ color: '#fff', zIndex: 1 }}
       >
         {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
+      <div
+        ref={ref}
+        style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+      >
+        <div
+          onClick={(event) => {
+            if (!insertMode) {
+              return;
+            }
+
+            const { offsetX, offsetY } = event.nativeEvent;
+            setMarker(<Marker x={offsetX - 4} y={offsetY - 4} insertMode />);
+          }}
+          style={{
+            backgroundColor: '#000',
+            backgroundImage: 'url("/images/cathedral-color.png")',
+            display: 'block',
+            height: 5500,
+            position: 'relative',
+            width: 7000,
+          }}
+        >
+          {markers}
+          {marker}
+        </div>
+      </div>
       {insertMode && (
         <Typography
           style={{
@@ -84,7 +80,7 @@ export default function Home() {
             transform: 'translate(-50%)',
           }}
         >
-          Hit Enter key to lock marker and fill information
+          Hit Enter to lock marker position and fill form
         </Typography>
       )}
       <Form
@@ -98,7 +94,7 @@ export default function Home() {
 
           setMarkers([
             ...markers,
-            <Marker x={marker.props.x} y={marker.props.y} />,
+            <Marker key={0} x={marker.props.x} y={marker.props.y} />,
           ]);
           setMarker(null);
 
@@ -107,9 +103,6 @@ export default function Home() {
         }}
         open={form.open}
       />
-      <img src="/images/cathedral-color.png" alt="background" />
-      {markers}
-      {marker}
     </div>
   );
 }
