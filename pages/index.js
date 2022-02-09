@@ -1,7 +1,7 @@
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import panZoom from 'panzoom';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 import Form from '../components/Form';
 import Marker from '../components/Marker';
