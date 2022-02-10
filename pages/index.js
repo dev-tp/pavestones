@@ -21,6 +21,17 @@ export default function Home() {
   }, []);
 
   React.useEffect(() => {
+    fetch('/api')
+      .then((response) => response.json())
+      .then((json) =>
+        setMarkers(
+          json.map((data) => <Marker key={data._id} x={data.x} y={data.y} />)
+        )
+      )
+      .catch((error) => console.error(error));
+  }, []);
+
+  React.useEffect(() => {
     function handleKeyUp(event) {
       if (insertMode) {
         if (event.key === 'Enter') {
