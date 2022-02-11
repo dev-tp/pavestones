@@ -10,7 +10,8 @@ export default function Marker(props) {
   return (
     <div
       className={classNames.join(' ')}
-      style={{ left: props.x, top: props.y }}
+      style={{ left: props.data.x, top: props.data.y }}
+      title={props.data.dedicated_to}
     />
   );
 }

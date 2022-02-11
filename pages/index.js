@@ -24,9 +24,7 @@ export default function Home() {
     fetch('/api')
       .then((response) => response.json())
       .then((json) =>
-        setMarkers(
-          json.map((data) => <Marker key={data._id} x={data.x} y={data.y} />)
-        )
+        setMarkers(json.map((data) => <Marker key={data._id} data={data} />))
       )
       .catch((error) => console.error(error));
   }, []);
@@ -82,13 +80,19 @@ export default function Home() {
               return;
             }
 
-            const { offsetX, offsetY } = event.nativeEvent;
-            setMarker(<Marker x={offsetX - 4} y={offsetY - 4} insertMode />);
+            setMarker(
+              <Marker
+                data={{
+                  x: event.nativeEvent.offsetX - 4,
+                  y: event.nativeEvent.offsetY - 4,
+                }}
+                insertMode
+              />
+            );
           }}
           style={{
             backgroundColor: '#000',
             backgroundImage: 'url("/images/cathedral-color.png")',
-            display: 'block',
             height: 5500,
             position: 'relative',
             width: 7000,
@@ -112,22 +116,31 @@ export default function Home() {
         </Typography>
       )}
       <Form
-        onCancel={(event) => {
-          event.stopPropagation();
+        onCancel={() => {
           setForm({ open: false });
           setMarker(null);
         }}
-        onSave={(event) => {
-          event.stopPropagation();
+        onSave={(form, resetForm) => {
+          const data = { ...form, ...marker.props.data };
 
-          setMarkers([
-            ...markers,
-            <Marker key={0} x={marker.props.x} y={marker.props.y} />,
-          ]);
-          setMarker(null);
+          fetch('/api', {
+            body: JSON.stringify(data),
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+            mode: 'cors',
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              setMarkers([...markers, <Marker key={json._id} data={json} />]);
+              setMarker(null);
 
-          setInsertMode(false);
-          setForm({ open: false });
+              setInsertMode(false);
+              setForm({ open: false });
+
+              resetForm();
+            })
+            .catch((error) => console.error(error));
         }}
         open={form.open}
       />
