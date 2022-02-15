@@ -6,31 +6,16 @@ import React from 'react';
 import Search from '@mui/icons-material/Search';
 
 export default function SearchBar(props) {
-  const [options, setOptions] = React.useState([]);
-  const [value, setValue] = React.useState('');
-
-  React.useEffect(() => {
-    if (value === '') {
-      return;
-    }
-
-    fetch(`/api?search=${value}`)
-      .then((response) => response.json())
-      .then((json) => setOptions(json));
-  }, [setOptions, value]);
-
   return (
     <Autocomplete
       getOptionLabel={(option) => option.dedicated_to}
-      isOptionEqualToValue={(option, value) => option._id === value._id}
       noOptionsText="No entries"
       onChange={(_, value) => props.onSelect(value)}
-      options={options}
+      options={props.options}
       renderInput={(params) => (
         <Paper ref={params.InputProps.ref} style={props.style}>
           <InputBase
             inputProps={{ ...params.inputProps }}
-            onChange={(event) => setValue(event.target.value)}
             placeholder="Search..."
             style={{ flexGrow: 1 }}
           />

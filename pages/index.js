@@ -57,6 +57,7 @@ export default function Home() {
       </Button>
       <SearchBar
         onSelect={(value) => console.log(value)}
+        options={markers}
         style={{
           borderRadius: 6,
           display: 'flex',
