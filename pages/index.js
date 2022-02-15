@@ -56,6 +56,7 @@ export default function Home() {
         {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
       <SearchBar
+        onSelect={(value) => console.log(value)}
         style={{
           borderRadius: 6,
           display: 'flex',
