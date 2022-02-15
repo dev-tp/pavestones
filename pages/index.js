@@ -23,9 +23,7 @@ export default function Home() {
   React.useEffect(() => {
     fetch('/api')
       .then((response) => response.json())
-      .then((json) =>
-        setMarkers(json.map((data) => <Marker key={data._id} data={data} />))
-      )
+      .then((json) => setMarkers(json))
       .catch((error) => console.error(error));
   }, []);
 
@@ -98,7 +96,9 @@ export default function Home() {
             width: 7000,
           }}
         >
-          {markers}
+          {markers.map((data) => (
+            <Marker key={data._id} data={data} />
+          ))}
           {marker}
         </div>
       </div>
@@ -132,7 +132,7 @@ export default function Home() {
           })
             .then((response) => response.json())
             .then((json) => {
-              setMarkers([...markers, <Marker key={json._id} data={json} />]);
+              setMarkers([...markers, json]);
               setMarker(null);
 
               setInsertMode(false);
