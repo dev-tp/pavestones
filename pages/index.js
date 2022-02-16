@@ -15,13 +15,18 @@ export default function Home() {
   const [insertMode, setInsertMode] = React.useState(false);
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
+  const [selected, setSelected] = React.useState(null);
+  const [viewport, setViewport] = React.useState(null);
 
   const ref = React.useRef(null);
 
   React.useEffect(() => {
-    const viewport = createPanZoom(ref.current, { filterKey: () => true });
-    viewport.moveTo(-IMAGE_WIDTH / 2, -IMAGE_HEIGHT / 2);
-  }, []);
+    const instance = createPanZoom(ref.current, { filterKey: () => true });
+
+    instance.moveTo(-IMAGE_WIDTH / 2, -IMAGE_HEIGHT / 2);
+
+    setViewport(instance);
+  }, [setViewport]);
 
   React.useEffect(() => {
     fetch('/api')
@@ -59,7 +64,7 @@ export default function Home() {
         {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
       <SearchBar
-        onSelect={(value) => console.log(value)}
+        onSelect={(value) => setSelected(value)}
         options={markers}
         style={{
           borderRadius: 6,
@@ -79,10 +84,7 @@ export default function Home() {
       >
         <div
           onClick={(event) => {
-            if (!insertMode) {
-              return;
-            }
-
+            if (!insertMode) return;
             setMarker(
               <Marker
                 data={{
@@ -101,9 +103,20 @@ export default function Home() {
             width: IMAGE_WIDTH,
           }}
         >
-          {markers.map((data) => (
-            <Marker key={data._id} data={data} />
-          ))}
+          {markers.map((data) => {
+            if (selected === null) {
+              return <Marker key={data._id} data={data} />;
+            } else if (selected._id === data._id) {
+              viewport.zoomAbs(0, 0, 1);
+
+              viewport.smoothMoveTo(
+                -selected.x + window.innerWidth / 2,
+                -selected.y + window.innerHeight / 2
+              );
+
+              return <Marker key={data._id} data={data} />;
+            }
+          })}
           {marker}
         </div>
       </div>
