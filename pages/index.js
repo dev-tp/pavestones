@@ -33,7 +33,7 @@ export default function Home() {
       .then((response) => response.json())
       .then((json) => setMarkers(json))
       .catch((error) => console.error(error));
-  }, []);
+  }, [setMarkers]);
 
   React.useEffect(() => {
     function handleKeyUp(event) {
