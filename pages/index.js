@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import panZoom from 'panzoom';
+import createPanZoom from 'panzoom';
 import React from 'react';
 import Typography from '@mui/material/Typography';
 
@@ -16,7 +16,7 @@ export default function Home() {
   const ref = React.useRef(null);
 
   React.useEffect(() => {
-    const viewport = panZoom(ref.current, { filterKey: () => true });
+    const viewport = createPanZoom(ref.current, { filterKey: () => true });
     viewport.moveTo(-7000 / 2, -5500 / 2);
   }, []);
 
