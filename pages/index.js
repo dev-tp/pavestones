@@ -7,6 +7,9 @@ import Form from '../components/Form';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
+const IMAGE_HEIGHT = 5500;
+const IMAGE_WIDTH = 7000;
+
 export default function Home() {
   const [form, setForm] = React.useState({ open: false });
   const [insertMode, setInsertMode] = React.useState(false);
@@ -17,7 +20,7 @@ export default function Home() {
 
   React.useEffect(() => {
     const viewport = createPanZoom(ref.current, { filterKey: () => true });
-    viewport.moveTo(-7000 / 2, -5500 / 2);
+    viewport.moveTo(-IMAGE_WIDTH / 2, -IMAGE_HEIGHT / 2);
   }, []);
 
   React.useEffect(() => {
@@ -93,9 +96,9 @@ export default function Home() {
           style={{
             backgroundColor: '#000',
             backgroundImage: 'url("/images/cathedral-color.png")',
-            height: 5500,
+            height: IMAGE_HEIGHT,
             position: 'relative',
-            width: 7000,
+            width: IMAGE_WIDTH,
           }}
         >
           {markers.map((data) => (
