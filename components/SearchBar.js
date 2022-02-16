@@ -21,7 +21,7 @@ export default function SearchBar(props) {
       onChange={(_, value) => props.onSelect(value)}
       options={props.options}
       renderInput={(params) => (
-        <Paper ref={params.InputProps.ref} style={props.style}>
+        <Paper className={props.className} ref={params.InputProps.ref}>
           <InputBase
             inputProps={{ ...params.inputProps }}
             placeholder="Search..."

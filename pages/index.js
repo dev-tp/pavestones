@@ -7,6 +7,8 @@ import Form from '../components/Form';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
+import styles from '../styles/Home.module.css';
+
 const IMAGE_HEIGHT = 5500;
 const IMAGE_WIDTH = 7000;
 
@@ -55,37 +57,25 @@ export default function Home() {
   return (
     <div>
       <Button
+        className={styles.modeButton}
         onClick={() => {
           if (insertMode) setMarker(null);
           setInsertMode(!insertMode);
           setSelected(null);
         }}
-        style={{ color: '#fff', position: 'fixed', top: 10, zIndex: 1 }}
       >
         {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
       {!insertMode && (
         <SearchBar
+          className={styles.searchBar}
           onSelect={(value) => setSelected(value)}
           options={markers}
-          style={{
-            borderRadius: 6,
-            display: 'flex',
-            left: '50%',
-            padding: '4px 6px 4px 12px',
-            position: 'fixed',
-            top: 10,
-            transform: 'translate(-50%)',
-            width: 400,
-            zIndex: 1,
-          }}
         />
       )}
-      <div
-        ref={ref}
-        style={{ bottom: 0, left: 0, position: 'fixed', right: 0, top: 0 }}
-      >
+      <div className={styles.container} ref={ref}>
         <div
+          className={styles.background}
           onClick={(event) => {
             if (!insertMode) return;
             setMarker(
@@ -98,13 +88,7 @@ export default function Home() {
               />
             );
           }}
-          style={{
-            backgroundColor: '#000',
-            backgroundImage: 'url("/images/cathedral-color.png")',
-            height: IMAGE_HEIGHT,
-            position: 'relative',
-            width: IMAGE_WIDTH,
-          }}
+          style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}
         >
           {markers.map((data) => {
             if (selected === null) {
@@ -124,15 +108,7 @@ export default function Home() {
         </div>
       </div>
       {insertMode && (
-        <Typography
-          style={{
-            bottom: 10,
-            color: '#fff',
-            left: '50%',
-            position: 'fixed',
-            transform: 'translate(-50%)',
-          }}
-        >
+        <Typography className={styles.insertModeTip}>
           Hit Enter to lock marker position and fill form
         </Typography>
       )}
