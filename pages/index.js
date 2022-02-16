@@ -58,26 +58,29 @@ export default function Home() {
         onClick={() => {
           if (insertMode) setMarker(null);
           setInsertMode(!insertMode);
+          setSelected(null);
         }}
         style={{ color: '#fff', position: 'fixed', top: 10, zIndex: 1 }}
       >
         {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
-      <SearchBar
-        onSelect={(value) => setSelected(value)}
-        options={markers}
-        style={{
-          borderRadius: 6,
-          display: 'flex',
-          left: '50%',
-          padding: '4px 6px 4px 12px',
-          position: 'fixed',
-          top: 10,
-          transform: 'translate(-50%)',
-          width: 400,
-          zIndex: 1,
-        }}
-      />
+      {!insertMode && (
+        <SearchBar
+          onSelect={(value) => setSelected(value)}
+          options={markers}
+          style={{
+            borderRadius: 6,
+            display: 'flex',
+            left: '50%',
+            padding: '4px 6px 4px 12px',
+            position: 'fixed',
+            top: 10,
+            transform: 'translate(-50%)',
+            width: 400,
+            zIndex: 1,
+          }}
+        />
+      )}
       <div
         ref={ref}
         style={{ bottom: 0, left: 0, position: 'fixed', right: 0, top: 0 }}
