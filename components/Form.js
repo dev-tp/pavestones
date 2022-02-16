@@ -28,6 +28,7 @@ export default function Form(props) {
     <Dialog fullWidth open={props.open}>
       <DialogContent style={{ paddingBottom: 0 }}>
         <TextField
+          autoFocus
           fullWidth
           label="Dedicated to"
           margin="dense"
