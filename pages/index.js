@@ -54,16 +54,66 @@ export default function Home() {
     return () => window.removeEventListener('keyup', handleKeyUp);
   }, [insertMode, setForm, setMarker]);
 
+  function closeForm() {
+    setForm({ open: false });
+    setMarker(null);
+  }
+
+  function handleModeButton() {
+    if (insertMode) setMarker(null);
+
+    setInsertMode(!insertMode);
+    setSelected(null);
+  }
+
+  function placeMarker(event) {
+    if (!insertMode) return;
+
+    const { offsetX, offsetY } = event.nativeEvent;
+    setMarker(<Marker data={{ x: offsetX - 4, y: offsetY - 4 }} insertMode />);
+  }
+
+  function renderMarkers() {
+    return markers.map((data) => {
+      if (selected === null) {
+        return <Marker key={data._id} data={data} />;
+      } else if (selected._id === data._id) {
+        viewport.zoomAbs(0, 0, 1);
+
+        viewport.smoothMoveTo(
+          -selected.x + window.innerWidth / 2,
+          -selected.y + window.innerHeight / 2
+        );
+
+        return <Marker key={data._id} data={data} />;
+      }
+    });
+  }
+
+  function saveFormData(data, resetForm) {
+    fetch('/api', {
+      body: JSON.stringify({ ...data, ...marker.props.data }),
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      mode: 'cors',
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setMarkers([...markers, json]);
+        setMarker(null);
+
+        setInsertMode(false);
+        setForm({ open: false });
+
+        resetForm();
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <div>
-      <Button
-        className={styles.modeButton}
-        onClick={() => {
-          if (insertMode) setMarker(null);
-          setInsertMode(!insertMode);
-          setSelected(null);
-        }}
-      >
+      <Button className={styles.modeButton} onClick={handleModeButton}>
         {insertMode ? 'Insert' : 'Regular'} Mode
       </Button>
       {!insertMode && (
@@ -76,34 +126,10 @@ export default function Home() {
       <div className={styles.container} ref={ref}>
         <div
           className={styles.background}
-          onClick={(event) => {
-            if (!insertMode) return;
-            setMarker(
-              <Marker
-                data={{
-                  x: event.nativeEvent.offsetX - 4,
-                  y: event.nativeEvent.offsetY - 4,
-                }}
-                insertMode
-              />
-            );
-          }}
+          onClick={placeMarker}
           style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}
         >
-          {markers.map((data) => {
-            if (selected === null) {
-              return <Marker key={data._id} data={data} />;
-            } else if (selected._id === data._id) {
-              viewport.zoomAbs(0, 0, 1);
-
-              viewport.smoothMoveTo(
-                -selected.x + window.innerWidth / 2,
-                -selected.y + window.innerHeight / 2
-              );
-
-              return <Marker key={data._id} data={data} />;
-            }
-          })}
+          {renderMarkers()}
           {marker}
         </div>
       </div>
@@ -112,35 +138,7 @@ export default function Home() {
           Hit Enter to lock marker position and fill form
         </Typography>
       )}
-      <Form
-        onCancel={() => {
-          setForm({ open: false });
-          setMarker(null);
-        }}
-        onSave={(form, resetForm) => {
-          const data = { ...form, ...marker.props.data };
-
-          fetch('/api', {
-            body: JSON.stringify(data),
-            credentials: 'same-origin',
-            headers: { 'Content-Type': 'application/json' },
-            method: 'POST',
-            mode: 'cors',
-          })
-            .then((response) => response.json())
-            .then((json) => {
-              setMarkers([...markers, json]);
-              setMarker(null);
-
-              setInsertMode(false);
-              setForm({ open: false });
-
-              resetForm();
-            })
-            .catch((error) => console.error(error));
-        }}
-        open={form.open}
-      />
+      <Form onCancel={closeForm} onSave={saveFormData} open={form.open} />
     </div>
   );
 }
