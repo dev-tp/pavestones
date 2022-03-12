@@ -25,7 +25,7 @@ export default function Home() {
   React.useEffect(() => {
     const instance = createPanZoom(ref.current, { filterKey: () => true });
 
-    instance.moveTo(-IMAGE_WIDTH / 2, -IMAGE_HEIGHT / 2);
+    instance.moveTo(-IMAGE_WIDTH * 0.5, -IMAGE_HEIGHT * 0.5);
 
     setViewport(instance);
   }, [setViewport]);
@@ -81,8 +81,8 @@ export default function Home() {
         viewport.zoomAbs(0, 0, 1);
 
         viewport.smoothMoveTo(
-          -selected.x + window.innerWidth / 2,
-          -selected.y + window.innerHeight / 2
+          -selected.x + window.innerWidth * 0.5,
+          -selected.y + window.innerHeight * 0.5
         );
 
         return <Marker key={data._id} data={data} />;
