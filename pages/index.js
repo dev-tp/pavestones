@@ -1,16 +1,16 @@
 import Button from '@mui/material/Button';
 import createPanZoom from 'panzoom';
+import Head from 'next/head';
 import React from 'react';
 import Typography from '@mui/material/Typography';
 
+import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
+import Certificate from '../components/Certificate';
 import Form from '../components/Form';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
 import styles from '../styles/Home.module.css';
-
-const IMAGE_HEIGHT = 5500;
-const IMAGE_WIDTH = 7000;
 
 export default function Home() {
   const [form, setForm] = React.useState({ open: false });
@@ -112,33 +112,39 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Button className={styles.modeButton} onClick={handleModeButton}>
-        {insertMode ? 'Insert' : 'Regular'} Mode
-      </Button>
-      {!insertMode && (
-        <SearchBar
-          className={styles.searchBar}
-          onSelect={(value) => setSelected(value)}
-          options={markers}
-        />
-      )}
-      <div className={styles.container} ref={ref}>
-        <div
-          className={styles.background}
-          onClick={placeMarker}
-          style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}
-        >
-          {renderMarkers()}
-          {marker}
+    <>
+      <Head>
+        <title>Paving Stones</title>
+      </Head>
+      <div className={styles.root}>
+        <Button className={styles.modeButton} onClick={handleModeButton}>
+          {insertMode ? 'Insert' : 'Regular'} Mode
+        </Button>
+        {!insertMode && (
+          <SearchBar
+            className={styles.searchBar}
+            onSelect={(value) => setSelected(value)}
+            options={markers}
+          />
+        )}
+        <div className={styles.container} ref={ref}>
+          <div
+            className={styles.background}
+            onClick={placeMarker}
+            style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}
+          >
+            {renderMarkers()}
+            {marker}
+          </div>
         </div>
+        {insertMode && (
+          <Typography className={styles.insertModeTip}>
+            Hit Enter to lock marker position and fill form
+          </Typography>
+        )}
+        <Form onCancel={closeForm} onSave={saveFormData} open={form.open} />
       </div>
-      {insertMode && (
-        <Typography className={styles.insertModeTip}>
-          Hit Enter to lock marker position and fill form
-        </Typography>
-      )}
-      <Form onCancel={closeForm} onSave={saveFormData} open={form.open} />
-    </div>
+      <Certificate className={styles.printout} data={selected} />
+    </>
   );
 }
