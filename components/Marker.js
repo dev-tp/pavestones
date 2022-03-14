@@ -10,6 +10,7 @@ export default function Marker(props) {
   return (
     <div
       className={classNames.join(' ')}
+      onClick={props.onClick}
       style={{ left: props.data.x, top: props.data.y }}
       title={props.data.dedicated_to}
     />

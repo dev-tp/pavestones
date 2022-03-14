@@ -13,6 +13,12 @@ const initialState = { dedicated_to: '', is_deceased: false };
 export default function Form(props) {
   const [state, setState] = React.useState(initialState);
 
+  React.useEffect(() => {
+    if (props.data) {
+      setState(props.data);
+    }
+  }, [props.data, setState]);
+
   function onCancel(event) {
     event.stopPropagation();
     setState(initialState);

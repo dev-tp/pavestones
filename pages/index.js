@@ -13,7 +13,7 @@ import SearchBar from '../components/SearchBar';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const [form, setForm] = React.useState({ open: false });
+  const [form, setForm] = React.useState({ data: null, open: false });
   const [insertMode, setInsertMode] = React.useState(false);
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
@@ -76,7 +76,13 @@ export default function Home() {
   function renderMarkers() {
     return markers.map((data) => {
       if (selected === null) {
-        return <Marker key={data._id} data={data} />;
+        return (
+          <Marker
+            data={data}
+            key={data._id}
+            onClick={() => setForm({ data, open: true })}
+          />
+        );
       } else if (selected._id === data._id) {
         viewport.zoomAbs(0, 0, 1);
 
@@ -85,14 +91,20 @@ export default function Home() {
           -selected.y + window.innerHeight * 0.5
         );
 
-        return <Marker key={data._id} data={data} />;
+        return (
+          <Marker
+            data={data}
+            key={data._id}
+            onClick={() => setForm({ data, open: true })}
+          />
+        );
       }
     });
   }
 
   function saveFormData(data, resetForm) {
-    fetch('/api', {
-      body: JSON.stringify({ ...data, ...marker.props.data }),
+    fetch(`/api/${data._id ? data._id : ''}`, {
+      body: JSON.stringify({ ...data, ...marker?.props.data }),
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -142,7 +154,12 @@ export default function Home() {
             Hit Enter to lock marker position and fill form
           </Typography>
         )}
-        <Form onCancel={closeForm} onSave={saveFormData} open={form.open} />
+        <Form
+          data={form.data}
+          onCancel={closeForm}
+          onSave={saveFormData}
+          open={form.open}
+        />
       </div>
       <Certificate className={styles.printout} data={selected} />
     </>
