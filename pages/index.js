@@ -41,7 +41,7 @@ export default function Home() {
     function handleKeyUp(event) {
       if (insertMode) {
         if (event.key === 'Enter') {
-          setForm({ open: true });
+          setForm({ data: null, open: true });
         } else if (event.key === 'Escape') {
           setInsertMode(false);
           setMarker(null);
@@ -55,7 +55,7 @@ export default function Home() {
   }, [insertMode, setForm, setMarker]);
 
   function closeForm() {
-    setForm({ open: false });
+    setForm({ data: null, open: false });
     setMarker(null);
   }
 
@@ -116,7 +116,7 @@ export default function Home() {
         setMarker(null);
 
         setInsertMode(false);
-        setForm({ open: false });
+        setForm({ data: null, open: false });
 
         resetForm();
       })
