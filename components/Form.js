@@ -8,7 +8,14 @@ import React from 'react';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 
-const initialState = { dedicated_to: '', is_deceased: false };
+const initialState = {
+  _id: null,
+  dedicated_to: '',
+  is_deceased: false,
+  patron: '',
+  x: null,
+  y: null,
+};
 
 export default function Form(props) {
   const [state, setState] = React.useState(initialState);
@@ -35,6 +42,15 @@ export default function Form(props) {
       <DialogContent style={{ paddingBottom: 0 }}>
         <TextField
           autoFocus
+          fullWidth
+          label="Patron"
+          margin="dense"
+          onChange={(event) =>
+            setState({ ...state, patron: event.target.value })
+          }
+          value={state.patron}
+        />
+        <TextField
           fullWidth
           label="Dedicated to"
           margin="dense"
