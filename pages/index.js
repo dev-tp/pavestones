@@ -12,11 +12,17 @@ import SearchBar from '../components/SearchBar';
 
 import styles from '../styles/Home.module.css';
 
+const modes = ['Regular', 'Insert', 'Edit'];
+
+const REGULAR_MODE = 0;
+const INSERT_MODE = 1;
+const EDIT_MODE = 2;
+
 export default function Home() {
   const [form, setForm] = React.useState({ data: null, open: false });
-  const [insertMode, setInsertMode] = React.useState(false);
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
+  const [mode, setMode] = React.useState(REGULAR_MODE);
   const [selected, setSelected] = React.useState(null);
   const [viewport, setViewport] = React.useState(null);
 
@@ -39,11 +45,11 @@ export default function Home() {
 
   React.useEffect(() => {
     function handleKeyUp(event) {
-      if (insertMode) {
+      if (mode !== REGULAR_MODE) {
         if (event.key === 'Enter') {
           setForm({ data: null, open: true });
         } else if (event.key === 'Escape') {
-          setInsertMode(false);
+          setMode(REGULAR_MODE);
           setMarker(null);
         }
       }
@@ -52,7 +58,7 @@ export default function Home() {
     window.addEventListener('keyup', handleKeyUp);
 
     return () => window.removeEventListener('keyup', handleKeyUp);
-  }, [insertMode, setForm, setMarker]);
+  }, [mode, setForm, setMarker]);
 
   function closeForm() {
     setForm({ data: null, open: false });
@@ -60,14 +66,14 @@ export default function Home() {
   }
 
   function handleModeButton() {
-    if (insertMode) setMarker(null);
+    if (mode !== REGULAR_MODE) setMarker(null);
 
-    setInsertMode(!insertMode);
+    setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
     setSelected(null);
   }
 
   function placeMarker(event) {
-    if (!insertMode) return;
+    if (mode === REGULAR_MODE) return;
 
     const { offsetX, offsetY } = event.nativeEvent;
     setMarker(<Marker data={{ x: offsetX - 4, y: offsetY - 4 }} insertMode />);
@@ -115,7 +121,7 @@ export default function Home() {
         setMarkers([...markers, json]);
         setMarker(null);
 
-        setInsertMode(false);
+        setMode(REGULAR_MODE);
         setForm({ data: null, open: false });
 
         resetForm();
@@ -130,9 +136,9 @@ export default function Home() {
       </Head>
       <div className={styles.root}>
         <Button className={styles.modeButton} onClick={handleModeButton}>
-          {insertMode ? 'Insert' : 'Regular'} Mode
+          {modes[mode]} Mode
         </Button>
-        {!insertMode && (
+        {mode === REGULAR_MODE && (
           <SearchBar
             className={styles.searchBar}
             onSelect={(value) => setSelected(value)}
@@ -149,7 +155,7 @@ export default function Home() {
             {marker}
           </div>
         </div>
-        {insertMode && (
+        {mode !== REGULAR_MODE && (
           <Typography className={styles.insertModeTip}>
             Hit Enter to lock marker position and fill form
           </Typography>
