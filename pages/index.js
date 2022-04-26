@@ -24,6 +24,7 @@ export default function Home() {
   const [markers, setMarkers] = React.useState([]);
   const [mode, setMode] = React.useState(REGULAR_MODE);
   const [selected, setSelected] = React.useState(null);
+  const [temp, setTemp] = React.useState(null);
   const [viewport, setViewport] = React.useState(null);
 
   const ref = React.useRef(null);
@@ -163,6 +164,30 @@ export default function Home() {
         <Form
           data={form.data}
           onCancel={closeForm}
+          onPositionEdit={() => {
+            setForm({ ...form, open: !form.open });
+
+            if (mode === REGULAR_MODE) {
+              setMarker(<Marker data={form.data} insertMode />);
+              setMarkers(
+                markers.filter((marker) => {
+                  if (marker._id === form.data._id) {
+                    setTemp(marker);
+                  }
+
+                  return marker._id !== form.data._id;
+                })
+              );
+            } else {
+              setMarker(null);
+              setMarkers([
+                markers,
+                <Marker key={form.data._id} data={form.data} />,
+              ]);
+            }
+
+            setMode(mode === REGULAR_MODE ? EDIT_MODE : REGULAR_MODE);
+          }}
           onSave={saveFormData}
           open={form.open}
         />

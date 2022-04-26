@@ -2,8 +2,11 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import IconButton from '@mui/material/IconButton';
+import MoveDown from '@mui/icons-material/MoveDown';
 import React from 'react';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
@@ -39,6 +42,13 @@ export default function Form(props) {
 
   return (
     <Dialog fullWidth open={props.open}>
+      <DialogTitle>
+        {props.data?._id && (
+          <IconButton onClick={props.onPositionEdit} size="small">
+            <MoveDown />
+          </IconButton>
+        )}
+      </DialogTitle>
       <DialogContent style={{ paddingBottom: 0 }}>
         <TextField
           autoFocus
