@@ -21,7 +21,7 @@
 }
 
 .modeButton {
-  color: #fff;
+  color: #fff !important;
   position: fixed;
   top: 10px;
   z-index: 1;
