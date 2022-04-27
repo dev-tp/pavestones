@@ -81,13 +81,19 @@ export default function Home() {
   }
 
   function renderMarkers() {
+    function openForm(data) {
+      if (mode === REGULAR_MODE) {
+        setForm({ data, open: true });
+      }
+    }
+
     return markers.map((data) => {
       if (selected === null) {
         return (
           <Marker
             data={data}
             key={data._id}
-            onClick={() => setForm({ data, open: true })}
+            onClick={() => openForm(data)}
           />
         );
       } else if (selected._id === data._id) {
@@ -102,7 +108,7 @@ export default function Home() {
           <Marker
             data={data}
             key={data._id}
-            onClick={() => setForm({ data, open: true })}
+            onClick={() => openForm(data)}
           />
         );
       }
