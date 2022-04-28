@@ -24,10 +24,10 @@ export default function Form(props) {
   const [state, setState] = React.useState(initialState);
 
   React.useEffect(() => {
-    if (props.data) {
+    if (props.open) {
       setState(props.data);
     }
-  }, [props.data, setState]);
+  }, [props, setState]);
 
   function onCancel(event) {
     event.stopPropagation();
