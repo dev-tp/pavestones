@@ -61,8 +61,7 @@ export default function Home() {
   }, [mode, setForm, setMarker, toggleMode]);
 
   function closeForm() {
-    setForm({ data: null, open: false });
-    setMarker(null);
+    setForm({ ...form, open: false });
   }
 
   function placeMarker(event) {
