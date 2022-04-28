@@ -50,8 +50,7 @@ export default function Home() {
         if (event.key === 'Enter') {
           setForm({ data: null, open: true });
         } else if (event.key === 'Escape') {
-          setMode(REGULAR_MODE);
-          setMarker(null);
+          toggleMode(true);
         }
       }
     }
@@ -59,18 +58,11 @@ export default function Home() {
     window.addEventListener('keyup', handleKeyUp);
 
     return () => window.removeEventListener('keyup', handleKeyUp);
-  }, [mode, setForm, setMarker]);
+  }, [mode, setForm, setMarker, toggleMode]);
 
   function closeForm() {
     setForm({ data: null, open: false });
     setMarker(null);
-  }
-
-  function handleModeButton() {
-    if (mode !== REGULAR_MODE) setMarker(null);
-
-    setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
-    setSelected(null);
   }
 
   function placeMarker(event) {
@@ -136,13 +128,27 @@ export default function Home() {
       .catch((error) => console.error(error));
   }
 
+  function toggleMode(regularMode = false) {
+    if (mode === EDIT_MODE) {
+      setMarkers([...markers, temp]);
+      setTemp(null);
+    }
+
+    if (mode !== REGULAR_MODE) {
+      setMarker(null);
+    }
+
+    setMode(mode !== REGULAR_MODE || regularMode ? REGULAR_MODE : INSERT_MODE);
+    setSelected(null);
+  }
+
   return (
     <>
       <Head>
         <title>Paving Stones</title>
       </Head>
       <div className={styles.root}>
-        <Button className={styles.modeButton} onClick={handleModeButton}>
+        <Button className={styles.modeButton} onClick={() => toggleMode()}>
           {modes[mode]} Mode
         </Button>
         {mode === REGULAR_MODE && (
