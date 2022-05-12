@@ -1,12 +1,11 @@
 import Button from '@mui/material/Button';
-import createPanZoom from 'panzoom';
 import Head from 'next/head';
 import React from 'react';
 import Typography from '@mui/material/Typography';
 
-import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
 import Certificate from '../components/Certificate';
 import Form from '../components/Form';
+import Map from '../components/Map';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
@@ -25,17 +24,6 @@ export default function Home() {
   const [mode, setMode] = React.useState(REGULAR_MODE);
   const [selected, setSelected] = React.useState(null);
   const [temp, setTemp] = React.useState(null);
-  const [viewport, setViewport] = React.useState(null);
-
-  const ref = React.useRef(null);
-
-  React.useEffect(() => {
-    const instance = createPanZoom(ref.current, { filterKey: () => true });
-
-    instance.moveTo(-IMAGE_WIDTH * 0.5, -IMAGE_HEIGHT * 0.5);
-
-    setViewport(instance);
-  }, [setViewport]);
 
   React.useEffect(() => {
     fetch('/api')
@@ -81,26 +69,11 @@ export default function Home() {
     return markers.map((data) => {
       if (selected === null) {
         return (
-          <Marker
-            data={data}
-            key={data._id}
-            onClick={() => openForm(data)}
-          />
+          <Marker data={data} key={data._id} onClick={() => openForm(data)} />
         );
       } else if (selected._id === data._id) {
-        viewport.zoomAbs(0, 0, 1);
-
-        viewport.smoothMoveTo(
-          -selected.x + window.innerWidth * 0.5,
-          -selected.y + window.innerHeight * 0.5
-        );
-
         return (
-          <Marker
-            data={data}
-            key={data._id}
-            onClick={() => openForm(data)}
-          />
+          <Marker data={data} key={data._id} onClick={() => openForm(data)} />
         );
       }
     });
@@ -157,16 +130,10 @@ export default function Home() {
             options={markers}
           />
         )}
-        <div className={styles.container} ref={ref}>
-          <div
-            className={styles.background}
-            onClick={placeMarker}
-            style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}
-          >
-            {renderMarkers()}
-            {marker}
-          </div>
-        </div>
+        <Map onClick={placeMarker}>
+          {renderMarkers()}
+          {marker}
+        </Map>
         {mode !== REGULAR_MODE && (
           <Typography className={styles.insertModeTip}>
             Hit Enter to lock marker position and fill form
