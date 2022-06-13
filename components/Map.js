@@ -4,59 +4,61 @@ export default function Map(props) {
   const ref = React.useRef();
 
   React.useEffect(() => {
-    if (ref.current) {
-      const container = ref.current;
+    if (!ref.current) {
+      return;
+    }
 
-      const offset = { x: 0, y: 0 };
-      const point = { x: 0, y: 0 };
+    const container = ref.current;
 
-      let isPanning = false;
-      let scale = 1;
+    const offset = { x: 0, y: 0 };
+    const point = { x: 0, y: 0 };
 
-      function setTransform() {
-        container.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+    let isPanning = false;
+    let scale = 1;
+
+    function setTransform() {
+      container.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+    }
+
+    container.onmousedown = (event) => {
+      event.preventDefault();
+
+      point.x = event.clientX - offset.x;
+      point.y = event.clientY - offset.y;
+
+      isPanning = true;
+    };
+
+    container.onmousemove = (event) => {
+      event.preventDefault();
+
+      if (!isPanning) {
+        return;
       }
 
-      container.onmousedown = (event) => {
-        event.preventDefault();
+      offset.x = event.clientX - point.x;
+      offset.y = event.clientY - point.y;
 
-        point.x = event.clientX - offset.x;
-        point.y = event.clientY - offset.y;
+      setTransform();
+    };
 
-        isPanning = true;
-      };
+    container.onmouseup = () => (isPanning = false);
 
-      container.onmousemove = (event) => {
-        event.preventDefault();
+    container.onwheel = (event) => {
+      event.preventDefault();
 
-        if (!isPanning) {
-          return;
-        }
+      const x = (event.clientX - offset.x) / scale;
+      const y = (event.clientY - offset.y) / scale;
 
-        offset.x = event.clientX - point.x;
-        offset.y = event.clientY - point.y;
+      const delta = event.wheelDelta ? event.wheelDelta : -event.deltaY;
 
-        setTransform();
-      };
+      delta > 0 ? (scale *= 1.1) : (scale /= 1.1);
 
-      container.onmouseup = () => (isPanning = false);
+      offset.x = event.clientX - x * scale;
+      offset.y = event.clientY - y * scale;
 
-      container.onwheel = (event) => {
-        event.preventDefault();
-
-        const x = (event.clientX - offset.x) / scale;
-        const y = (event.clientY - offset.y) / scale;
-
-        const delta = event.wheelDelta ? event.wheelDelta : -event.deltaY;
-
-        delta > 0 ? (scale *= 1.1) : (scale /= 1.1);
-
-        offset.x = event.clientX - x * scale;
-        offset.y = event.clientY - y * scale;
-
-        setTransform();
-      };
-    }
+      setTransform();
+    };
   }, [ref]);
 
   return (
