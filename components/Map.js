@@ -8,28 +8,22 @@ export default function Map(props) {
       return;
     }
 
-    const container = ref.current;
-
     const offset = { x: 0, y: 0 };
     const point = { x: 0, y: 0 };
 
     let isPanning = false;
     let scale = 1;
 
-    function setTransform() {
-      container.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
-    }
-
-    container.onmousedown = (event) => {
+    function onMouseDown(event) {
       event.preventDefault();
 
       point.x = event.clientX - offset.x;
       point.y = event.clientY - offset.y;
 
       isPanning = true;
-    };
+    }
 
-    container.onmousemove = (event) => {
+    function onMouseMove(event) {
       event.preventDefault();
 
       if (!isPanning) {
@@ -40,11 +34,13 @@ export default function Map(props) {
       offset.y = event.clientY - point.y;
 
       setTransform();
-    };
+    }
 
-    container.onmouseup = () => (isPanning = false);
+    function onMouseUp() {
+      isPanning = false;
+    }
 
-    container.onwheel = (event) => {
+    function onWheel(event) {
       event.preventDefault();
 
       const x = (event.clientX - offset.x) / scale;
@@ -58,6 +54,22 @@ export default function Map(props) {
       offset.y = event.clientY - y * scale;
 
       setTransform();
+    }
+
+    function setTransform() {
+      ref.current.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+    }
+
+    ref.current.addEventListener('mousedown', onMouseDown, false);
+    ref.current.addEventListener('mousemove', onMouseMove, false);
+    ref.current.addEventListener('mouseup', onMouseUp, false);
+    ref.current.addEventListener('wheel', onWheel, false);
+
+    return () => {
+      ref.current.removeEventListener('mousedown', onMouseDown, false);
+      ref.current.removeEventListener('mousemove', onMouseMove, false);
+      ref.current.removeEventListener('mouseup', onMouseUp, false);
+      ref.current.removeEventListener('wheel', onWheel, false);
     };
   }, [ref]);
 
