@@ -15,8 +15,6 @@ export default function Map(props) {
     let scale = 1;
 
     function onMouseDown(event) {
-      event.preventDefault();
-
       point.x = event.clientX - offset.x;
       point.y = event.clientY - offset.y;
 
