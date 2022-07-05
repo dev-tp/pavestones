@@ -8,6 +8,8 @@ export default function Map(props) {
       return;
     }
 
+    const instance = ref.current;
+
     const offset = { x: 0, y: 0 };
     const point = { x: 0, y: 0 };
 
@@ -55,19 +57,19 @@ export default function Map(props) {
     }
 
     function setTransform() {
-      ref.current.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+      instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
     }
 
-    ref.current.addEventListener('mousedown', onMouseDown, false);
-    ref.current.addEventListener('mousemove', onMouseMove, false);
-    ref.current.addEventListener('mouseup', onMouseUp, false);
-    ref.current.addEventListener('wheel', onWheel, false);
+    instance.addEventListener('mousedown', onMouseDown, false);
+    instance.addEventListener('mousemove', onMouseMove, false);
+    instance.addEventListener('mouseup', onMouseUp, false);
+    instance.addEventListener('wheel', onWheel, false);
 
     return () => {
-      ref.current.removeEventListener('mousedown', onMouseDown, false);
-      ref.current.removeEventListener('mousemove', onMouseMove, false);
-      ref.current.removeEventListener('mouseup', onMouseUp, false);
-      ref.current.removeEventListener('wheel', onWheel, false);
+      instance.removeEventListener('mousedown', onMouseDown, false);
+      instance.removeEventListener('mousemove', onMouseMove, false);
+      instance.removeEventListener('mouseup', onMouseUp, false);
+      instance.removeEventListener('wheel', onWheel, false);
     };
   }, [ref]);
 
