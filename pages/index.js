@@ -18,7 +18,10 @@ export default function Home() {
   const [mode, setMode] = React.useState(REGULAR_MODE);
 
   React.useEffect(
-    async () => setMarkers(await (await fetch('/api')).json()),
+    () =>
+      fetch('/api')
+        .then((response) => response.json())
+        .then((json) => setMarkers(json)),
     [setMarkers]
   );
 
