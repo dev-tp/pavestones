@@ -17,6 +17,11 @@ export default function Home() {
   const [markers, setMarkers] = React.useState([]);
   const [mode, setMode] = React.useState(REGULAR_MODE);
 
+  const toggleMode = React.useCallback(() => {
+    setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
+    setMarker(null);
+  }, [mode]);
+
   React.useEffect(
     () =>
       fetch('/api')
@@ -119,11 +124,6 @@ export default function Home() {
 
     setMode(REGULAR_MODE);
     setForm({ data: schema, open: false });
-  }
-
-  function toggleMode() {
-    setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
-    setMarker(null);
   }
 
   return (
