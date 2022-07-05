@@ -26,14 +26,16 @@ export default function Form(props) {
     };
   }
 
-  function submit(event) {
+  function handleKeyUp(event) {
     if (event.ctrlKey && event.key === 'Enter') {
       props.onSave(getCurrentData());
+    } else if (event.key === 'Escape') {
+      props.onCancel();
     }
   }
 
   return (
-    <Dialog fullWidth onKeyUp={submit} open={props.open}>
+    <Dialog fullWidth onKeyUp={handleKeyUp} open={props.open}>
       <DialogTitle>
         {props.data?._id && (
           <>
