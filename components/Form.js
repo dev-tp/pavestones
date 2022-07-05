@@ -11,40 +11,34 @@ import React from 'react';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 
-const initialState = {
-  _id: null,
-  dedicated_to: '',
-  is_deceased: false,
-  patron: '',
-  x: null,
-  y: null,
-};
-
 export default function Form(props) {
-  const [state, setState] = React.useState(initialState);
+  const dedicatedTo = React.createRef();
+  const isDeceased = React.createRef();
+  const patron = React.createRef();
 
-  React.useEffect(() => {
-    if (props.open) {
-      setState(props.data);
-    }
-  }, [props, setState]);
-
-  function onCancel(event) {
-    event.stopPropagation();
-    setState(initialState);
-    props.onCancel();
+  function getCurrentData() {
+    return {
+      ...props.data,
+      dedicated_to: dedicatedTo.current?.value,
+      is_deceased: isDeceased.current?.checked,
+      patron: patron.current?.value,
+    };
   }
 
-  function onSave(event) {
-    event.stopPropagation();
-    props.onSave(state, () => setState(initialState));
+  function submit(event) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      props.onSave(getCurrentData());
+    }
   }
 
   return (
-    <Dialog fullWidth open={props.open}>
+    <Dialog fullWidth onKeyUp={submit} open={props.open}>
       <DialogTitle>
         {props.data?._id && (
-          <IconButton onClick={props.onPositionEdit} size="small">
+          <IconButton
+            onClick={() => props.onPositionEdit(getCurrentData())}
+            size="small"
+          >
             <MoveDown />
           </IconButton>
         )}
@@ -52,31 +46,25 @@ export default function Form(props) {
       <DialogContent style={{ paddingBottom: 0 }}>
         <TextField
           autoFocus
+          defaultValue={props.data?.patron}
           fullWidth
+          inputRef={patron}
           label="Patron"
           margin="dense"
-          onChange={(event) =>
-            setState({ ...state, patron: event.target.value })
-          }
-          value={state.patron}
         />
         <TextField
+          defaultValue={props.data?.dedicated_to}
           fullWidth
+          inputRef={dedicatedTo}
           label="Dedicated to"
           margin="dense"
-          onChange={(event) =>
-            setState({ ...state, dedicated_to: event.target.value })
-          }
-          value={state.dedicated_to}
         />
         <FormGroup>
           <FormControlLabel
             control={
               <Switch
-                checked={state.is_deceased}
-                onChange={() =>
-                  setState({ ...state, is_deceased: !state.is_deceased })
-                }
+                defaultChecked={props.data?.is_deceased}
+                inputRef={isDeceased}
               />
             }
             label="Deceased"
@@ -84,8 +72,8 @@ export default function Form(props) {
         </FormGroup>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={onSave}>Save</Button>
+        <Button onClick={props.onCancel}>Cancel</Button>
+        <Button onClick={() => props.onSave(getCurrentData())}>Save</Button>
       </DialogActions>
     </Dialog>
   );

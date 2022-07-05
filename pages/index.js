@@ -1,176 +1,129 @@
-import Button from '@mui/material/Button';
-import Head from 'next/head';
 import React from 'react';
-import Typography from '@mui/material/Typography';
 
-import Certificate from '../components/Certificate';
 import Form from '../components/Form';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
-import SearchBar from '../components/SearchBar';
-
-import styles from '../styles/Home.module.css';
-
-const modes = ['Regular', 'Insert', 'Edit'];
+import schema from '../lib/schema';
 
 const REGULAR_MODE = 0;
 const INSERT_MODE = 1;
 const EDIT_MODE = 2;
 
+const modes = ['Regular', 'Insert', 'Edit'];
+
 export default function Home() {
-  const [form, setForm] = React.useState({ data: null, open: false });
+  const [form, setForm] = React.useState({ data: schema, open: false });
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
   const [mode, setMode] = React.useState(REGULAR_MODE);
-  const [selected, setSelected] = React.useState(null);
-  const [temp, setTemp] = React.useState(null);
+
+  React.useEffect(
+    async () => setMarkers(await (await fetch('/api')).json()),
+    [setMarkers]
+  );
 
   React.useEffect(() => {
-    fetch('/api')
-      .then((response) => response.json())
-      .then((json) => setMarkers(json))
-      .catch((error) => console.error(error));
-  }, [setMarkers]);
-
-  React.useEffect(() => {
-    function handleKeyUp(event) {
-      if (mode !== REGULAR_MODE) {
-        if (event.key === 'Enter') {
-          setForm({ data: null, open: true });
-        } else if (event.key === 'Escape') {
-          toggleMode(true);
-        }
-      }
+    if (mode === REGULAR_MODE) {
+      return;
     }
 
-    window.addEventListener('keyup', handleKeyUp);
+    const handleKeyUp = (event) => {
+      if (event.key === 'Enter') {
+        setForm({ data: marker, open: true });
+      } else if (event.key === 'Escape') {
+        toggleMode();
+      }
+    };
 
-    return () => window.removeEventListener('keyup', handleKeyUp);
-  }, [mode, setForm, setMarker, toggleMode]);
+    window.addEventListener('keyup', handleKeyUp, false);
 
-  function closeForm() {
+    return () => window.removeEventListener('keyup', handleKeyUp, false);
+  }, [marker, mode, setForm, toggleMode]);
+
+  // TODO Pass form-data as parameter in case user updates data without
+  // committing updates
+  function editMarkerPosition() {
     setForm({ ...form, open: false });
+    setMarker(form.data);
+    setMode(EDIT_MODE);
   }
 
   function placeMarker(event) {
-    if (mode === REGULAR_MODE) return;
-
-    const { offsetX, offsetY } = event.nativeEvent;
-    setMarker(<Marker data={{ x: offsetX - 4, y: offsetY - 4 }} insertMode />);
-  }
-
-  function renderMarkers() {
-    function openForm(data) {
-      if (mode === REGULAR_MODE) {
-        setForm({ data, open: true });
-      }
+    if (mode === REGULAR_MODE) {
+      return;
     }
 
-    return markers.map((data) => {
-      if (selected === null) {
-        return (
-          <Marker data={data} key={data._id} onClick={() => openForm(data)} />
-        );
-      } else if (selected._id === data._id) {
-        return (
-          <Marker data={data} key={data._id} onClick={() => openForm(data)} />
-        );
-      }
+    setMarker({
+      ...form.data,
+      x: event.nativeEvent.offsetX - 4,
+      y: event.nativeEvent.offsetY - 4,
     });
   }
 
-  function saveFormData(data, resetForm) {
-    fetch(`/api/${data._id ? data._id : ''}`, {
-      body: JSON.stringify({ ...data, ...marker?.props.data }),
+  function render() {
+    const openForm = (data) => {
+      if (mode === REGULAR_MODE) {
+        setForm({ data, open: true });
+      }
+    };
+
+    return (
+      <>
+        {markers.map((data, i) => {
+          if (marker && marker._id === data._id) {
+            return null;
+          }
+          return <Marker data={data} key={i} onClick={() => openForm(data)} />;
+        })}
+        {marker && <Marker data={marker} insertMode />}
+      </>
+    );
+  }
+
+  async function saveFormData(data) {
+    const response = await fetch(`/api/${data._id || ''}`, {
+      body: JSON.stringify(data),
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       mode: 'cors',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        setMarkers([...markers, json]);
-        setMarker(null);
+    });
 
-        setMode(REGULAR_MODE);
-        setForm({ data: null, open: false });
+    const json = await response.json();
 
-        resetForm();
-      })
-      .catch((error) => console.error(error));
+    if (!data._id) {
+      setMarkers([...markers, json]);
+    } else {
+      setMarkers(
+        markers.map((marker) => (marker._id === json._id ? json : marker))
+      );
+    }
+
+    setMarker(null);
+
+    setMode(REGULAR_MODE);
+    setForm({ data: schema, open: false });
   }
 
-  function toggleMode(regularMode = false) {
-    if (mode === EDIT_MODE) {
-      setMarkers([...markers, temp]);
-      setTemp(null);
-    }
-
-    if (mode !== REGULAR_MODE) {
-      setMarker(null);
-    }
-
-    setMode(mode !== REGULAR_MODE || regularMode ? REGULAR_MODE : INSERT_MODE);
-    setSelected(null);
+  function toggleMode() {
+    setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
+    setMarker(null);
   }
 
   return (
     <>
-      <Head>
-        <title>Paving Stones</title>
-      </Head>
-      <div className={styles.root}>
-        <Button className={styles.modeButton} onClick={() => toggleMode()}>
-          {modes[mode]} Mode
-        </Button>
-        {mode === REGULAR_MODE && (
-          <SearchBar
-            className={styles.searchBar}
-            onSelect={(value) => setSelected(value)}
-            options={markers}
-          />
-        )}
-        <Map onClick={placeMarker}>
-          {renderMarkers()}
-          {marker}
-        </Map>
-        {mode !== REGULAR_MODE && (
-          <Typography className={styles.insertModeTip}>
-            Hit Enter to lock marker position and fill form
-          </Typography>
-        )}
-        <Form
-          data={form.data}
-          onCancel={closeForm}
-          onPositionEdit={() => {
-            setForm({ ...form, open: !form.open });
-
-            if (mode === REGULAR_MODE) {
-              setMarker(<Marker data={form.data} insertMode />);
-              setMarkers(
-                markers.filter((marker) => {
-                  if (marker._id === form.data._id) {
-                    setTemp(marker);
-                  }
-
-                  return marker._id !== form.data._id;
-                })
-              );
-            } else {
-              setMarker(null);
-              setMarkers([
-                markers,
-                <Marker key={form.data._id} data={form.data} />,
-              ]);
-            }
-
-            setMode(mode === REGULAR_MODE ? EDIT_MODE : REGULAR_MODE);
-          }}
-          onSave={saveFormData}
-          open={form.open}
-        />
-      </div>
-      <Certificate className={styles.printout} data={selected} />
+      <button onClick={toggleMode} style={{ position: 'absolute', zIndex: 1 }}>
+        {modes[mode]}
+      </button>
+      <Map onClick={placeMarker}>{render()}</Map>
+      <Form
+        data={form.data}
+        onCancel={() => setForm({ ...form, open: false })}
+        onPositionEdit={editMarkerPosition}
+        onSave={saveFormData}
+        open={form.open}
+      />
+      {/* <Certificate className={styles.printout} data={selected} /> */}
     </>
   );
 }
