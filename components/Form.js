@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import DeleteForever from '@mui/icons-material/DeleteForever';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -35,12 +36,20 @@ export default function Form(props) {
     <Dialog fullWidth onKeyUp={submit} open={props.open}>
       <DialogTitle>
         {props.data?._id && (
-          <IconButton
-            onClick={() => props.onPositionEdit(getCurrentData())}
-            size="small"
-          >
-            <MoveDown />
-          </IconButton>
+          <>
+            <IconButton
+              onClick={() => props.onPositionEdit(getCurrentData())}
+              size="small"
+            >
+              <MoveDown />
+            </IconButton>
+            <IconButton
+              onClick={() => props.onDelete(getCurrentData())}
+              size="small"
+            >
+              <DeleteForever />
+            </IconButton>
+          </>
         )}
       </DialogTitle>
       <DialogContent style={{ paddingBottom: 0 }}>

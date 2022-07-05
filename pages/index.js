@@ -40,6 +40,19 @@ export default function Home() {
     return () => window.removeEventListener('keyup', handleKeyUp, false);
   }, [marker, mode, setForm, toggleMode]);
 
+  async function deleteMarker(data) {
+    if (confirm('Are you sure you want to delete this entry?')) {
+      const response = await fetch(`/api/${data._id}`, {
+        method: 'DELETE',
+      });
+
+      if ((await response.json()).ok) {
+        setForm({ data: schema, open: false });
+        setMarkers(markers.filter((marker) => marker._id !== data._id));
+      }
+    }
+  }
+
   // TODO Pass form-data as parameter in case user updates data without
   // committing updates
   function editMarkerPosition() {
@@ -119,6 +132,7 @@ export default function Home() {
       <Form
         data={form.data}
         onCancel={() => setForm({ ...form, open: false })}
+        onDelete={deleteMarker}
         onPositionEdit={editMarkerPosition}
         onSave={saveFormData}
         open={form.open}
