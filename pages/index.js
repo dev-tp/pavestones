@@ -112,6 +112,8 @@ export default function Home() {
 
     const json = await response.json();
 
+    // If `data._id` is undefined, then `json` is a new entry.
+    // Otherwise, it is an update to an entry.
     if (!data._id) {
       setMarkers([...markers, json]);
     } else {
