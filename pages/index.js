@@ -75,7 +75,7 @@ export default function Home() {
     }
 
     setMarker({
-      ...form.data,
+      ...(mode === INSERT_MODE ? schema : form.data),
       x: event.nativeEvent.offsetX - 4,
       y: event.nativeEvent.offsetY - 4,
     });
