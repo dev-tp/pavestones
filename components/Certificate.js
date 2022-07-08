@@ -1,69 +1,111 @@
-import { DEFAULT_PAPER_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
+import React from 'react';
 
-import styles from '../styles/Certificate.module.css';
+const IMAGE_WIDTH = 7000;
+const IMAGE_HEIGHT = 5000;
 
-const MAP_WIDTH = DEFAULT_PAPER_WIDTH;
-const MAP_HEIGHT = `calc(${IMAGE_HEIGHT} * ${MAP_WIDTH} / ${IMAGE_WIDTH})`;
+const MAP_WIDTH = '7.5in';
+const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;
 
-const MINI_MAP_WIDTH = 360;
-const MINI_MAP_HEIGHT = (IMAGE_HEIGHT * MINI_MAP_WIDTH) / IMAGE_WIDTH;
-
-function centerMap(data) {
-  if (data) {
+export default function Certificate(props) {
+  function centerOnPoint(data) {
     const x = `calc(-${data.x}px + ${MAP_WIDTH} * 0.5)`;
     const y = `calc(-${data.y}px + ${MAP_HEIGHT} * 0.5)`;
 
     return `translate(${x}, ${y})`;
   }
 
-  return null;
-}
-
-export default function Certificate(props) {
   return (
-    <div
-      className={props.className}
-      style={{ margin: 'auto', width: DEFAULT_PAPER_WIDTH }}
-    >
-      <div className={styles.header}>
-        <img alt="Logo" className={styles.logo} src="/images/logo.png" />
-        <p>Cathedral Pave Stone designated for:</p>
-        <p>{props.data?.dedicated_to}</p>
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          height: '1in',
+          marginBottom: '1rem',
+          position: 'relative',
+        }}
+      >
+        <img
+          alt="Logo"
+          src="/images/logo.png"
+          style={{ height: '1in', width: '1in', position: 'absolute' }}
+        />
+        <div style={{ flexGrow: 1, textAlign: 'center' }}>
+          <p>Cathedral Pave Stone designated for:</p>
+          <p>{props.data.dedicated_to}</p>
+        </div>
       </div>
-      <div className={styles.map} style={{ height: MAP_HEIGHT }}>
-        <span className={styles.tip}>Enlarged area</span>
+      <div
+        id="container"
+        style={{
+          border: '1px solid',
+          boxSizing: 'border-box',
+          height: MAP_HEIGHT,
+          overflow: 'hidden',
+          position: 'relative',
+          width: '100%',
+        }}
+      >
+        <span
+          style={{
+            background: '#fff',
+            left: '0.1rem',
+            padding: '0.1rem',
+            position: 'absolute',
+            top: '0.1rem',
+            zIndex: 1,
+          }}
+        >
+          Enlarged area
+        </span>
         <div
+          id="map"
           style={{
             backgroundImage: 'url(/images/cert-floor-plan.png)',
             height: IMAGE_HEIGHT,
-            transform: centerMap(props.data),
+            transform: centerOnPoint(props.data),
             transformOrigin: '0 0',
             width: IMAGE_WIDTH,
           }}
         >
           <div
-            className={styles.marker}
-            style={{ left: props.data?.x, top: props.data?.y }}
+            id="marker"
+            style={{
+              background: '#f00',
+              height: 4,
+              left: props.data.x,
+              position: 'absolute',
+              top: props.data.y,
+              width: 4,
+            }}
           />
         </div>
         <div
-          className={styles.miniMap}
-          style={{ height: MINI_MAP_HEIGHT, width: MINI_MAP_WIDTH }}
+          style={{
+            borderLeft: '1px solid',
+            borderTop: '1px solid',
+            bottom: 0,
+            height: `calc(${MAP_HEIGHT} * 0.4)`,
+            position: 'absolute',
+            right: 0,
+            width: `calc(${MAP_WIDTH} * 0.4)`,
+          }}
         >
-          <span className={styles.tip}>Overall floor plan</span>
+          <span>Overall floor plan</span>
           <div
             style={{
               border: '1px solid #f00',
               height: 20,
-              left: (props.data?.x / IMAGE_WIDTH) * MINI_MAP_WIDTH - 20 * 0.5,
+              // left: (props.data.x / IMAGE_WIDTH) * MINI_MAP_WIDTH - 20 * 0.5,
+              // left: `calc(${MAP_WIDTH} * 0.30)`,
               position: 'absolute',
-              top: (props.data?.y / IMAGE_HEIGHT) * MINI_MAP_HEIGHT - 20 * 0.5,
+              // top: (props.data.y / IMAGE_HEIGHT) * MINI_MAP_HEIGHT - 20 * 0.5,
+              // top: `calc(${MAP_HEIGHT} * 0.30)`,
               width: 20,
             }}
           />
         </div>
       </div>
-      <div className={styles.twoColumnGrid}>
+      <div style={{ display: 'grid', gridTemplateColumns: '50% 50%' }}>
         <div>
           <p>
             Thank you for your gift to the Cathedral of Our Lady of the Angels.
@@ -78,18 +120,16 @@ export default function Certificate(props) {
             enlarged.
           </p>
         </div>
-        <div>
-          <ul className={styles.twoColumnGrid}>
-            <li>Grand Doors</li>
-            <li>South Ambulatory</li>
-            <li>Baptismal Font</li>
-            <li>Main Aisle</li>
-            <li>Altar</li>
-            <li>Organ Chancel</li>
-            <li>North Doors</li>
-            <li>North Ambulatory</li>
-          </ul>
-        </div>
+        <ul style={{ columns: 2, listStyle: 'upper-latin' }}>
+          <li>Grand Doors</li>
+          <li>South Ambulatory</li>
+          <li>Baptismal Font</li>
+          <li>Main Aisle</li>
+          <li>Altar</li>
+          <li>Organ Chancel</li>
+          <li>North Doors</li>
+          <li>North Ambulatory</li>
+        </ul>
       </div>
     </div>
   );

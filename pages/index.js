@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Certificate from '../components/Certificate';
 import Form from '../components/Form';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
@@ -130,10 +131,15 @@ export default function Home() {
 
   return (
     <>
-      <button onClick={toggleMode} style={{ position: 'absolute', zIndex: 1 }}>
-        {modes[mode]}
-      </button>
-      <Map onClick={placeMarker}>{render()}</Map>
+      <div id="home">
+        <button
+          onClick={toggleMode}
+          style={{ position: 'absolute', zIndex: 1 }}
+        >
+          {modes[mode]}
+        </button>
+        <Map onClick={placeMarker}>{render()}</Map>
+      </div>
       <Form
         data={form.data}
         onCancel={() => setForm({ ...form, open: false })}
@@ -142,7 +148,7 @@ export default function Home() {
         onSave={saveFormData}
         open={form.open}
       />
-      {/* <Certificate className={styles.printout} data={selected} /> */}
+      <Certificate data={form.data} />
     </>
   );
 }

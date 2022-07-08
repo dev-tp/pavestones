@@ -8,18 +8,14 @@ html {
   padding: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 @media print {
   body,
   html {
     background-color: unset;
+  }
+
+  #form,
+  #home {
+    display: none;
   }
 }

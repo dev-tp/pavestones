@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import IconButton from '@mui/material/IconButton';
 import MoveDown from '@mui/icons-material/MoveDown';
+import Print from '@mui/icons-material/Print';
 import React from 'react';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
@@ -35,7 +36,7 @@ export default function Form(props) {
   }
 
   return (
-    <Dialog fullWidth onKeyUp={handleKeyUp} open={props.open}>
+    <Dialog id="form" fullWidth onKeyUp={handleKeyUp} open={props.open}>
       <DialogTitle>
         {props.data?._id && (
           <>
@@ -44,6 +45,9 @@ export default function Form(props) {
               size="small"
             >
               <MoveDown />
+            </IconButton>
+            <IconButton onClick={print} size="small">
+              <Print />
             </IconButton>
             <IconButton
               onClick={() => props.onDelete(getCurrentData())}
