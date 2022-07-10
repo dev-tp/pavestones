@@ -1,5 +1,6 @@
 import React from 'react';
 
+const lastCoordinate = { x: 0, y: 0 };
 const offset = { x: 0, y: 0 };
 const point = { x: 0, y: 0 };
 
@@ -11,7 +12,7 @@ export default function Map(props) {
   const ref = React.useRef();
 
   function moveTo(coordinate) {
-    if (coordinate.x === offset.x && coordinate.y === offset.y) {
+    if (coordinate.x === lastCoordinate.x && coordinate.y === lastCoordinate.y) {
       return;
     }
 
@@ -19,6 +20,9 @@ export default function Map(props) {
 
     offset.x = coordinate.x + window.innerWidth / 2;
     offset.y = coordinate.y + window.innerHeight / 2;
+
+    lastCoordinate.x = coordinate.x;
+    lastCoordinate.y = coordinate.y;
 
     setTransform();
   }
