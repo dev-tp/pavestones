@@ -35,7 +35,6 @@ export default function Certificate(props) {
         </div>
       </div>
       <div
-        id="container"
         style={{
           border: '1px solid',
           boxSizing: 'border-box',
@@ -58,7 +57,6 @@ export default function Certificate(props) {
           Enlarged area
         </span>
         <div
-          id="map"
           style={{
             backgroundImage: 'url(/images/cert-floor-plan.png)',
             height: IMAGE_HEIGHT,
@@ -68,7 +66,6 @@ export default function Certificate(props) {
           }}
         >
           <div
-            id="marker"
             style={{
               background: '#f00',
               height: 4,
