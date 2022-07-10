@@ -1,20 +1,40 @@
 import React from 'react';
 
+const offset = { x: 0, y: 0 };
+const point = { x: 0, y: 0 };
+
+let instance = null;
+let isPanning = false;
+let scale = 1;
+
 export default function Map(props) {
   const ref = React.useRef();
+
+  function moveTo(coordinate) {
+    scale = 1;
+
+    offset.x = coordinate.x + window.innerWidth / 2;
+    offset.y = coordinate.y + window.innerHeight / 2;
+
+    setTransform();
+  }
+
+  function setTransform() {
+    instance?.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+  }
+
+  // FIXME `props.coordinate` updates after updating marker position
+  // Only applies `moveTo` whenever `props.coordinate` is updated
+  React.useEffect(() => moveTo(props.coordinate), [moveTo, props.coordinate]);
 
   React.useEffect(() => {
     if (!ref.current) {
       return;
     }
 
-    const instance = ref.current;
-
-    const offset = { x: 0, y: 0 };
-    const point = { x: 0, y: 0 };
-
-    let isPanning = false;
-    let scale = 1;
+    if (!instance) {
+      instance = ref.current;
+    }
 
     function onMouseDown(event) {
       point.x = event.clientX - offset.x;
@@ -54,10 +74,6 @@ export default function Map(props) {
       offset.y = event.clientY - y * scale;
 
       setTransform();
-    }
-
-    function setTransform() {
-      instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
     }
 
     instance.addEventListener('mousedown', onMouseDown, false);

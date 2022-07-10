@@ -13,6 +13,7 @@ const EDIT_MODE = 2;
 const modes = ['Regular', 'Insert', 'Edit'];
 
 export default function Home() {
+  const [coordinate, setCoordinate] = React.useState({ x: 0, y: 0 });
   const [form, setForm] = React.useState({ data: schema, open: false });
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
@@ -138,7 +139,9 @@ export default function Home() {
         >
           {modes[mode]}
         </button>
-        <Map onClick={placeMarker}>{render()}</Map>
+        <Map coordinate={coordinate} onClick={placeMarker}>
+          {render()}
+        </Map>
       </div>
       <Form
         data={form.data}
