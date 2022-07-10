@@ -6,6 +6,19 @@ const IMAGE_HEIGHT = 5000;
 const MAP_WIDTH = '7.5in';
 const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;
 
+const MINI_MAP_HEIGHT = 275;
+const MINI_MAP_WIDTH = 350;
+
+const label = {
+  background: '#fff',
+  fontSize: '0.8rem',
+  left: '0.1rem',
+  padding: '0.1rem',
+  position: 'absolute',
+  top: '0.1rem',
+  zIndex: 1,
+};
+
 export default function Certificate(props) {
   function centerOnPoint(data) {
     const x = `calc(-${data.x}px + ${MAP_WIDTH} * 0.5)`;
@@ -44,18 +57,7 @@ export default function Certificate(props) {
           width: '100%',
         }}
       >
-        <span
-          style={{
-            background: '#fff',
-            left: '0.1rem',
-            padding: '0.1rem',
-            position: 'absolute',
-            top: '0.1rem',
-            zIndex: 1,
-          }}
-        >
-          Enlarged area
-        </span>
+        <span style={label}>Enlarged area</span>
         <div
           style={{
             backgroundImage: 'url(/images/cert-floor-plan.png)',
@@ -78,25 +80,24 @@ export default function Certificate(props) {
         </div>
         <div
           style={{
+            backgroundImage: 'url(/images/mini-floor-plan.png)',
             borderLeft: '1px solid',
             borderTop: '1px solid',
             bottom: 0,
-            height: `calc(${MAP_HEIGHT} * 0.4)`,
+            height: MINI_MAP_HEIGHT,
             position: 'absolute',
             right: 0,
-            width: `calc(${MAP_WIDTH} * 0.4)`,
+            width: MINI_MAP_WIDTH,
           }}
         >
-          <span>Overall floor plan</span>
+          <span style={label}>Overall floor plan</span>
           <div
             style={{
               border: '1px solid #f00',
               height: 20,
-              // left: (props.data.x / IMAGE_WIDTH) * MINI_MAP_WIDTH - 20 * 0.5,
-              // left: `calc(${MAP_WIDTH} * 0.30)`,
+              left: `calc(${(props.data.x / IMAGE_WIDTH) * 100}% - 12px)`,
               position: 'absolute',
-              // top: (props.data.y / IMAGE_HEIGHT) * MINI_MAP_HEIGHT - 20 * 0.5,
-              // top: `calc(${MAP_HEIGHT} * 0.30)`,
+              top: `calc(${(props.data.y / IMAGE_HEIGHT) * 100}% - 25px)`,
               width: 20,
             }}
           />
