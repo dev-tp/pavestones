@@ -11,6 +11,10 @@ export default function Map(props) {
   const ref = React.useRef();
 
   function moveTo(coordinate) {
+    if (coordinate.x === offset.x && coordinate.y === offset.y) {
+      return;
+    }
+
     scale = 1;
 
     offset.x = coordinate.x + window.innerWidth / 2;
@@ -23,7 +27,6 @@ export default function Map(props) {
     instance?.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
   }
 
-  // FIXME `props.coordinate` updates after updating marker position
   // Only applies `moveTo` whenever `props.coordinate` is updated
   React.useEffect(() => moveTo(props.coordinate), [moveTo, props.coordinate]);
 
