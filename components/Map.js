@@ -28,7 +28,7 @@ export default function Map(props) {
   }
 
   function setTransform() {
-    instance?.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+    instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
   }
 
   // Only applies `moveTo` whenever `props.coordinate` is updated
