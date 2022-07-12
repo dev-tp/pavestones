@@ -11,28 +11,28 @@ let scale = 1;
 export default function Map(props) {
   const ref = React.useRef();
 
-  function moveTo(coordinate) {
-    if (coordinate.x === lastCoordinate.x && coordinate.y === lastCoordinate.y) {
+  function setTransform() {
+    instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+  }
+
+  React.useEffect(() => {
+    if (
+      props.coordinate.x === lastCoordinate.x &&
+      props.coordinate.y === lastCoordinate.y
+    ) {
       return;
     }
 
     scale = 1;
 
-    offset.x = coordinate.x + window.innerWidth / 2;
-    offset.y = coordinate.y + window.innerHeight / 2;
+    offset.x = props.coordinate.x + window.innerWidth / 2;
+    offset.y = props.coordinate.y + window.innerHeight / 2;
 
-    lastCoordinate.x = coordinate.x;
-    lastCoordinate.y = coordinate.y;
+    lastCoordinate.x = props.coordinate.x;
+    lastCoordinate.y = props.coordinate.y;
 
     setTransform();
-  }
-
-  function setTransform() {
-    instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
-  }
-
-  // Only applies `moveTo` whenever `props.coordinate` is updated
-  React.useEffect(() => moveTo(props.coordinate), [moveTo, props.coordinate]);
+  }, [props.coordinate]);
 
   React.useEffect(() => {
     if (!ref.current) {
