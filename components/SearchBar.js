@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 
 const PADDING = 8;
 
-const ListboxComponent = React.forwardRef((props, ref) => {
+const ListboxComponent = React.forwardRef(function Component(props, ref) {
   const { children, ...other } = props;
   const itemData = [];
 
@@ -62,7 +62,7 @@ const PopperComponent = styled(Popper)({
 
 const OuterElementContext = React.createContext({});
 
-const OuterElementType = React.forwardRef((props, ref) => {
+const OuterElementType = React.forwardRef(function Component(props, ref) {
   const outerProps = React.useContext(OuterElementContext);
   return <div ref={ref} {...props} {...outerProps} />;
 });
