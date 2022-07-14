@@ -4,6 +4,7 @@ import Certificate from '../components/Certificate';
 import Form from '../components/Form';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
+import SearchBar from '../components/SearchBar';
 import schema from '../lib/schema';
 
 const REGULAR_MODE = 0;
@@ -139,6 +140,7 @@ export default function Home() {
         >
           {modes[mode]}
         </button>
+        <SearchBar options={markers} />
         <Map coordinate={coordinate} onClick={placeMarker}>
           {render()}
         </Map>

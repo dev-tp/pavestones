@@ -1,49 +1,107 @@
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import Paper from '@mui/material/Paper';
+import { autocompleteClasses, styled } from '@mui/material';
+import { VariableSizeList } from 'react-window';
+import Autocomplete from '@mui/material/Autocomplete';
+import Popper from '@mui/material/Popper';
 import React from 'react';
-import Search from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
 
-const customFilterOptions = createFilterOptions({
-  ignoreAccents: true,
-  ignoreCase: true,
-  limit: 10,
-  trim: true,
+const PADDING = 8;
+
+const ListboxComponent = React.forwardRef((props, ref) => {
+  const { children, ...other } = props;
+  const itemData = [];
+
+  children.forEach((item) => {
+    itemData.push(item);
+    itemData.push(...(item.children || []));
+  });
+
+  const itemCount = itemData.length;
+  const itemSize = 48;
+
+  const getHeight = () => {
+    if (itemCount > 8) {
+      return 8 * itemSize;
+    }
+
+    return itemData.map(() => itemSize).reduce((a, b) => a + b, 0);
+  };
+
+  const gridRef = useResetCache(itemCount);
+
+  return (
+    <div ref={ref}>
+      <OuterElementContext.Provider value={other}>
+        <VariableSizeList
+          height={getHeight() + 2 * PADDING}
+          innerElementType="ul"
+          itemCount={itemCount}
+          itemData={itemData}
+          itemSize={() => itemSize}
+          outerElementType={OuterElementType}
+          overscanCount={5}
+          ref={gridRef}
+          width="100%"
+        >
+          {renderRow}
+        </VariableSizeList>
+      </OuterElementContext.Provider>
+    </div>
+  );
 });
+
+const PopperComponent = styled(Popper)({
+  [`& .${autocompleteClasses.listbox}`]: {
+    boxSizing: 'border-box',
+    '& ul': {
+      padding: 0,
+      margin: 0,
+    },
+  },
+});
+
+const OuterElementContext = React.createContext({});
+
+const OuterElementType = React.forwardRef((props, ref) => {
+  const outerProps = React.useContext(OuterElementContext);
+  return <div ref={ref} {...props} {...outerProps} />;
+});
+
+function renderRow(props) {
+  const { data, index, style } = props;
+  const dataset = data[index];
+
+  return (
+    <li {...dataset[0]} style={{ ...style, top: style.top + PADDING }}>
+      {dataset[1].dedicated_to}
+    </li>
+  );
+}
+
+function useResetCache(data) {
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    if (ref.current != null) {
+      ref.current.resetAfterIndex(0, true);
+    }
+  }, [data]);
+
+  return ref;
+}
 
 export default function SearchBar(props) {
   return (
     <Autocomplete
-      filterOptions={customFilterOptions}
       getOptionLabel={(option) => option.dedicated_to}
-      noOptionsText="No entries"
-      onChange={(_, value) => props.onSelect(value)}
+      ListboxComponent={ListboxComponent}
       options={props.options}
+      PopperComponent={PopperComponent}
       renderInput={(params) => (
-        <Paper className={props.className} ref={params.InputProps.ref}>
-          <InputBase
-            inputProps={{ ...params.inputProps }}
-            placeholder="Search..."
-            style={{ flexGrow: 1 }}
-          />
-          <IconButton size="small">
-            <Search />
-          </IconButton>
-        </Paper>
+        <TextField {...params} fullWidth label="Search" />
       )}
-      renderOption={(props, option) => (
-        <li
-          {...props}
-          key={option._id}
-          style={{ alignItems: 'start', display: 'flex', flexFlow: 'column' }}
-        >
-          <div>{option.dedicated_to}</div>
-          <div>
-            x: {option.x}, y: {option.y}
-          </div>
-        </li>
-      )}
+      renderOption={(props, option) => [props, option]}
+      style={{ position: 'absolute', width: 400 }}
     />
   );
 }
