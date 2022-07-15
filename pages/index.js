@@ -177,6 +177,20 @@ export default function Home() {
         <Map coordinate={searchValue} onClick={placeMarker}>
           {render()}
         </Map>
+        {mode !== REGULAR_MODE && (
+          <span
+            style={{
+              bottom: '1rem',
+              color: '#fff',
+              left: '50%',
+              position: 'absolute',
+              transform: 'translate(-50%)',
+              zIndex: 1,
+            }}
+          >
+            Press Enter to lock position and fill form.
+          </span>
+        )}
       </div>
       <Form
         data={form.data}
