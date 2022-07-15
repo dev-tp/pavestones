@@ -1,9 +1,13 @@
 import { autocompleteClasses, styled } from '@mui/material';
 import { VariableSizeList } from 'react-window';
 import Autocomplete from '@mui/material/Autocomplete';
+import Clear from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import React from 'react';
-import TextField from '@mui/material/TextField';
+import Search from '@mui/icons-material/Search';
 
 const PADDING = 8;
 
@@ -94,6 +98,12 @@ export default function SearchBar(props) {
   const [inputValue, setInputValue] = React.useState('');
   const [selectedValue, setSelectedValue] = React.useState(null);
 
+  function clear() {
+    props.onChange(null);
+    setInputValue('');
+    setSelectedValue(null);
+  }
+
   function handleChange(_, value) {
     setSelectedValue(value);
     props.onChange(value);
@@ -110,10 +120,27 @@ export default function SearchBar(props) {
       options={props.options}
       PopperComponent={PopperComponent}
       renderInput={(params) => (
-        <TextField {...params} fullWidth label="Search" />
+        <Paper
+          ref={params.InputProps.ref}
+          style={{ display: 'flex', padding: '0.5rem 0.5rem 0.5rem 1rem' }}
+        >
+          <InputBase
+            inputProps={params.inputProps}
+            placeholder="Search"
+            style={{ flexGrow: 1 }}
+          />
+          {selectedValue && (
+            <IconButton onClick={clear} size="small">
+              <Clear />
+            </IconButton>
+          )}
+          <IconButton size="small">
+            <Search />
+          </IconButton>
+        </Paper>
       )}
       renderOption={(props, option) => [props, option]}
-      style={{ position: 'absolute', width: 400 }}
+      style={{ position: 'absolute', width: 400, zIndex: 1 }}
       value={selectedValue}
     />
   );
