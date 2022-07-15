@@ -9,3 +9,7 @@
 .modifiable {
   background: #ff0;
 }
+
+.searchResult {
+  background: #00f;
+}

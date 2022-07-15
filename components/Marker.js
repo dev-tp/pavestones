@@ -7,6 +7,10 @@ export default function Marker(props) {
     classNames.push(style.modifiable);
   }
 
+  if (props.searchResult) {
+    classNames.push(style.searchResult);
+  }
+
   return (
     <div
       className={classNames.join(' ')}

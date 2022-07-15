@@ -14,11 +14,11 @@ const EDIT_MODE = 2;
 const modes = ['Regular', 'Insert', 'Edit'];
 
 export default function Home() {
-  const [coordinate, setCoordinate] = React.useState({ x: 0, y: 0 });
   const [form, setForm] = React.useState({ data: schema, open: false });
   const [marker, setMarker] = React.useState(null);
   const [markers, setMarkers] = React.useState([]);
   const [mode, setMode] = React.useState(REGULAR_MODE);
+  const [searchValue, setSearchValue] = React.useState(null);
 
   const toggleMode = React.useCallback(() => {
     setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
@@ -97,6 +97,18 @@ export default function Home() {
           if (marker && marker._id === data._id) {
             return null;
           }
+
+          if (searchValue && searchValue._id === data._id) {
+            return (
+              <Marker
+                data={data}
+                key={i}
+                onClick={() => openForm(data)}
+                searchResult
+              />
+            );
+          }
+
           return <Marker data={data} key={i} onClick={() => openForm(data)} />;
         })}
         {marker && <Marker data={marker} insertMode />}
@@ -140,8 +152,8 @@ export default function Home() {
         >
           {modes[mode]}
         </button>
-        <SearchBar options={markers} />
-        <Map coordinate={coordinate} onClick={placeMarker}>
+        <SearchBar onChange={setSearchValue} options={markers} />
+        <Map coordinate={searchValue} onClick={placeMarker}>
           {render()}
         </Map>
       </div>

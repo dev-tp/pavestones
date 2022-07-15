@@ -91,10 +91,22 @@ function useResetCache(data) {
 }
 
 export default function SearchBar(props) {
+  const [inputValue, setInputValue] = React.useState('');
+  const [selectedValue, setSelectedValue] = React.useState(null);
+
+  function handleChange(_, value) {
+    setSelectedValue(value);
+    props.onChange(value);
+  }
+
   return (
     <Autocomplete
       getOptionLabel={(option) => option.dedicated_to}
+      inputValue={inputValue}
+      isOptionEqualToValue={(option, value) => option._id === value._id}
       ListboxComponent={ListboxComponent}
+      onChange={handleChange}
+      onInputChange={(_, value) => setInputValue(value)}
       options={props.options}
       PopperComponent={PopperComponent}
       renderInput={(params) => (
@@ -102,6 +114,7 @@ export default function SearchBar(props) {
       )}
       renderOption={(props, option) => [props, option]}
       style={{ position: 'absolute', width: 400 }}
+      value={selectedValue}
     />
   );
 }
