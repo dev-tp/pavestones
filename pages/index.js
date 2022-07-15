@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import React from 'react';
 
 import Certificate from '../components/Certificate';
@@ -146,13 +147,33 @@ export default function Home() {
   return (
     <>
       <div id="home">
-        <button
+        <Button
           onClick={toggleMode}
-          style={{ position: 'absolute', zIndex: 1 }}
+          size="large"
+          style={{
+            borderColor: '#fff',
+            color: '#fff',
+            left: '1rem',
+            position: 'absolute',
+            top: '1rem',
+            zIndex: 1,
+          }}
+          variant="outlined"
         >
           {modes[mode]}
-        </button>
-        <SearchBar onChange={setSearchValue} options={markers} />
+        </Button>
+        <SearchBar
+          onChange={setSearchValue}
+          options={markers}
+          style={{
+            left: '50%',
+            position: 'absolute',
+            top: '1rem',
+            transform: 'translate(-50%)',
+            width: 400,
+            zIndex: 1,
+          }}
+        />
         <Map coordinate={searchValue} onClick={placeMarker}>
           {render()}
         </Map>

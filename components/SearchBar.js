@@ -140,7 +140,7 @@ export default function SearchBar(props) {
         </Paper>
       )}
       renderOption={(props, option) => [props, option]}
-      style={{ position: 'absolute', width: 400, zIndex: 1 }}
+      style={props.style}
       value={selectedValue}
     />
   );
