@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import Head from 'next/head';
 import React from 'react';
 
 import Certificate from '../components/Certificate';
@@ -146,6 +147,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Paving Stones</title>
+      </Head>
       <div id="home">
         <Button
           onClick={toggleMode}
