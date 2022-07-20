@@ -24,6 +24,8 @@ export default function Map(props) {
       return;
     }
 
+    scale = 2.5;
+
     // `props.coordinate` must be positive
     offset.x = -props.coordinate.x * scale + window.innerWidth / 2;
     offset.y = -props.coordinate.y * scale + window.innerHeight / 2;
