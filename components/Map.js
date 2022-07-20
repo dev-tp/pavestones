@@ -41,6 +41,9 @@ export default function Map(props) {
 
     if (!instance) {
       instance = ref.current;
+      scale = window.innerWidth / 7000;
+
+      setTransform();
     }
 
     function onMouseDown(event) {
