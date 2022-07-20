@@ -21,7 +21,7 @@ const ListboxComponent = React.forwardRef(function Component(props, ref) {
   });
 
   const itemCount = itemData.length;
-  const itemSize = 48;
+  const itemSize = 64;
 
   const getHeight = () => {
     if (itemCount > 8) {
@@ -76,9 +76,20 @@ function renderRow(props) {
   const dataset = data[index];
 
   return (
-    <li {...dataset[0]} style={{ ...style, top: style.top + PADDING }}>
-      {dataset[1].dedicated_to}
-    </li>
+    <div
+      {...dataset[0]}
+      style={{
+        ...style,
+        alignItems: 'flex-start',
+        display: 'flex',
+        flexFlow: 'column',
+        justifyContent: 'center',
+        top: style.top + PADDING,
+      }}
+    >
+      <span>{dataset[1].dedicated_to}</span>
+      <span style={{ color: 'rgba(0, 0, 0, 0.5)' }}>{dataset[1].patron}</span>
+    </div>
   );
 }
 
