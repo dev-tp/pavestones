@@ -1,6 +1,6 @@
 import { autocompleteClasses, styled } from '@mui/material';
 import { VariableSizeList } from 'react-window';
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Clear from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
@@ -10,6 +10,11 @@ import React from 'react';
 import Search from '@mui/icons-material/Search';
 
 const PADDING = 8;
+
+const filterOptions = createFilterOptions({
+  matchFrom: 'any',
+  stringify: (option) => `${option.dedicated_to} ${option.patron}`,
+});
 
 const ListboxComponent = React.forwardRef(function Component(props, ref) {
   const { children, ...other } = props;
@@ -122,6 +127,7 @@ export default function SearchBar(props) {
 
   return (
     <Autocomplete
+      filterOptions={filterOptions}
       getOptionLabel={(option) => option.dedicated_to}
       inputValue={inputValue}
       isOptionEqualToValue={(option, value) => option._id === value._id}
