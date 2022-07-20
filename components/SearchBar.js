@@ -115,6 +115,7 @@ export default function SearchBar(props) {
       inputValue={inputValue}
       isOptionEqualToValue={(option, value) => option._id === value._id}
       ListboxComponent={ListboxComponent}
+      noOptionsText="No results"
       onChange={handleChange}
       onInputChange={(_, value) => setInputValue(value)}
       options={props.options}
