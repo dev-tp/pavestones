@@ -204,7 +204,7 @@ export default function Home() {
         onSave={saveFormData}
         open={form.open}
       />
-      <Certificate data={form.data} />
+      {form.open && <Certificate data={form.data} />}
     </>
   );
 }
