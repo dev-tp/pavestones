@@ -1,7 +1,6 @@
 import React from 'react';
 
-const IMAGE_WIDTH = 7000;
-const IMAGE_HEIGHT = 5000;
+import { IMAGE_WIDTH, IMAGE_HEIGHT } from '../constants';
 
 const MAP_WIDTH = '7.5in';
 const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;

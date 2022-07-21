@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
+
 const lastCoordinate = { x: 0, y: 0 };
 const offset = { x: 0, y: 0 };
 const point = { x: 0, y: 0 };
@@ -43,7 +45,7 @@ export default function Map(props) {
 
     if (!instance) {
       instance = ref.current;
-      scale = window.innerWidth / 7000;
+      scale = window.innerWidth / IMAGE_WIDTH;
 
       setTransform();
     }
@@ -107,8 +109,8 @@ export default function Map(props) {
         onClick={props.onClick}
         style={{
           background: 'url(/images/floor-plan.png)',
-          height: 5500,
-          width: 7000,
+          height: IMAGE_HEIGHT,
+          width: IMAGE_WIDTH,
         }}
       >
         {props.children}
