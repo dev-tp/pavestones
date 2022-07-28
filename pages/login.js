@@ -2,16 +2,37 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import React from 'react';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+
+import { useUser } from '../lib/useUser';
 
 export default function Login() {
+  const [error, setError] = React.useState(null);
+
+  const { mutate } = useUser({ redirectTo: '/', redirectIfFound: true });
+
   const password = React.useRef();
   const username = React.useRef();
 
   async function submit(event) {
     event.preventDefault();
 
-    console.log(username.current.value);
-    console.log(password.current.value);
+    const response = await fetch('/api/auth', {
+      body: JSON.stringify({
+        password: password.current.value,
+        username: username.current.value,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    });
+
+    const json = await response.json();
+
+    if (json.error) {
+      return setError(json.error);
+    }
+
+    mutate(json, false);
   }
 
   return (
@@ -40,6 +61,14 @@ export default function Login() {
         onSubmit={submit}
         style={{ padding: '3rem 2rem' }}
       >
+        {error && (
+          <Typography
+            color="error"
+            style={{ marginBottom: '1rem', textAlign: 'center' }}
+          >
+            {error}
+          </Typography>
+        )}
         <TextField
           fullWidth
           inputRef={username}

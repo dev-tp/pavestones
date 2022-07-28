@@ -7,6 +7,8 @@ import Form from '../components/Form';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
+
+import { useUser } from '../lib/useUser';
 import schema from '../lib/schema';
 
 const REGULAR_MODE = 0;
@@ -21,6 +23,8 @@ export default function Home() {
   const [markers, setMarkers] = React.useState([]);
   const [mode, setMode] = React.useState(REGULAR_MODE);
   const [searchValue, setSearchValue] = React.useState(null);
+
+  const { data, mutate } = useUser();
 
   const toggleMode = React.useCallback(() => {
     setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
@@ -72,6 +76,14 @@ export default function Home() {
     setForm({ ...form, open: false });
     setMarker(form.data);
     setMode(EDIT_MODE);
+  }
+
+  async function logout() {
+    const response = await fetch('/api/auth', { method: 'DELETE' });
+
+    if (response.ok) {
+      mutate({ user: null });
+    }
   }
 
   function placeMarker(event) {
@@ -151,21 +163,23 @@ export default function Home() {
         <title>Paving Stones</title>
       </Head>
       <div id="home">
-        <Button
-          onClick={toggleMode}
-          size="large"
-          style={{
-            borderColor: '#fff',
-            color: '#fff',
-            left: '1rem',
-            position: 'absolute',
-            top: '1rem',
-            zIndex: 1,
-          }}
-          variant="outlined"
-        >
-          {modes[mode]}
-        </Button>
+        {data.user && (
+          <Button
+            onClick={toggleMode}
+            size="large"
+            style={{
+              borderColor: '#fff',
+              color: '#fff',
+              left: '1rem',
+              position: 'absolute',
+              top: '1rem',
+              zIndex: 1,
+            }}
+            variant="outlined"
+          >
+            {modes[mode]}
+          </Button>
+        )}
         <SearchBar
           onChange={setSearchValue}
           options={markers}
@@ -178,6 +192,22 @@ export default function Home() {
             zIndex: 1,
           }}
         />
+        <Button
+          href={data.user ? undefined : '/login'}
+          onClick={data.user ? logout : undefined}
+          size="large"
+          style={{
+            borderColor: '#fff',
+            color: '#fff',
+            right: '1rem',
+            position: 'absolute',
+            top: '1rem',
+            zIndex: 1,
+          }}
+          variant="outlined"
+        >
+          {data.user ? 'Logout' : 'Login'}
+        </Button>
         <Map coordinate={searchValue} onClick={placeMarker}>
           {render()}
         </Map>
