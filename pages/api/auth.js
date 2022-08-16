@@ -7,7 +7,7 @@ async function handler(request, response) {
   switch (request.method) {
     case 'DELETE':
       await request.session.destroy();
-      return response.status(204).end();
+      return response.json({ user: null });
     case 'POST':
       const { database } = await connection();
       const { password, username } = request.body;
