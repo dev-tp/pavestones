@@ -14,18 +14,14 @@ async function handler(request, response) {
       const { database } = await connection();
       const { password, username } = request.body;
 
-      const results = await database
-        .collection('user')
-        .find({ username })
-        .toArray();
+      const user = await database.collection('user').findOne({ username });
 
-      if (results.length === 0) {
+      if (!user) {
         return response
           .status(403)
           .send({ error: 'Incorrect username or password.' });
       }
 
-      const user = results[0];
       const match = await bcrypt.compare(password, user.hash);
 
       if (match) {
