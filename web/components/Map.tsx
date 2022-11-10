@@ -1,20 +1,23 @@
 import React from 'react';
 
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
+import MapProps from '../types/MapProps';
 
 const lastCoordinate = { x: 0, y: 0 };
 const offset = { x: 0, y: 0 };
 const point = { x: 0, y: 0 };
 
-let instance = null;
+let instance: HTMLDivElement;
 let isPanning = false;
 let scale = 1;
 
-export default function Map(props) {
-  const ref = React.useRef();
+export default function Map(props: MapProps): JSX.Element {
+  const ref = React.useRef<HTMLDivElement>(null);
 
   function setTransform() {
-    instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+    if (instance) {
+      instance.style.transform = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
+    }
   }
 
   React.useEffect(() => {
@@ -50,14 +53,14 @@ export default function Map(props) {
       setTransform();
     }
 
-    function onMouseDown(event) {
+    function onMouseDown(event: MouseEvent) {
       point.x = event.clientX - offset.x;
       point.y = event.clientY - offset.y;
 
       isPanning = true;
     }
 
-    function onMouseMove(event) {
+    function onMouseMove(event: MouseEvent) {
       event.preventDefault();
 
       if (!isPanning) {
@@ -74,7 +77,7 @@ export default function Map(props) {
       isPanning = false;
     }
 
-    function onWheel(event) {
+    function onWheel(event: any) {
       event.preventDefault();
 
       const x = (event.clientX - offset.x) / scale;

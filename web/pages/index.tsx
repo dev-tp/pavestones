@@ -9,7 +9,7 @@ import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
 import { useUser } from '../lib/useUser';
-import schema from '../lib/schema';
+import PaveStoneProps from '../types/PaveStoneProps';
 
 const REGULAR_MODE = 0;
 const INSERT_MODE = 1;
@@ -17,36 +17,45 @@ const EDIT_MODE = 2;
 
 const modes = ['Regular', 'Insert', 'Edit'];
 
-export default function Home() {
-  const [form, setForm] = React.useState({ data: schema, open: false });
-  const [marker, setMarker] = React.useState(null);
-  const [markers, setMarkers] = React.useState([]);
-  const [mode, setMode] = React.useState(REGULAR_MODE);
-  const [searchValue, setSearchValue] = React.useState(null);
+export default function Home(): JSX.Element {
+  const [form, setForm] = React.useState<{
+    data: PaveStoneProps;
+    isOpen: boolean;
+  }>({
+    data: {},
+    isOpen: false,
+  });
+  const [marker, setMarker] = React.useState<PaveStoneProps>({});
+  const [markers, setMarkers] = React.useState<PaveStoneProps[]>([]);
+  const [mode, setMode] = React.useState<number>(REGULAR_MODE);
+  const [searchValue, setSearchValue] = React.useState<PaveStoneProps>({});
 
   const { data, mutate } = useUser();
 
   const toggleMode = React.useCallback(() => {
     setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
-    setMarker(null);
+    setMarker({});
   }, [mode]);
 
-  React.useEffect(
-    () =>
-      fetch('/api')
-        .then((response) => response.json())
-        .then((json) => setMarkers(json)),
-    [setMarkers]
-  );
+  React.useEffect(() => {
+    async function fetchMarkers() {
+      const response = await fetch('/api');
+      const json = await response.json();
+
+      setMarkers(json);
+    }
+
+    fetchMarkers();
+  }, [setMarkers]);
 
   React.useEffect(() => {
     if (mode === REGULAR_MODE) {
       return;
     }
 
-    const handleKeyUp = (event) => {
+    const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
-        setForm({ data: marker, open: true });
+        setForm({ data: marker, isOpen: true });
       } else if (event.key === 'Escape') {
         toggleMode();
       }
@@ -57,15 +66,15 @@ export default function Home() {
     return () => window.removeEventListener('keyup', handleKeyUp, false);
   }, [marker, mode, setForm, toggleMode]);
 
-  async function deleteMarker(data) {
+  async function deleteMarker(data: PaveStoneProps) {
     if (confirm('Are you sure you want to delete this entry?')) {
       const response = await fetch(`/api/${data._id}`, {
         method: 'DELETE',
       });
 
       if ((await response.json()).ok) {
-        setForm({ data: schema, open: false });
-        setMarkers(markers.filter((marker) => marker._id !== data._id));
+        setForm({ data: {}, isOpen: false });
+        setMarkers(markers.filter((marker) => marker?._id !== data._id));
       }
     }
   }
@@ -73,12 +82,12 @@ export default function Home() {
   // TODO Pass form-data as parameter in case user updates data without
   // committing updates
   function editMarkerPosition() {
-    setForm({ ...form, open: false });
+    setForm({ ...form, isOpen: false });
     setMarker(form.data);
     setMode(EDIT_MODE);
   }
 
-  async function logout() {
+  async function logout(): Promise<void> {
     const response = await fetch('/api/auth', { method: 'DELETE' });
 
     if (response.ok) {
@@ -86,22 +95,24 @@ export default function Home() {
     }
   }
 
-  function placeMarker(event) {
+  function placeMarker(event: React.SyntheticEvent<Element, MouseEvent>) {
     if (mode === REGULAR_MODE) {
       return;
     }
 
     setMarker({
-      ...(mode === INSERT_MODE ? schema : form.data),
-      x: event.nativeEvent.offsetX - 4,
-      y: event.nativeEvent.offsetY - 4,
+      ...(mode === INSERT_MODE ? {} : form.data),
+      coordinate: {
+        x: event.nativeEvent.offsetX - 4,
+        y: event.nativeEvent.offsetY - 4,
+      },
     });
   }
 
-  function render() {
-    const openForm = (data) => {
+  function render(): JSX.Element {
+    const openForm = (data: PaveStoneProps) => {
       if (mode === REGULAR_MODE) {
-        setForm({ data, open: true });
+        setForm({ data, isOpen: true });
       }
     };
 
@@ -130,7 +141,7 @@ export default function Home() {
     );
   }
 
-  async function saveFormData(data) {
+  async function saveFormData(data: PaveStoneProps): Promise<void> {
     const response = await fetch(`/api/${data._id || ''}`, {
       body: JSON.stringify(data),
       credentials: 'same-origin',
@@ -143,7 +154,7 @@ export default function Home() {
 
     // If `data._id` is undefined, then `json` is a new entry.
     // Otherwise, it is an update to an entry.
-    if (!data._id) {
+    if (data._id === undefined) {
       setMarkers([...markers, json]);
     } else {
       setMarkers(
@@ -151,10 +162,10 @@ export default function Home() {
       );
     }
 
-    setMarker(null);
+    setMarker({});
 
     setMode(REGULAR_MODE);
-    setForm({ data: schema, open: false });
+    setForm({ data: {}, isOpen: false });
   }
 
   return (
@@ -208,7 +219,7 @@ export default function Home() {
         >
           {data.user ? 'Logout' : 'Login'}
         </Button>
-        <Map coordinate={searchValue} onClick={placeMarker}>
+        <Map coordinate={searchValue.coordinate} onClick={placeMarker}>
           {render()}
         </Map>
         {mode !== REGULAR_MODE && (
@@ -228,13 +239,13 @@ export default function Home() {
       </div>
       <Form
         data={form.data}
-        onCancel={() => setForm({ ...form, open: false })}
+        isOpen={form.isOpen}
+        onCancel={() => setForm({ data: {}, isOpen: false })}
         onDelete={deleteMarker}
         onPositionEdit={editMarkerPosition}
         onSave={saveFormData}
-        open={form.open}
       />
-      {form.open && <Certificate data={form.data} />}
+      {form.isOpen && <Certificate data={form.data} />}
     </>
   );
 }

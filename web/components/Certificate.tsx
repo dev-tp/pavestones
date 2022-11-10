@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { IMAGE_WIDTH, IMAGE_HEIGHT } from '../constants';
+import PaveStoneProps from '../types/PaveStoneProps';
 
 const MAP_WIDTH = '7.5in';
 const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;
@@ -8,7 +9,7 @@ const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;
 const MINI_MAP_HEIGHT = 275;
 const MINI_MAP_WIDTH = 350;
 
-const label = {
+const label: React.CSSProperties = {
   background: '#fff',
   fontSize: '0.8rem',
   left: '0.1rem',
@@ -18,10 +19,14 @@ const label = {
   zIndex: 1,
 };
 
-export default function Certificate(props) {
-  function centerOnPoint(data) {
-    const x = `calc(-${data.x}px + ${MAP_WIDTH} * 0.5)`;
-    const y = `calc(-${data.y}px + ${MAP_HEIGHT} * 0.5)`;
+export default function Certificate({
+  data,
+}: {
+  data: PaveStoneProps;
+}): JSX.Element {
+  function centerOnPoint(data: PaveStoneProps) {
+    const x = `calc(-${data.coordinate?.x}px + ${MAP_WIDTH} * 0.5)`;
+    const y = `calc(-${data.coordinate?.y}px + ${MAP_HEIGHT} * 0.5)`;
 
     return `translate(${x}, ${y})`;
   }
@@ -43,7 +48,7 @@ export default function Certificate(props) {
         />
         <div style={{ flexGrow: 1, textAlign: 'center' }}>
           <p>Cathedral Pave Stone designated for:</p>
-          <p>{props.data.dedicated_to}</p>
+          <p>{data.dedicated_to}</p>
         </div>
       </div>
       <div
@@ -61,7 +66,7 @@ export default function Certificate(props) {
           style={{
             backgroundImage: 'url(/images/cert-floor-plan.png)',
             height: IMAGE_HEIGHT,
-            transform: centerOnPoint(props.data),
+            transform: centerOnPoint(data),
             transformOrigin: '0 0',
             width: IMAGE_WIDTH,
           }}
@@ -70,9 +75,9 @@ export default function Certificate(props) {
             style={{
               background: '#f00',
               height: 4,
-              left: props.data.x,
+              left: data.coordinate?.x,
               position: 'absolute',
-              top: props.data.y,
+              top: data.coordinate?.y,
               width: 4,
             }}
           />
@@ -94,9 +99,9 @@ export default function Certificate(props) {
             style={{
               border: '1px solid #f00',
               height: 20,
-              left: `calc(${(props.data.x / IMAGE_WIDTH) * 100}% - 12px)`,
+              left: `calc(${(data.coordinate!.x / IMAGE_WIDTH) * 100}% - 12px)`,
               position: 'absolute',
-              top: `calc(${(props.data.y / IMAGE_HEIGHT) * 100}% - 25px)`,
+              top: `calc(${(data.coordinate!.y / IMAGE_HEIGHT) * 100}% - 25px)`,
               width: 20,
             }}
           />

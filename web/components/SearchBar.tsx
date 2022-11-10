@@ -1,5 +1,5 @@
 import { autocompleteClasses, styled } from '@mui/material';
-import { VariableSizeList } from 'react-window';
+import { ListChildComponentProps, VariableSizeList } from 'react-window';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Clear from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
@@ -9,20 +9,30 @@ import Popper from '@mui/material/Popper';
 import React from 'react';
 import Search from '@mui/icons-material/Search';
 
+import PaveStoneProps from '../types/PaveStoneProps';
+
 const PADDING = 8;
 
 const filterOptions = createFilterOptions({
   matchFrom: 'any',
-  stringify: (option) => `${option.dedicated_to} ${option.patron}`,
+  stringify: (option: PaveStoneProps) =>
+    `${option.dedicated_to} ${option.patron}`,
 });
 
-const ListboxComponent = React.forwardRef(function Component(props, ref) {
-  const { children, ...other } = props;
-  const itemData = [];
+const ListboxComponent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLElement>
+>(function Component(props, ref) {
+  // `children` is not defined in `ReactNode` anymore, use `PropsWithChildren`
+  // to inherit `children` in React >= 18
+  type ReactNodeWithChildren = React.PropsWithChildren<React.ReactNode>;
 
-  children.forEach((item) => {
+  const { children, ...other } = props;
+  const itemData: ReactNodeWithChildren[] = [];
+
+  (children as ReactNodeWithChildren[]).forEach((item) => {
     itemData.push(item);
-    itemData.push(...(item.children || []));
+    itemData.push(...((item.children as ReactNodeWithChildren[]) || []));
   });
 
   const itemCount = itemData.length;
@@ -71,12 +81,15 @@ const PopperComponent = styled(Popper)({
 
 const OuterElementContext = React.createContext({});
 
-const OuterElementType = React.forwardRef(function Component(props, ref) {
+const OuterElementType = React.forwardRef<HTMLDivElement>(function Component(
+  props,
+  ref
+) {
   const outerProps = React.useContext(OuterElementContext);
   return <div ref={ref} {...props} {...outerProps} />;
 });
 
-function renderRow(props) {
+function renderRow(props: ListChildComponentProps) {
   const { data, index, style } = props;
   const dataset = data[index];
 
@@ -98,11 +111,11 @@ function renderRow(props) {
   );
 }
 
-function useResetCache(data) {
-  const ref = React.useRef(null);
+function useResetCache(data: number) {
+  const ref = React.useRef<VariableSizeList>(null);
 
   React.useEffect(() => {
-    if (ref.current != null) {
+    if (ref.current) {
       ref.current.resetAfterIndex(0, true);
     }
   }, [data]);
@@ -110,25 +123,32 @@ function useResetCache(data) {
   return ref;
 }
 
-export default function SearchBar(props) {
-  const [inputValue, setInputValue] = React.useState('');
-  const [selectedValue, setSelectedValue] = React.useState(null);
+export default function SearchBar(props: {
+  onChange: (data: PaveStoneProps) => void;
+  options: PaveStoneProps[];
+  style: React.CSSProperties;
+}): JSX.Element {
+  const [inputValue, setInputValue] = React.useState<string>('');
+  const [selectedValue, setSelectedValue] = React.useState<PaveStoneProps>({});
 
   function clear() {
-    props.onChange(null);
+    props.onChange({});
     setInputValue('');
-    setSelectedValue(null);
+    setSelectedValue({});
   }
 
-  function handleChange(_, value) {
-    setSelectedValue(value);
-    props.onChange(value);
+  function handleChange(
+    _: React.SyntheticEvent<Element, Event>,
+    value: PaveStoneProps | null
+  ) {
+    setSelectedValue(value ?? {});
+    props.onChange(value ?? {});
   }
 
   return (
     <Autocomplete
       filterOptions={filterOptions}
-      getOptionLabel={(option) => option.dedicated_to}
+      getOptionLabel={(option: PaveStoneProps) => option.dedicated_to ?? ''}
       inputValue={inputValue}
       isOptionEqualToValue={(option, value) => option._id === value._id}
       ListboxComponent={ListboxComponent}
@@ -157,7 +177,7 @@ export default function SearchBar(props) {
           </IconButton>
         </Paper>
       )}
-      renderOption={(props, option) => [props, option]}
+      renderOption={(props, option) => [props, option] as React.ReactNode}
       style={props.style}
       value={selectedValue}
     />

@@ -13,12 +13,15 @@ import React from 'react';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 
-export default function Form(props) {
-  const dedicatedTo = React.createRef();
-  const isDeceased = React.createRef();
-  const patron = React.createRef();
+import FormProps from '../types/FormProps';
+import PaveStoneProps from '../types/PaveStoneProps';
 
-  function getCurrentData() {
+export default function Form(props: FormProps): JSX.Element {
+  const dedicatedTo = React.createRef<HTMLInputElement>();
+  const isDeceased = React.createRef<HTMLInputElement>();
+  const patron = React.createRef<HTMLInputElement>();
+
+  function getCurrentData(): PaveStoneProps {
     return {
       ...props.data,
       dedicated_to: dedicatedTo.current?.value,
@@ -27,7 +30,7 @@ export default function Form(props) {
     };
   }
 
-  function handleKeyUp(event) {
+  function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.ctrlKey && event.key === 'Enter') {
       props.onSave(getCurrentData());
     } else if (event.key === 'Escape') {
@@ -36,7 +39,7 @@ export default function Form(props) {
   }
 
   return (
-    <Dialog id="form" fullWidth onKeyUp={handleKeyUp} open={props.open}>
+    <Dialog id="form" fullWidth onKeyUp={handleKeyUp} open={props.isOpen}>
       <DialogTitle>
         {props.data?._id && (
           <>
