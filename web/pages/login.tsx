@@ -1,99 +1,66 @@
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import React from 'react';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 
 import { useUser } from '../lib/useUser';
 
-export default function Login() {
-  const [error, setError] = React.useState(null);
+export default function Login(): JSX.Element {
+  const [error, setError] = React.useState<string>('');
 
   const { mutate } = useUser({ redirectTo: '/', redirectIfFound: true });
 
-  const password = React.useRef();
-  const username = React.useRef();
+  const password = React.useRef<HTMLInputElement>(null);
+  const username = React.useRef<HTMLInputElement>(null);
 
-  async function submit(event) {
+  async function submit(event: React.FormEvent) {
     event.preventDefault();
 
-    const response = await fetch('/api/auth', {
-      body: JSON.stringify({
-        password: password.current.value,
-        username: username.current.value,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-    });
+    try {
+      const response = await fetch('/api/auth', {
+        body: JSON.stringify({
+          password: password.current?.value,
+          username: username.current?.value,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      });
 
-    const json = await response.json();
+      const json = await response.json();
 
-    if (json.error) {
-      return setError(json.error);
+      if (json.error) {
+        return setError(json.error);
+      }
+
+      mutate(json, false);
+    } catch (_) {
+      setError('There was a server error. Please try again later.');
     }
-
-    mutate(json, false);
   }
 
   return (
-    <div
-      style={{
-        alignItems: 'center',
-        display: 'flex',
-        height: '100%',
-        justifyContent: 'center',
-      }}
-    >
-      <div
-        style={{
-          background: 'url(/images/floor-plan.png)',
-          backgroundPositionY: '50%',
-          backgroundSize: 'cover',
-          filter: 'brightness(2) blur(10px) invert(1)',
-          inset: -10,
-          position: 'absolute',
-          zIndex: -1,
-        }}
-      />
-      <Paper
-        component="form"
-        elevation={3}
+    <div className="flex h-screen items-center justify-center">
+      <div className="absolute inset-0 bg-[url('/images/floor-plan.png')] bg-cover bg-center blur-md invert" />
+      <form
+        className="z-10 grid w-1/4 gap-4 rounded-lg bg-white p-4 drop-shadow-md"
         onSubmit={submit}
-        style={{ padding: '3rem 2rem' }}
       >
         {error && (
-          <Typography
-            color="error"
-            style={{ marginBottom: '1rem', textAlign: 'center' }}
-          >
-            {error}
-          </Typography>
+          <span className="text-center text-sm text-red-500">{error}</span>
         )}
-        <TextField
-          fullWidth
-          inputRef={username}
-          label="Username"
-          style={{ marginBottom: '1rem' }}
-          variant="standard"
+        <input
+          className="rounded-md border p-2"
+          placeholder="Username"
+          ref={username}
+          type="text"
         />
-        <TextField
-          fullWidth
-          inputRef={password}
-          label="Password"
-          style={{ marginBottom: '3rem' }}
+        <input
+          className="rounded-md border p-2"
+          placeholder="Password"
+          ref={password}
           type="password"
-          variant="standard"
         />
-        <Button
-          fullWidth
-          size="large"
-          style={{ textTransform: 'capitalize' }}
-          type="submit"
-          variant="outlined"
-        >
-          Login
-        </Button>
-      </Paper>
+        <button className="rounded-md bg-blue-500 p-2 text-white">
+          Submit
+        </button>
+      </form>
     </div>
   );
 }
