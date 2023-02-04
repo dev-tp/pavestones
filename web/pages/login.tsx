@@ -37,11 +37,12 @@ export default function Login(): JSX.Element {
 
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="absolute inset-0 bg-[url('/images/floor-plan.png')] bg-cover bg-center blur-md invert" />
+      <div className="absolute -inset-10 bg-[url('/images/floor-plan.png')] bg-cover bg-center blur-sm invert" />
       <form
-        className="z-10 grid w-1/4 gap-4 rounded-lg bg-white p-4 drop-shadow-md"
+        className="z-10 grid w-1/4 gap-4 rounded-lg bg-white p-4 drop-shadow-lg"
         onSubmit={submit}
       >
+        <span className="text-xl">Pave Stones</span>
         {error && (
           <span className="text-center text-sm text-red-500">{error}</span>
         )}
@@ -57,8 +58,8 @@ export default function Login(): JSX.Element {
           ref={password}
           type="password"
         />
-        <button className="rounded-md bg-blue-500 p-2 text-white">
-          Submit
+        <button className="rounded-md bg-blue-500 p-2 text-white drop-shadow-md">
+          Login
         </button>
       </form>
     </div>
