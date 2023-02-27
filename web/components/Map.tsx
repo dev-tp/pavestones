@@ -77,15 +77,13 @@ export default function Map(props: MapProps): JSX.Element {
       isPanning = false;
     }
 
-    function onWheel(event: any) {
+    function onWheel(event: WheelEvent) {
       event.preventDefault();
 
       const x = (event.clientX - offset.x) / scale;
       const y = (event.clientY - offset.y) / scale;
 
-      const delta = event.wheelDelta ? event.wheelDelta : -event.deltaY;
-
-      delta > 0 ? (scale *= 1.1) : (scale /= 1.1);
+      -event.deltaY > 0 ? (scale *= 1.1) : (scale /= 1.1);
 
       offset.x = event.clientX - x * scale;
       offset.y = event.clientY - y * scale;
