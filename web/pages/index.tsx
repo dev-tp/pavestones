@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import Head from 'next/head';
 import React from 'react';
 
@@ -173,23 +172,14 @@ export default function Home(): JSX.Element {
       <Head>
         <title>Paving Stones</title>
       </Head>
-      <div id="home">
+      <div className="bg-zinc-800">
         {data.user && (
-          <Button
+          <button
+            className="absolute top-4 left-4 z-10 rounded-md border border-white px-4 py-2 text-white"
             onClick={toggleMode}
-            size="large"
-            style={{
-              borderColor: '#fff',
-              color: '#fff',
-              left: '1rem',
-              position: 'absolute',
-              top: '1rem',
-              zIndex: 1,
-            }}
-            variant="outlined"
           >
             {modes[mode]}
-          </Button>
+          </button>
         )}
         <SearchBar
           onChange={setSearchValue}
@@ -203,36 +193,27 @@ export default function Home(): JSX.Element {
             zIndex: 1,
           }}
         />
-        <Button
-          href={data.user ? undefined : '/login'}
-          onClick={data.user ? logout : undefined}
-          size="large"
-          style={{
-            borderColor: '#fff',
-            color: '#fff',
-            right: '1rem',
-            position: 'absolute',
-            top: '1rem',
-            zIndex: 1,
-          }}
-          variant="outlined"
-        >
-          {data.user ? 'Logout' : 'Login'}
-        </Button>
+        </div>
+        {data.user ? (
+          <button
+            className="absolute right-4 top-4 z-10 rounded-md border border-white px-4 py-2 text-white"
+            onClick={logout}
+          >
+            Logout
+          </button>
+        ) : (
+          <a
+            className="absolute right-4 top-4 z-10 rounded-md border border-white px-4 py-2 text-white"
+            href="/login"
+          >
+            Login
+          </a>
+        )}
         <Map coordinate={searchValue.coordinate} onClick={placeMarker}>
           {render()}
         </Map>
         {mode !== REGULAR_MODE && (
-          <span
-            style={{
-              bottom: '1rem',
-              color: '#fff',
-              left: '50%',
-              position: 'absolute',
-              transform: 'translate(-50%)',
-              zIndex: 1,
-            }}
-          >
+          <span className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 transform text-white">
             Press Enter to lock position and fill form.
           </span>
         )}
