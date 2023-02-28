@@ -181,18 +181,12 @@ export default function Home(): JSX.Element {
             {modes[mode]}
           </button>
         )}
-        <SearchBar
-          onChange={setSearchValue}
-          options={markers}
-          style={{
-            left: '50%',
-            position: 'absolute',
-            top: '1rem',
-            transform: 'translate(-50%)',
-            width: 400,
-            zIndex: 1,
-          }}
-        />
+        <div className="absolute top-4 left-1/2 z-10 w-1/4 -translate-x-1/2 transform">
+          <SearchBar
+            onChange={(record) => setSearchValue(record || {})}
+            records={markers}
+            selected={searchValue}
+          />
         </div>
         {data.user ? (
           <button
