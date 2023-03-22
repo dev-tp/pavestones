@@ -1,21 +1,15 @@
 import MarkerProps from '../types/MarkerProps';
 
-import style from '../styles/Marker.module.css';
-
 export default function Marker(props: MarkerProps): JSX.Element {
-  const classNames = [style.root];
-
-  if (props.insertMode) {
-    classNames.push(style.modifiable);
-  }
-
-  if (props.searchResult) {
-    classNames.push(style.searchResult);
-  }
+  const backgroundColor = props.insertMode
+    ? 'bg-yellow-500'
+    : props.searchResult
+    ? 'bg-blue-500'
+    : 'bg-red-500';
 
   return (
     <div
-      className={classNames.join(' ')}
+      className={`absolute h-2 w-2 rounded-full ${backgroundColor}`}
       onClick={props.onClick}
       style={{ left: props.data.coordinate?.x, top: props.data.coordinate?.y }}
       title={props.data.dedicated_to}
