@@ -8,7 +8,7 @@ import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
 import { useUser } from '../lib/useUser';
-import PaveStoneProps from '../types/PaveStoneProps';
+import { PaveStoneProps } from '../types';
 
 const REGULAR_MODE = 0;
 const INSERT_MODE = 1;

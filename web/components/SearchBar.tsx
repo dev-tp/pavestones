@@ -2,7 +2,7 @@ import { Combobox } from '@headlessui/react';
 import Fuse from 'fuse.js';
 import React from 'react';
 
-import PaveStoneProps from '../types/PaveStoneProps';
+import { PaveStoneProps } from '../types';
 
 export default function SearchBar(props: {
   onChange: (record: PaveStoneProps | null) => void;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMAGE_WIDTH, IMAGE_HEIGHT } from '../constants';
-import PaveStoneProps from '../types/PaveStoneProps';
+import { PaveStoneProps } from '../types';
 
 const MAP_WIDTH = '7.5in';
 const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;

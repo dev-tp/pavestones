@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
-import MapProps from '../types/MapProps';
+import { MapProps } from '../types';
 
 const lastCoordinate = { x: 0, y: 0 };
 const offset = { x: 0, y: 0 };

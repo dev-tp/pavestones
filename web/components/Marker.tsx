@@ -1,4 +1,4 @@
-import MarkerProps from '../types/MarkerProps';
+import { MarkerProps } from '../types';
 
 export default function Marker(props: MarkerProps): JSX.Element {
   const backgroundColor = props.insertMode

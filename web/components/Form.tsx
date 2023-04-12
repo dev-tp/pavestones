@@ -6,8 +6,7 @@ import {
 } from '@heroicons/react/24/outline';
 import React from 'react';
 
-import FormProps from '../types/FormProps';
-import PaveStoneProps from '../types/PaveStoneProps';
+import { FormProps, PaveStoneProps } from '../types';
 
 export default function Form(props: FormProps): JSX.Element {
   const dedicatedTo = React.createRef<HTMLInputElement>();
