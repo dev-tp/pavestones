@@ -1,4 +1,5 @@
 import { Combobox } from '@headlessui/react';
+import Fuse from 'fuse.js';
 import React from 'react';
 
 import PaveStoneProps from '../types/PaveStoneProps';
@@ -10,12 +11,24 @@ export default function SearchBar(props: {
 }): JSX.Element {
   const [query, setQuery] = React.useState<string>('');
 
-  const records =
-    query === ''
-      ? props.records
-      : props.records.filter(
-          (record) => record.dedicated_to === query || record.patron === query
-        );
+  const fuse = React.useMemo<Fuse<PaveStoneProps>>(
+    () =>
+      new Fuse<PaveStoneProps>(props.records, {
+        keys: ['dedicated_to', 'patron'],
+      }),
+    [props.records]
+  );
+
+  const records = React.useMemo<PaveStoneProps[]>(
+    () =>
+      query.length > 0
+        ? fuse
+            .search(query)
+            .slice(0, 25)
+            .map((result) => result.item)
+        : props.records.slice(-10),
+    [props.records, query]
+  );
 
   return (
     <Combobox
