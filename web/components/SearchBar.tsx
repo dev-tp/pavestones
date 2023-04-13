@@ -15,6 +15,7 @@ export default function SearchBar(props: {
     () =>
       new Fuse<PaveStoneProps>(props.records, {
         keys: ['dedicated_to', 'patron'],
+        threshold: 0.25,
       }),
     [props.records]
   );
@@ -22,10 +23,7 @@ export default function SearchBar(props: {
   const records = React.useMemo<PaveStoneProps[]>(
     () =>
       query.length > 0
-        ? fuse
-            .search(query)
-            .slice(0, 25)
-            .map((result) => result.item)
+        ? fuse.search(query, { limit: 25 }).map((result) => result.item)
         : props.records.slice(-10),
     [props.records, query]
   );
