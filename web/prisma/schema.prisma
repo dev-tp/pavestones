@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  hash     String
+}
+
+model Pavestone {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  patron       String
+  dedicated_to String
+  coordinate   Coordinate
+  is_deceased  Boolean    @default(false)
+  date         DateTime   @default(now())
+}
+
+type Coordinate {
+  x Int
+  y Int
+}
