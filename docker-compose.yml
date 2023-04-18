@@ -1,7 +1,8 @@
 services:
-
   database:
     build: ./database
+    env_file:
+      - web/.env
     ports:
       - 27017:27017
 
