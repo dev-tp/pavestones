@@ -78,7 +78,8 @@ export default function Map(props: MapProps): JSX.Element {
     }
 
     function onWheel(event: WheelEvent) {
-      event.preventDefault();
+      // Unable to process `preventDefault` while passive is enabled.
+      // event.preventDefault();
 
       const x = (event.clientX - offset.x) / scale;
       const y = (event.clientY - offset.y) / scale;
@@ -94,7 +95,7 @@ export default function Map(props: MapProps): JSX.Element {
     instance.addEventListener('mousedown', onMouseDown, false);
     instance.addEventListener('mousemove', onMouseMove, false);
     instance.addEventListener('mouseup', onMouseUp, false);
-    instance.addEventListener('wheel', onWheel, false);
+    instance.addEventListener('wheel', onWheel, { passive: true });
 
     return () => {
       instance.removeEventListener('mousedown', onMouseDown, false);
