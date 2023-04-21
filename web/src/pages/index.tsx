@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import React from 'react';
 
 import Certificate from '../components/Certificate';
@@ -196,12 +197,12 @@ export default function Home(): JSX.Element {
             Logout
           </button>
         ) : (
-          <a
+          <Link
             className="absolute right-4 top-4 z-10 rounded-md border border-white px-4 py-2 text-white"
             href="/login"
           >
             Login
-          </a>
+          </Link>
         )}
         <Map coordinate={searchValue.coordinate} onClick={placeMarker}>
           {render()}
