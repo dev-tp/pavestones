@@ -6,7 +6,8 @@ import {
 } from '@heroicons/react/24/outline';
 import React from 'react';
 
-import { FormProps, PaveStoneProps } from '../types';
+import { FormProps } from '../types';
+import { Pavestone } from '@prisma/client';
 
 export default function Form(props: FormProps): JSX.Element {
   const dedicatedTo = React.createRef<HTMLInputElement>();
@@ -14,13 +15,13 @@ export default function Form(props: FormProps): JSX.Element {
 
   let isDeceased = false;
 
-  function getCurrentData(): PaveStoneProps {
+  function getCurrentData(): Pavestone {
     return {
       ...props.data,
-      dedicated_to: dedicatedTo.current?.value,
+      dedicated_to: dedicatedTo.current!.value,
       is_deceased: isDeceased,
-      patron: patron.current?.value,
-    };
+      patron: patron.current!.value,
+    } as Pavestone;
   }
 
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -42,7 +43,7 @@ export default function Form(props: FormProps): JSX.Element {
       <div className="fixed inset-0 overflow-y-auto">
         <div className="flex min-h-full items-center justify-center">
           <Dialog.Panel className="flex w-1/3 flex-col rounded-md bg-white p-4 pb-2">
-            {props.data._id && (
+            {props.data.id && (
               <div className="flex justify-end">
                 <button
                   className="px-1"

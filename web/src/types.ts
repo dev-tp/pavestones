@@ -1,34 +1,24 @@
+import { Pavestone } from '@prisma/client';
+
 export interface FormProps {
-  data: PaveStoneProps;
+  data: Pavestone;
   isOpen: boolean;
   onCancel: () => void;
-  onDelete: (data: PaveStoneProps) => void;
-  onPositionEdit: (data: PaveStoneProps) => void;
-  onSave: (data: PaveStoneProps) => void;
+  onDelete: (data: Pavestone) => void;
+  onPositionEdit: (data: Pavestone) => void;
+  onSave: (data: Pavestone) => void;
 }
 
 export interface MapProps {
   children: JSX.Element;
-  coordinate?: Point;
+  x?: number;
+  y?: number;
   onClick: (event: React.SyntheticEvent<Element, MouseEvent>) => void;
 }
 
 export interface MarkerProps {
-  data: PaveStoneProps;
+  data: Pavestone;
   insertMode?: boolean;
   onClick?: () => void;
   searchResult?: boolean;
-}
-
-export interface PaveStoneProps {
-  _id?: number;
-  patron?: string;
-  dedicated_to?: string;
-  is_deceased?: boolean;
-  coordinate?: Point;
-}
-
-export interface Point {
-  x: number;
-  y: number;
 }

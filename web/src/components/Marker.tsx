@@ -11,7 +11,7 @@ export default function Marker(props: MarkerProps): JSX.Element {
     <div
       className={`absolute h-2 w-2 rounded-full ${backgroundColor}`}
       onClick={props.onClick}
-      style={{ left: props.data.coordinate?.x, top: props.data.coordinate?.y }}
+      style={{ left: props.data.x, top: props.data.y }}
       title={props.data.dedicated_to}
     />
   );

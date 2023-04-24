@@ -14,15 +14,11 @@ model User {
 }
 
 model Pavestone {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   patron       String
   dedicated_to String
-  coordinate   Coordinate
-  is_deceased  Boolean    @default(false)
-  date         DateTime   @default(now())
-}
-
-type Coordinate {
-  x Int
-  y Int
+  is_deceased  Boolean   @default(false)
+  x            Int
+  y            Int
+  date         DateTime @default(now())
 }

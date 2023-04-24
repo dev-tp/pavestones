@@ -1,15 +1,15 @@
+import { Pavestone } from '@prisma/client';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 
+import { trpc } from '../utils/trpc';
 import Certificate from '../components/Certificate';
 import Form from '../components/Form';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
-
-import { useUser } from '../lib/useUser';
-import { PaveStoneProps } from '../types';
 
 const REGULAR_MODE = 0;
 const INSERT_MODE = 1;
@@ -19,34 +19,45 @@ const modes = ['Regular', 'Insert', 'Edit'];
 
 export default function Home(): JSX.Element {
   const [form, setForm] = React.useState<{
-    data: PaveStoneProps;
+    data: Pavestone;
     isOpen: boolean;
   }>({
-    data: {},
+    data: {} as Pavestone,
     isOpen: false,
   });
-  const [marker, setMarker] = React.useState<PaveStoneProps>({});
-  const [markers, setMarkers] = React.useState<PaveStoneProps[]>([]);
+  const [marker, setMarker] = React.useState<Pavestone>({} as Pavestone);
   const [mode, setMode] = React.useState<number>(REGULAR_MODE);
-  const [searchValue, setSearchValue] = React.useState<PaveStoneProps>({});
+  const [searchValue, setSearchValue] = React.useState<Pavestone>(
+    {} as Pavestone
+  );
 
-  const { data, mutate } = useUser();
+  const router = useRouter();
+  const utils = trpc.useContext();
+
+  const logout = trpc.session.logout.useMutation({
+    onSuccess: () => router.reload(),
+    onError: (error) => console.error(error.message),
+  });
+
+  const markers = {
+    add: trpc.pavestones.add.useMutation({
+      onSuccess: () => utils.pavestones.invalidate(),
+    }),
+    delete: trpc.pavestones.delete.useMutation({
+      onSuccess: () => utils.invalidate(),
+    }),
+    list: trpc.pavestones.list.useQuery(),
+    update: trpc.pavestones.update.useMutation({
+      onSuccess: () => utils.invalidate(),
+    }),
+  };
+
+  const user = trpc.session.user.useQuery().data;
 
   const toggleMode = React.useCallback(() => {
     setMode(mode === REGULAR_MODE ? INSERT_MODE : REGULAR_MODE);
-    setMarker({});
+    setMarker({} as Pavestone);
   }, [mode]);
-
-  React.useEffect(() => {
-    async function fetchMarkers() {
-      const response = await fetch('/api');
-      const json = await response.json();
-
-      setMarkers(json);
-    }
-
-    fetchMarkers();
-  }, [setMarkers]);
 
   React.useEffect(() => {
     if (mode === REGULAR_MODE) {
@@ -66,16 +77,10 @@ export default function Home(): JSX.Element {
     return () => window.removeEventListener('keyup', handleKeyUp, false);
   }, [marker, mode, setForm, toggleMode]);
 
-  async function deleteMarker(data: PaveStoneProps) {
+  async function deleteMarker(data: Pavestone) {
     if (confirm('Are you sure you want to delete this entry?')) {
-      const response = await fetch(`/api/${data._id}`, {
-        method: 'DELETE',
-      });
-
-      if ((await response.json()).ok) {
-        setForm({ data: {}, isOpen: false });
-        setMarkers(markers.filter((marker) => marker?._id !== data._id));
-      }
+      await markers.delete.mutateAsync(data);
+      setForm({ data: {} as Pavestone, isOpen: false });
     }
   }
 
@@ -87,30 +92,20 @@ export default function Home(): JSX.Element {
     setMode(EDIT_MODE);
   }
 
-  async function logout(): Promise<void> {
-    const response = await fetch('/api/auth', { method: 'DELETE' });
-
-    if (response.ok) {
-      mutate({ user: null });
-    }
-  }
-
   function placeMarker(event: React.SyntheticEvent<Element, MouseEvent>) {
     if (mode === REGULAR_MODE) {
       return;
     }
 
     setMarker({
-      ...(mode === INSERT_MODE ? {} : form.data),
-      coordinate: {
-        x: event.nativeEvent.offsetX - 4,
-        y: event.nativeEvent.offsetY - 4,
-      },
+      ...(mode === INSERT_MODE ? ({} as Pavestone) : form.data),
+      x: event.nativeEvent.offsetX - 4,
+      y: event.nativeEvent.offsetY - 4,
     });
   }
 
   function render(): JSX.Element {
-    const openForm = (data: PaveStoneProps) => {
+    const openForm = (data: Pavestone) => {
       if (mode === REGULAR_MODE) {
         setForm({ data, isOpen: true });
       }
@@ -118,12 +113,12 @@ export default function Home(): JSX.Element {
 
     return (
       <>
-        {markers.map((data, i) => {
-          if (marker && marker._id === data._id) {
+        {markers.list.data?.map((data: Pavestone, i: number) => {
+          if (marker && marker.id === data.id) {
             return null;
           }
 
-          if (searchValue && searchValue._id === data._id) {
+          if (searchValue && searchValue.id === data.id) {
             return (
               <Marker
                 data={data}
@@ -141,31 +136,16 @@ export default function Home(): JSX.Element {
     );
   }
 
-  async function saveFormData(data: PaveStoneProps): Promise<void> {
-    const response = await fetch(`/api/${data._id || ''}`, {
-      body: JSON.stringify(data),
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-      mode: 'cors',
-    });
-
-    const json = await response.json();
-
-    // If `data._id` is undefined, then `json` is a new entry.
-    // Otherwise, it is an update to an entry.
-    if (data._id === undefined) {
-      setMarkers([...markers, json]);
+  async function saveFormData(data: Pavestone): Promise<void> {
+    if (data.id) {
+      await markers.update.mutateAsync(data);
     } else {
-      setMarkers(
-        markers.map((marker) => (marker._id === json._id ? json : marker))
-      );
+      await markers.add.mutateAsync(data);
     }
 
-    setMarker({});
-
+    setMarker({} as Pavestone);
     setMode(REGULAR_MODE);
-    setForm({ data: {}, isOpen: false });
+    setForm({ data: {} as Pavestone, isOpen: false });
   }
 
   return (
@@ -174,7 +154,7 @@ export default function Home(): JSX.Element {
         <title>Paving Stones</title>
       </Head>
       <div className="bg-zinc-800">
-        {data.user && (
+        {user?.isLoggedIn && (
           <button
             className="absolute top-4 left-4 z-10 rounded-md border border-white px-4 py-2 text-white"
             onClick={toggleMode}
@@ -184,15 +164,15 @@ export default function Home(): JSX.Element {
         )}
         <div className="absolute top-4 left-1/2 z-10 w-1/4 -translate-x-1/2 transform">
           <SearchBar
-            onChange={(record) => setSearchValue(record || {})}
-            records={markers}
+            onChange={(record) => setSearchValue(record || ({} as Pavestone))}
+            records={markers.list.data as Pavestone[]}
             selected={searchValue}
           />
         </div>
-        {data.user ? (
+        {user?.isLoggedIn ? (
           <button
             className="absolute right-4 top-4 z-10 rounded-md border border-white px-4 py-2 text-white"
-            onClick={logout}
+            onClick={async () => await logout.mutateAsync()}
           >
             Logout
           </button>
@@ -204,7 +184,7 @@ export default function Home(): JSX.Element {
             Login
           </Link>
         )}
-        <Map coordinate={searchValue.coordinate} onClick={placeMarker}>
+        <Map x={searchValue.x} y={searchValue.y} onClick={placeMarker}>
           {render()}
         </Map>
         {mode !== REGULAR_MODE && (
@@ -216,7 +196,7 @@ export default function Home(): JSX.Element {
       <Form
         data={form.data}
         isOpen={form.isOpen}
-        onCancel={() => setForm({ data: {}, isOpen: false })}
+        onCancel={() => setForm({ data: {} as Pavestone, isOpen: false })}
         onDelete={deleteMarker}
         onPositionEdit={editMarkerPosition}
         onSave={saveFormData}

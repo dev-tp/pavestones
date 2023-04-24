@@ -1,11 +1,17 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
-import { useUser } from '../lib/useUser';
+import { trpc } from '../utils/trpc';
 
 export default function Login(): JSX.Element {
   const [error, setError] = React.useState<string>('');
 
-  const { mutate } = useUser({ redirectTo: '/', redirectIfFound: true });
+  const router = useRouter();
+
+  const login = trpc.session.login.useMutation({
+    onSuccess: () => router.push('/'),
+    onError: (error) => setError(error.message),
+  });
 
   const password = React.useRef<HTMLInputElement>(null);
   const username = React.useRef<HTMLInputElement>(null);
@@ -13,25 +19,8 @@ export default function Login(): JSX.Element {
   async function submit(event: React.FormEvent) {
     event.preventDefault();
 
-    try {
-      const response = await fetch('/api/auth', {
-        body: JSON.stringify({
-          password: password.current?.value,
-          username: username.current?.value,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-      });
-
-      const json = await response.json();
-
-      if (json.error) {
-        return setError(json.error);
-      }
-
-      mutate(json, false);
-    } catch (_) {
-      setError('There was a server error. Please try again later.');
+    if (username.current) {
+      login.mutate({ username: username.current.value });
     }
   }
 

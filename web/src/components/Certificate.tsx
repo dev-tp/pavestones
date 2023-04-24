@@ -1,7 +1,7 @@
+import { Pavestone } from '@prisma/client';
 import React from 'react';
 
 import { IMAGE_WIDTH, IMAGE_HEIGHT } from '../constants';
-import { PaveStoneProps } from '../types';
 
 const MAP_WIDTH = '7.5in';
 const MAP_HEIGHT = `calc((${IMAGE_HEIGHT} * ${MAP_WIDTH}) / ${IMAGE_WIDTH})`;
@@ -22,11 +22,11 @@ const label: React.CSSProperties = {
 export default function Certificate({
   data,
 }: {
-  data: PaveStoneProps;
+  data: Pavestone;
 }): JSX.Element {
-  function centerOnPoint(data: PaveStoneProps) {
-    const x = `calc(-${data.coordinate?.x}px + ${MAP_WIDTH} * 0.5)`;
-    const y = `calc(-${data.coordinate?.y}px + ${MAP_HEIGHT} * 0.5)`;
+  function centerOnPoint(data: Pavestone) {
+    const x = `calc(-${data.x}px + ${MAP_WIDTH} * 0.5)`;
+    const y = `calc(-${data.y}px + ${MAP_HEIGHT} * 0.5)`;
 
     return `translate(${x}, ${y})`;
   }
@@ -75,9 +75,9 @@ export default function Certificate({
             style={{
               background: '#f00',
               height: 4,
-              left: data.coordinate?.x,
+              left: data.x,
               position: 'absolute',
-              top: data.coordinate?.y,
+              top: data.y,
               width: 4,
             }}
           />
@@ -99,9 +99,9 @@ export default function Certificate({
             style={{
               border: '1px solid #f00',
               height: 20,
-              left: `calc(${(data.coordinate!.x / IMAGE_WIDTH) * 100}% - 12px)`,
+              left: `calc(${(data.x / IMAGE_WIDTH) * 100}% - 12px)`,
               position: 'absolute',
-              top: `calc(${(data.coordinate!.y / IMAGE_HEIGHT) * 100}% - 25px)`,
+              top: `calc(${(data.y / IMAGE_HEIGHT) * 100}% - 25px)`,
               width: 20,
             }}
           />

@@ -21,25 +21,25 @@ export default function Map(props: MapProps): JSX.Element {
   }
 
   React.useEffect(() => {
-    if (
-      !props.coordinate ||
-      (props.coordinate.x === lastCoordinate.x &&
-        props.coordinate.y === lastCoordinate.y)
-    ) {
+    if (!props.x || !props.y) {
+      return;
+    }
+
+    if (props.x === lastCoordinate.x && props.y === lastCoordinate.y) {
       return;
     }
 
     scale = 2.5;
 
     // `props.coordinate` must be positive
-    offset.x = -props.coordinate.x * scale + window.innerWidth / 2;
-    offset.y = -props.coordinate.y * scale + window.innerHeight / 2;
+    offset.x = -props.x * scale + window.innerWidth / 2;
+    offset.y = -props.y * scale + window.innerHeight / 2;
 
-    lastCoordinate.x = props.coordinate.x;
-    lastCoordinate.y = props.coordinate.y;
+    lastCoordinate.x = props.x;
+    lastCoordinate.y = props.y;
 
     setTransform();
-  }, [props.coordinate]);
+  }, [props.x, props.y]);
 
   React.useEffect(() => {
     instance = ref.current;
