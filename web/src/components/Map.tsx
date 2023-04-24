@@ -7,7 +7,7 @@ const lastCoordinate = { x: 0, y: 0 };
 const offset = { x: 0, y: 0 };
 const point = { x: 0, y: 0 };
 
-let instance: HTMLDivElement;
+let instance: HTMLDivElement | null;
 let isPanning = false;
 let scale = 1;
 
@@ -42,16 +42,10 @@ export default function Map(props: MapProps): JSX.Element {
   }, [props.coordinate]);
 
   React.useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
+    instance = ref.current;
 
-    if (!instance) {
-      instance = ref.current;
-      scale = window.innerWidth / IMAGE_WIDTH;
-
-      setTransform();
-    }
+    scale = window.innerWidth / IMAGE_WIDTH;
+    setTransform();
 
     function onMouseDown(event: MouseEvent) {
       point.x = event.clientX - offset.x;
@@ -92,16 +86,16 @@ export default function Map(props: MapProps): JSX.Element {
       setTransform();
     }
 
-    instance.addEventListener('mousedown', onMouseDown, false);
-    instance.addEventListener('mousemove', onMouseMove, false);
-    instance.addEventListener('mouseup', onMouseUp, false);
-    instance.addEventListener('wheel', onWheel, { passive: true });
+    instance?.addEventListener('mousedown', onMouseDown, false);
+    instance?.addEventListener('mousemove', onMouseMove, false);
+    instance?.addEventListener('mouseup', onMouseUp, false);
+    instance?.addEventListener('wheel', onWheel, { passive: true });
 
     return () => {
-      instance.removeEventListener('mousedown', onMouseDown, false);
-      instance.removeEventListener('mousemove', onMouseMove, false);
-      instance.removeEventListener('mouseup', onMouseUp, false);
-      instance.removeEventListener('wheel', onWheel, false);
+      instance?.removeEventListener('mousedown', onMouseDown, false);
+      instance?.removeEventListener('mousemove', onMouseMove, false);
+      instance?.removeEventListener('mouseup', onMouseUp, false);
+      instance?.removeEventListener('wheel', onWheel, false);
     };
   }, [ref]);
 
