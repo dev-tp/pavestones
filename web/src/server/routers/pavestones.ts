@@ -18,7 +18,7 @@ export const pavestoneRouter = router({
     });
   }),
   delete: procedure
-    .input(schema.extend({ id: z.string() }))
+    .input(schema.extend({ id: z.number() }))
     .mutation(async ({ input }) => {
       return await prisma.pavestone.delete({ where: { id: input.id } });
     }),
@@ -26,7 +26,7 @@ export const pavestoneRouter = router({
     return await prisma.pavestone.findMany();
   }),
   update: procedure
-    .input(schema.extend({ id: z.string() }))
+    .input(schema.extend({ id: z.number() }))
     .mutation(async ({ input }) => {
       const { id, ...data } = input;
       return await prisma.pavestone.update({
