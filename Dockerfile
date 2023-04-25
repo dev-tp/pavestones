@@ -1,20 +1,30 @@
-FROM node:alpine
+FROM alpine
 
-WORKDIR /root/
+WORKDIR /root
 
-COPY ./ /root/
+COPY ./ ./
 
-RUN yarn
-RUN yarn build
+RUN apk add npm
+RUN npm install -g pnpm
 
-FROM node:alpine
+RUN pnpm install
+RUN pnpm build
 
-WORKDIR /root/
+FROM alpine
 
-COPY --from=0 /root/.env.local /root/.env.local
-COPY --from=0 /root/.next/ /root/.next/
-COPY --from=0 /root/node_modules/ /root/node_modules/
-COPY --from=0 /root/package.json /root/package.json
-COPY --from=0 /root/public/ /root/public/
+WORKDIR /root
 
-CMD [ "npm", "start" ]
+COPY --from=0 /root/.env ./
+COPY --from=0 /root/.next ./.next
+COPY --from=0 /root/node_modules ./node_modules
+COPY --from=0 /root/package.json ./
+COPY --from=0 /root/prisma ./prisma
+COPY --from=0 /root/public ./public
+COPY --from=0 /root/src ./src
+
+RUN apk add nodejs
+
+CMD node node_modules/prisma/build/index.js generate; \
+    node node_modules/prisma/build/index.js db push; \
+    node node_modules/tsx/dist/cli.js prisma/seed.ts; \
+    node node_modules/next/dist/bin/next start
