@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { prisma } from '../prisma';
@@ -12,14 +13,22 @@ const schema = z.object({
 });
 
 export const pavestoneRouter = router({
-  add: procedure.input(schema).mutation(async ({ input }) => {
+  add: procedure.input(schema).mutation(async ({ ctx, input }) => {
+    if (!ctx.session.user) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+
     return await prisma.pavestone.create({
       data: input,
     });
   }),
   delete: procedure
     .input(schema.extend({ id: z.number() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.session.user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED' });
+      }
+
       return await prisma.pavestone.delete({ where: { id: input.id } });
     }),
   list: procedure.query(async () => {
@@ -27,8 +36,13 @@ export const pavestoneRouter = router({
   }),
   update: procedure
     .input(schema.extend({ id: z.number() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.session.user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED' });
+      }
+
       const { id, ...data } = input;
+
       return await prisma.pavestone.update({
         data,
         where: { id },
