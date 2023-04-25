@@ -106,6 +106,10 @@ export default function Home(): JSX.Element {
 
   function render(): JSX.Element {
     const openForm = (data: Pavestone) => {
+      if (!user?.isLoggedIn) {
+        return;
+      }
+
       if (mode === REGULAR_MODE) {
         setForm({ data, isOpen: true });
       }
