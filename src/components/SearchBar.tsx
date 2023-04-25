@@ -44,7 +44,11 @@ export default function SearchBar(props: {
           <Combobox.Option
             key={record.id}
             value={record}
-            className="relative cursor-default select-none p-2"
+            className={({ active }) =>
+              `relative cursor-default select-none p-2 ${
+                active ? 'bg-blue-500 text-white' : ''
+              }`
+            }
           >
             <div>{record.dedicated_to}</div>
             <div>{record.patron}</div>
