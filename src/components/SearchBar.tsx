@@ -24,7 +24,7 @@ export default function SearchBar(props: {
       query.length > 0
         ? fuse.search(query, { limit: 25 }).map((result) => result.item)
         : props.records?.slice(-10),
-    [props.records, query]
+    [props.records, fuse, query]
   );
 
   return (
