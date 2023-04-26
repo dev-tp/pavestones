@@ -3,16 +3,17 @@ import React from 'react';
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../constants';
 import { MapProps } from '../types';
 
-const lastCoordinate = { x: 0, y: 0 };
-const offset = { x: 0, y: 0 };
-const point = { x: 0, y: 0 };
-
 let instance: HTMLDivElement | null;
-let isPanning = false;
-let scale = 1;
 
 export default function Map(props: MapProps): JSX.Element {
   const ref = React.useRef<HTMLDivElement>(null);
+
+  const lastCoordinate = { x: 0, y: 0 };
+  const offset = { x: 0, y: 0 };
+  const point = { x: 0, y: 0 };
+
+  let isPanning = false;
+  let scale = 1;
 
   function setTransform() {
     if (instance) {
