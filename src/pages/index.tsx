@@ -11,6 +11,8 @@ import Map from '../components/Map';
 import Marker from '../components/Marker';
 import SearchBar from '../components/SearchBar';
 
+import type { FormProps } from '../types';
+
 const REGULAR_MODE = 0;
 const INSERT_MODE = 1;
 const EDIT_MODE = 2;
@@ -18,12 +20,15 @@ const EDIT_MODE = 2;
 const modes = ['Regular', 'Insert', 'Edit'];
 
 export default function Home(): JSX.Element {
-  const [form, setForm] = React.useState<{
-    data: Pavestone;
-    isOpen: boolean;
-  }>({
+  const [form, setForm] = React.useState<FormProps>({
     data: {} as Pavestone,
     isOpen: false,
+    onCancel() {
+      setForm({ ...form, data: {} as Pavestone, isOpen: false });
+    },
+    onDelete: deleteMarker,
+    onPositionEdit: editMarkerPosition,
+    onSave: saveFormData,
   });
   const [marker, setMarker] = React.useState<Pavestone>({} as Pavestone);
   const [mode, setMode] = React.useState<number>(REGULAR_MODE);
@@ -66,7 +71,7 @@ export default function Home(): JSX.Element {
 
     const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
-        setForm({ data: marker, isOpen: true });
+        setForm({ ...form, data: marker, isOpen: true });
       } else if (event.key === 'Escape') {
         toggleMode();
       }
@@ -75,12 +80,12 @@ export default function Home(): JSX.Element {
     window.addEventListener('keyup', handleKeyUp, false);
 
     return () => window.removeEventListener('keyup', handleKeyUp, false);
-  }, [marker, mode, setForm, toggleMode]);
+  }, [form, marker, mode, setForm, toggleMode]);
 
   async function deleteMarker(data: Pavestone) {
     if (confirm('Are you sure you want to delete this entry?')) {
       await markers.delete.mutateAsync(data);
-      setForm({ data: {} as Pavestone, isOpen: false });
+      setForm({ ...form, data: {} as Pavestone, isOpen: false });
     }
   }
 
@@ -111,7 +116,7 @@ export default function Home(): JSX.Element {
       }
 
       if (mode === REGULAR_MODE) {
-        setForm({ data, isOpen: true });
+        setForm({ ...form, data, isOpen: true });
       }
     };
 
@@ -149,7 +154,7 @@ export default function Home(): JSX.Element {
 
     setMarker({} as Pavestone);
     setMode(REGULAR_MODE);
-    setForm({ data: {} as Pavestone, isOpen: false });
+    setForm({ ...form, data: {} as Pavestone, isOpen: false });
   }
 
   return (
@@ -197,14 +202,7 @@ export default function Home(): JSX.Element {
           </span>
         )}
       </div>
-      <Form
-        data={form.data}
-        isOpen={form.isOpen}
-        onCancel={() => setForm({ data: {} as Pavestone, isOpen: false })}
-        onDelete={deleteMarker}
-        onPositionEdit={editMarkerPosition}
-        onSave={saveFormData}
-      />
+      <Form {...form} />
       {form.isOpen && <Certificate data={form.data} />}
     </>
   );
