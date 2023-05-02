@@ -75,7 +75,7 @@ function StaticMap({ className, data }: CertificateProps): JSX.Element {
 export default function Certificate({ data }: CertificateProps): JSX.Element {
   return (
     <div className="h-screen">
-      <img alt="logo" className="absolute h-[1in]" src="/images/logo.png" />
+      <img alt="logo" className="absolute h-[1in]" src="/images/logo.svg" />
       <div className="flex h-[1in] items-center justify-center">
         <div className="text-center">
           <p>Cathedral Pavestone designated for:</p>
