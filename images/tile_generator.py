@@ -11,6 +11,7 @@ def draw_circular_tiles(
     number_of_tiles=4,
     tile_angle=90,
     number_of_rows=1,
+    line_id=uuid.uuid4(),
 ):
     if center is None:
         center = (
@@ -19,8 +20,6 @@ def draw_circular_tiles(
         )
 
     for row in range(number_of_rows):
-        line_id = uuid.uuid4()
-
         inner_radius = initial_radius + offset * row
         outer_radius = initial_radius + offset * (row + 1)
 
@@ -79,8 +78,8 @@ def main():
         if i > 3:
             number_of_tiles += 25
 
-        if i > 51:
-            number_of_tiles = 1
+        # if i > 51:
+        #     number_of_tiles = 1
 
         if i == 0:
             offset = 51
@@ -152,7 +151,7 @@ def main():
         elif i == 35:
             rotate = 63.7
         elif i == 36:
-            number_of_tiles -= 25 # 917
+            number_of_tiles -= 25  # 917
             rotate = 64.3
         elif i == 37:
             number_of_tiles += 26
@@ -236,6 +235,7 @@ def main():
             number_of_tiles=number_of_tiles,
             tile_angle=360 / number_of_tiles,
             rotate=rotate,
+            line_id=f"line{i + 1}",
         )
 
     print("</svg>")
