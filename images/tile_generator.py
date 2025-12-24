@@ -69,462 +69,174 @@ def main():
   <image xlink:href="cathedral-color.png" style="display:inline" /> """
     )
 
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=35,
-        offset=51,
-        number_of_tiles=12,
-        tile_angle=360 / 12,
-    )
+    number_of_tiles = 12
+    radius = 35
 
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=40,
-        tile_angle=360 / 40,
-    )
+    for i in range(123):
+        offset = 34.72
+        rotate = 0
 
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=72,
-        tile_angle=360 / 72,
-        rotate=2.5,
-    )
+        if i > 3:
+            number_of_tiles += 25
 
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=113,
-        tile_angle=360 / 113,
-        rotate=2.3,
-    )
+        if i > 51:
+            number_of_tiles = 1
 
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=138,
-        tile_angle=360 / 138,
-        rotate=2.4,
-    )
+        if i == 0:
+            offset = 51
+        elif i == 1:
+            number_of_tiles = 40
+        elif i == 2:
+            number_of_tiles = 72
+            rotate = 2.3
+        elif i == 3:
+            number_of_tiles = 113
+            rotate = 2.2
+        elif i == 5:
+            number_of_tiles += 1
+        elif i == 6:
+            rotate = 0.6
+        elif i == 7:
+            rotate = 0.8
+        elif i == 8:
+            rotate = 4
+        elif i == 10:
+            rotate = 0.2
+        elif i == 11:
+            rotate = 0.4
+        elif i == 12:
+            rotate = 0.7
+        elif i == 13:
+            rotate = 0.9
+        elif i == 15:
+            rotate = 1.1
+        elif i == 16:
+            number_of_tiles += 1
+            rotate = 0.3
+        elif i == 17:
+            rotate = 0.4
+        elif i == 18:
+            rotate = 0.6
+        elif i == 20:
+            rotate = 0.2
+        elif i == 21:
+            rotate = 0.3
+        elif i == 22:
+            rotate = 0.5
+        elif i == 23:
+            rotate = 5.2
+        elif i == 24:
+            rotate = 11.3
+        elif i == 25:
+            number_of_tiles += 1
+            rotate = 17.4
+        elif i == 26:
+            rotate = 23.1
+        elif i == 27:
+            rotate = 24.9
+        elif i == 28:
+            rotate = 27.6
+        elif i == 29:
+            rotate = 30.6
+        elif i == 30:
+            rotate = 35.2
+        elif i == 31:
+            rotate = 36
+        elif i == 32:
+            number_of_tiles += 1
+            rotate = 36.55
+        elif i == 33:
+            rotate = 39.35
+        elif i == 34:
+            rotate = 40
+        elif i == 35:
+            rotate = 63.7
+        elif i == 36:
+            number_of_tiles -= 25 # 917
+            rotate = 64.3
+        elif i == 37:
+            number_of_tiles += 26
+            rotate = 64.5
+        elif i == 38:
+            rotate = 65.1
+        elif i == 39:
+            rotate = 64.3
+        elif i == 40:
+            rotate = 62.2
+        elif i == 41:
+            rotate = 58.1
+        elif i == 42:
+            rotate = 57.9
+        elif i == 43:
+            rotate = 58.3
+        elif i == 44:
+            rotate = 58.6
+        elif i == 45:
+            number_of_tiles += 1
+            rotate = 59.2
+        elif i == 46:
+            rotate = 59.5
+        elif i == 47:
+            number_of_tiles = 1293
+            rotate = 59.85
+        elif i == 48:
+            number_of_tiles = 1246
+            rotate = 111.94
+        elif i == 49:
+            rotate = 112.1
+        elif i == 50:
+            rotate = 112.2
+        elif i == 51:
+            rotate = 112.3
+        elif i == 52:
+            rotate = 112.55
+        elif i == 53:
+            rotate = 111.08
+        elif i == 54:
+            rotate = 110.46
+        elif i == 55:
+            rotate = 111.35
+        elif i == 56:
+            rotate = 112.5
+        elif i == 57:
+            rotate = 113.3
+        elif i == 58:
+            rotate = 114.1
+        elif i == 59:
+            rotate = 114.9
+        elif i == 60:
+            rotate = 115.45
+        elif i == 61:
+            rotate = 116.3
+        elif i == 62:
+            rotate = 117
+        elif i == 63:
+            rotate = 117.7
+        elif i == 64:
+            rotate = 118.15
+        elif i == 65:
+            rotate = 118.8
+        elif i == 66:
+            rotate = 119.43
+        elif i == 67:
+            rotate = 120.03
+        elif i == 68:
+            rotate = 120.53
+        elif i == 69:
+            rotate = 121.1
+        elif i == 70:
+            rotate = 121.66
+        elif i == 71:
+            rotate = 122
 
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=164,
-        tile_angle=360 / 164,
-        rotate=2.1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=189,
-        tile_angle=360 / 189,
-        rotate=2.3,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=214,
-        tile_angle=360 / 214,
-        rotate=0.8,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=36,
-        number_of_tiles=239,
-        tile_angle=360 / 239,
-        rotate=1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=264,
-        tile_angle=360 / 264,
-        rotate=1.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=289,
-        tile_angle=360 / 289,
-        rotate=0.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=314,
-        tile_angle=360 / 314,
-        rotate=0.4,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=339,
-        tile_angle=360 / 339,
-        rotate=0.7,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=364,
-        tile_angle=360 / 364,
-        rotate=0.8,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=389,
-        tile_angle=360 / 389,
-        rotate=0.9,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=414,
-        tile_angle=360 / 414,
-        rotate=1.1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=440,
-        tile_angle=360 / 440,
-        rotate=1.1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=465,
-        tile_angle=360 / 465,
-        rotate=1.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=490,
-        tile_angle=360 / 490,
-        rotate=1.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=515,
-        tile_angle=360 / 515,
-        rotate=1.4,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=540,
-        tile_angle=360 / 540,
-        rotate=1.5,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=565,
-        tile_angle=360 / 565,
-        rotate=1.6,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=590,
-        tile_angle=360 / 590,
-        rotate=1.7,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=615,
-        tile_angle=360 / 615,
-        rotate=1.7,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=640,
-        tile_angle=360 / 640,
-        rotate=1.8,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=666,
-        tile_angle=360 / 666,
-        rotate=1.7,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=691,
-        tile_angle=360 / 691,
-        rotate=1.8,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=716,
-        tile_angle=360 / 716,
-        rotate=1.8,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=741,
-        tile_angle=360 / 741,
-        rotate=1.9,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=766,
-        tile_angle=360 / 766,
-        rotate=0,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=791,
-        tile_angle=360 / 791,
-        rotate=35.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=36,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=36.6,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=39.3,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=39.9,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=63.7,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=64.3,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=64.5,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=65.1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=36,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=64.3,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=62.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=58.1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=57.9,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=34,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=58.3,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=58.6,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=59.2,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=59.5,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=59.9,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=111.94,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=112.1,
-    )
-
-    radius = draw_circular_tiles(
-        center=(4512, 2287),
-        initial_radius=radius,
-        offset=35,
-        number_of_tiles=0,
-        tile_angle=360 / 791,
-        rotate=112.2,
-    )
+        radius = draw_circular_tiles(
+            center=(4512, 2287),
+            initial_radius=radius,
+            offset=offset,
+            number_of_tiles=number_of_tiles,
+            tile_angle=360 / number_of_tiles,
+            rotate=rotate,
+        )
 
     print("</svg>")
 
