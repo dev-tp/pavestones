@@ -78,8 +78,8 @@ def main():
         if i > 3:
             number_of_tiles += 25
 
-        # if i > 51:
-        #     number_of_tiles = 1
+        if i > 71:
+            number_of_tiles = 1
 
         if i == 0:
             offset = 51
@@ -151,7 +151,7 @@ def main():
         elif i == 35:
             rotate = 63.7
         elif i == 36:
-            number_of_tiles -= 25  # 917
+            number_of_tiles -= 25
             rotate = 64.3
         elif i == 37:
             number_of_tiles += 26
@@ -176,18 +176,20 @@ def main():
         elif i == 46:
             rotate = 59.5
         elif i == 47:
-            number_of_tiles = 1293
+            number_of_tiles += 74
             rotate = 59.85
         elif i == 48:
-            number_of_tiles = 1246
+            number_of_tiles -= 75
             rotate = 111.94
         elif i == 49:
-            rotate = 112.1
+            number_of_tiles += 1
+            rotate = 112.08
         elif i == 50:
             rotate = 112.2
         elif i == 51:
             rotate = 112.3
         elif i == 52:
+            number_of_tiles += 1
             rotate = 112.55
         elif i == 53:
             rotate = 111.08
@@ -200,12 +202,15 @@ def main():
         elif i == 57:
             rotate = 113.3
         elif i == 58:
+            number_of_tiles -= 3
             rotate = 114.1
         elif i == 59:
             rotate = 114.9
         elif i == 60:
+            number_of_tiles += 3
             rotate = 115.45
         elif i == 61:
+            number_of_tiles += 1
             rotate = 116.3
         elif i == 62:
             rotate = 117
@@ -220,13 +225,14 @@ def main():
         elif i == 67:
             rotate = 120.03
         elif i == 68:
+            number_of_tiles += 1
             rotate = 120.53
         elif i == 69:
             rotate = 121.1
         elif i == 70:
             rotate = 121.66
         elif i == 71:
-            rotate = 122
+            rotate = 245.14
 
         radius = draw_circular_tiles(
             center=(4512, 2287),
