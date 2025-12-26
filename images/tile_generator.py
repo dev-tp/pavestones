@@ -881,6 +881,108 @@ def main():
                     *range(848, number_of_tiles),
                 ]
             )
+        elif i == 72:
+            rotate = 245.38
+        elif i == 73:
+            rotate = 244.46
+        elif i == 74:
+            rotate = 242.8
+        elif i == 75:
+            rotate = 241
+        elif i == 76:
+            rotate = 239.6
+        elif i == 77:
+            rotate = 238.25
+        elif i == 78:
+            rotate = 236.95
+        elif i == 79:
+            rotate = 237.08
+        elif i == 80:
+            rotate = 237.55
+        elif i == 81:
+            rotate = 249.15
+        elif i == 82:
+            rotate = 249.5
+        elif i == 83:
+            rotate = 249.83
+        elif i == 84:
+            rotate = 250.14
+        elif i == 85:
+            rotate = 250.45
+        elif i == 86:
+            rotate = 250.75
+        elif i == 87:
+            rotate = 251.04
+        elif i == 88:
+            rotate = 251.35
+        elif i == 89:
+            rotate = 251.63
+        elif i == 90:
+            rotate = 251.93
+        elif i == 91:
+            rotate = 252.18
+        elif i == 92:
+            rotate = 252.45
+        elif i == 93:
+            rotate = 252.7
+        elif i == 94:
+            rotate = 252.95
+        elif i == 95:
+            rotate = 253.2
+        elif i == 96:
+            rotate = 253.45
+        elif i == 97:
+            rotate = 253.7
+        elif i == 98:
+            rotate = 253.94
+        elif i == 99:
+            rotate = 254.15
+        elif i == 100:
+            rotate = 254.24
+        elif i == 101:
+            rotate = 253.05
+        elif i == 102:
+            rotate = 250.53
+        elif i == 103:
+            rotate = 248.17
+        elif i == 104:
+            rotate = 246.28
+        elif i == 105:
+            rotate = 244.54
+        elif i == 106:
+            rotate = 242.71
+        elif i == 107:
+            rotate = 243.16
+        elif i == 108:
+            rotate = 243.6
+        elif i == 109:
+            rotate = 244.04
+        elif i == 110:
+            rotate = 244.46
+        elif i == 111:
+            rotate = 244.62
+        elif i == 112:
+            rotate = 244.91
+        elif i == 113:
+            rotate = 263.58
+        elif i == 114:
+            rotate = 263.7
+        elif i == 115:
+            rotate = 263.73
+        elif i == 116:
+            rotate = 263.56
+        elif i == 117:
+            rotate = 263.56
+        elif i == 118:
+            rotate = 264.03
+        elif i == 119:
+            rotate = 264.13
+        elif i == 120:
+            rotate = 264.24
+        elif i == 121:
+            rotate = 264.23
+        elif i == 122:
+            rotate = 264.1
 
         radius = draw_circular_tiles(
             center=(4512, 2287),
