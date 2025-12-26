@@ -101,142 +101,786 @@ def main():
             skip_tiles = set(range(132, 149))
         elif i == 7:
             rotate = 0.8
+            skip_tiles = set(range(142, 177))
         elif i == 8:
             rotate = 4
+            skip_tiles = set(
+                [
+                    *range(18, 23),
+                    *range(42, 47),
+                    *range(66, 71),
+                    *range(90, 95),
+                    *range(114, 119),
+                    *range(151, 201),
+                    *range(233, 238),
+                ]
+            )
+        elif i == 9:
+            skip_tiles = set(range(165, 230))
         elif i == 10:
             rotate = 0.2
+            skip_tiles = set(
+                [
+                    *range(177, 206),
+                    *range(225, 252),
+                ]
+            )
         elif i == 11:
             rotate = 0.4
+            skip_tiles = set(
+                [
+                    *range(154, 157),
+                    *range(189, 212),
+                    *range(257, 271),
+                ]
+            )
         elif i == 12:
             rotate = 0.7
+            skip_tiles = set(
+                [
+                    *range(48, 51),
+                    *range(167, 170),
+                    *range(201, 222),
+                    *range(278, 289),
+                ]
+            )
         elif i == 13:
             rotate = 0.9
+            skip_tiles = set(
+                [
+                    *range(179, 182),
+                    *range(212, 232),
+                    *range(296, 309),
+                ]
+            )
+        elif i == 14:
+            skip_tiles = set(
+                [
+                    *range(226, 244),
+                    *range(317, 334),
+                    *range(362, 371),
+                ]
+            )
         elif i == 15:
             rotate = 1.1
+            skip_tiles = set(
+                [
+                    *range(16, 21),
+                    *range(58, 62),
+                    *range(99, 104),
+                    *range(141, 145),
+                    *range(163, 165),
+                    *range(182, 187),
+                    *range(204, 206),
+                    *range(240, 255),
+                    *range(338, 357),
+                    *range(374, 394),
+                    *range(411, 413),
+                ]
+            )
         elif i == 16:
             number_of_tiles += 1
             rotate = 0.3
+            skip_tiles = set(
+                [
+                    *range(259, 272),
+                    *range(365, 384),
+                    *range(391, 410),
+                ]
+            )
         elif i == 17:
             rotate = 0.4
+            skip_tiles = set(
+                [
+                    *range(271, 288),
+                    *range(390, 422),
+                ]
+            )
         elif i == 18:
             rotate = 0.6
+            skip_tiles = set(
+                [
+                    *range(120, 122),
+                    *range(283, 300),
+                    *range(414, 437),
+                    *range(455, 470),
+                ]
+            )
+        elif i == 19:
+            skip_tiles = set(
+                [
+                    *range(296, 313),
+                    *range(440, 453),
+                    *range(470, 492),
+                ]
+            )
         elif i == 20:
             rotate = 0.2
+            skip_tiles = set(
+                [
+                    *range(309, 325),
+                    *range(457, 469),
+                    *range(485, 502),
+                ]
+            )
         elif i == 21:
             rotate = 0.3
+            skip_tiles = set(
+                [
+                    *range(321, 337),
+                    *range(478, 486),
+                    *range(500, 516),
+                    *range(534, 537),
+                ]
+            )
         elif i == 22:
             rotate = 0.5
+            skip_tiles = set(
+                [
+                    *range(55, 60),
+                    *range(114, 119),
+                    *range(173, 178),
+                    *range(232, 237),
+                    *range(291, 296),
+                    *range(333, 349),
+                    *range(406, 428),
+                    *range(454, 469),
+                    *range(517, 531),
+                ]
+            )
         elif i == 23:
             rotate = 5.2
+            skip_tiles = set(
+                [
+                    *range(338, 353),
+                    *range(402, 438),
+                    *range(465, 493),
+                    *range(526, 539),
+                    *range(568, 571),
+                    *range(581, number_of_tiles),
+                ]
+            )
         elif i == 24:
             rotate = 11.3
+            skip_tiles = set(
+                [
+                    *range(3, 7),
+                    *range(106, 108),
+                    *range(170, 172),
+                    *range(339, 354),
+                    *range(407, 445),
+                    *range(473, 511),
+                    *range(533, 544),
+                    *range(577, number_of_tiles),
+                ]
+            )
         elif i == 25:
             number_of_tiles += 1
             rotate = 17.4
+            skip_tiles = set(
+                [
+                    *range(198, 202),
+                    *range(341, 355),
+                    *range(406, 453),
+                    *range(480, 528),
+                    *range(546, 562),
+                    *range(577, number_of_tiles),
+                ]
+            )
         elif i == 26:
             rotate = 23.1
+            skip_tiles = set(
+                [
+                    *range(194, 199),
+                    *range(230, 232),
+                    *range(341, 356),
+                    *range(406, 459),
+                    *range(487, 543),
+                    *range(564, number_of_tiles),
+                ]
+            )
         elif i == 27:
             rotate = 24.9
+            skip_tiles = set(
+                [
+                    *range(198, 202),
+                    *range(349, 364),
+                    *range(398, 404),
+                    *range(418, 473),
+                    *range(500, 565),
+                    *range(589, number_of_tiles),
+                ]
+            )
         elif i == 28:
             rotate = 27.6
+            skip_tiles = set(
+                [
+                    *range(15, 18),
+                    *range(355, 370),
+                    *range(401, 416),
+                    *range(430, 484),
+                    *range(512, 580),
+                    *range(613, number_of_tiles),
+                ]
+            )
         elif i == 29:
             rotate = 30.6
+            skip_tiles = set(
+                [
+                    *range(38, 39),
+                    *range(56, 60),
+                    *range(316, 318),
+                    *range(366, 380),
+                    *range(403, 427),
+                    *range(441, 495),
+                    *range(522, 597),
+                    *range(632, number_of_tiles),
+                ]
+            )
         elif i == 30:
             rotate = 35.2
+            skip_tiles = set(
+                [
+                    *range(25, 32),
+                    *range(42, 53),
+                    *range(236, 240),
+                    *range(370, 380),
+                    *range(402, 434),
+                    *range(448, 501),
+                    *range(529, 611),
+                    *range(647, number_of_tiles),
+                ]
+            )
         elif i == 31:
             rotate = 36
+            skip_tiles = set(
+                [
+                    *range(21, 33),
+                    *range(36, 55),
+                    *range(242, 248),
+                    *range(375, 386),
+                    *range(409, 449),
+                    *range(463, 516),
+                    *range(543, 629),
+                    *range(650, 657),
+                    *range(670, number_of_tiles),
+                ]
+            )
         elif i == 32:
             number_of_tiles += 1
             rotate = 36.55
+            skip_tiles = set(
+                [
+                    *range(2, 4),
+                    *range(17, 57),
+                    *range(244, 256),
+                    *range(291, 294),
+                    *range(314, 396),
+                    *range(417, 465),
+                    *range(479, 531),
+                    *range(559, 646),
+                    *range(663, 682),
+                    *range(689, number_of_tiles),
+                ]
+            )
         elif i == 33:
             rotate = 39.35
+            skip_tiles = set(
+                [
+                    *range(8, 54),
+                    *range(241, 258),
+                    *range(303, 392),
+                    *range(423, 475),
+                    *range(489, 541),
+                    *range(568, 654),
+                    *range(670, number_of_tiles),
+                ]
+            )
         elif i == 34:
             rotate = 40
+            skip_tiles = set(
+                [
+                    *range(4, 56),
+                    *range(243, 265),
+                    *range(302, 398),
+                    *range(431, 490),
+                    *range(503, 555),
+                    *range(583, 667),
+                    *range(683, number_of_tiles),
+                ]
+            )
         elif i == 35:
             rotate = 63.7
+            skip_tiles = set(
+                [
+                    *range(141, 177),
+                    *range(186, 204),
+                    *range(209, 214),
+                    *range(241, 346),
+                    *range(381, 446),
+                    *range(459, 511),
+                    *range(538, 622),
+                    *range(637, number_of_tiles),
+                ]
+            )
         elif i == 36:
             number_of_tiles -= 25
             rotate = 64.3
+            skip_tiles = set(
+                [
+                    *range(131, 198),
+                    *range(209, 213),
+                    *range(233, 341),
+                    *range(377, 447),
+                    *range(460, 509),
+                    *range(537, 616),
+                    *range(631, number_of_tiles),
+                ]
+            )
         elif i == 37:
             number_of_tiles += 26
             rotate = 64.5
+            skip_tiles = set(
+                [
+                    *range(138, 142),
+                    *range(162, 166),
+                    *range(191, 207),
+                    *range(221, 226),
+                    *range(238, 357),
+                    *range(399, 474),
+                    *range(487, 538),
+                    *range(565, 647),
+                    *range(661, number_of_tiles),
+                ]
+            )
         elif i == 38:
             rotate = 65.1
+            skip_tiles = set(
+                [
+                    *range(140, 144),
+                    *range(165, 169),
+                    *range(226, 231),
+                    *range(237, 369),
+                    *range(386, 394),
+                    *range(415, 487),
+                    *range(500, 550),
+                    *range(578, 658),
+                    *range(672, number_of_tiles),
+                ]
+            )
         elif i == 39:
             rotate = 64.3
+            skip_tiles = set(
+                [
+                    *range(33, 92),
+                    *range(146, 150),
+                    *range(236, 415),
+                    *range(434, 504),
+                    *range(517, 567),
+                    *range(594, 674),
+                    *range(688, number_of_tiles),
+                ]
+            )
         elif i == 40:
             rotate = 62.2
+            skip_tiles = set(
+                [
+                    *range(24, 118),
+                    *range(156, 160),
+                    *range(249, 439),
+                    *range(457, 525),
+                    *range(537, 587),
+                    *range(615, 693),
+                    *range(707, number_of_tiles),
+                ]
+            )
         elif i == 41:
             rotate = 58.1
+            skip_tiles = set(
+                [
+                    *range(29, 144),
+                    *range(172, 176),
+                    *range(268, 469),
+                    *range(486, 551),
+                    *range(564, 590),
+                    *range(647, 719),
+                    *range(732, number_of_tiles),
+                ]
+            )
         elif i == 42:
             rotate = 57.9
+            skip_tiles = set(
+                [
+                    *range(26, 155),
+                    *range(177, 181),
+                    *range(194, 197),
+                    *range(277, 487),
+                    *range(503, 567),
+                    *range(691, 734),
+                    *range(747, number_of_tiles),
+                ]
+            )
         elif i == 43:
             rotate = 58.3
+            skip_tiles = set(
+                [
+                    *range(16, 160),
+                    *range(180, 184),
+                    *range(196, 210),
+                    *range(283, 503),
+                    *range(519, 575),
+                    *range(722, 746),
+                    *range(759, number_of_tiles),
+                ]
+            )
         elif i == 44:
             rotate = 58.6
+            skip_tiles = set(
+                [
+                    *range(15, 165),
+                    *range(183, 187),
+                    *range(200, 216),
+                    *range(218, 220),
+                    *range(289, 519),
+                    *range(534, 576),
+                    *range(749, 759),
+                    *range(772, number_of_tiles),
+                ]
+            )
         elif i == 45:
             number_of_tiles += 1
             rotate = 59.2
+            skip_tiles = set(
+                [
+                    *range(15, 168),
+                    *range(186, 189),
+                    *range(202, 233),
+                    *range(241, 243),
+                    *range(295, 534),
+                    *range(549, 578),
+                    *range(786, number_of_tiles),
+                ]
+            )
         elif i == 46:
             rotate = 59.5
+            skip_tiles = set(
+                [
+                    *range(16, 171),
+                    *range(189, 192),
+                    *range(205, 250),
+                    *range(302, 549),
+                    *range(564, 581),
+                    *range(803, number_of_tiles),
+                ]
+            )
         elif i == 47:
             number_of_tiles += 74
             rotate = 59.85
+            skip_tiles = set(
+                [
+                    *range(10, 185),
+                    *range(203, 207),
+                    *range(221, 284),
+                    *range(327, 598),
+                    *range(614, 620),
+                    *range(689, 739),
+                    *range(769, 805),
+                    *range(874, number_of_tiles),
+                ]
+            )
         elif i == 48:
             number_of_tiles -= 75
             rotate = 111.94
+            skip_tiles = set(
+                [
+                    *range(16, 19),
+                    *range(33, 97),
+                    *range(135, 400),
+                    *range(461, 470),
+                    *range(484, 531),
+                    *range(559, 611),
+                    *range(659, number_of_tiles),
+                ]
+            )
         elif i == 49:
             number_of_tiles += 1
             rotate = 112.08
+            skip_tiles = set(
+                [
+                    *range(16, 19),
+                    *range(33, 106),
+                    *range(139, 411),
+                    *range(458, 481),
+                    *range(495, 542),
+                    *range(570, 638),
+                    *range(669, number_of_tiles),
+                ]
+            )
         elif i == 50:
             rotate = 112.2
+            skip_tiles = set(
+                [
+                    *range(16, 19),
+                    *range(33, 125),
+                    *range(142, 419),
+                    *range(456, 492),
+                    *range(506, 552),
+                    *range(580, 649),
+                    *range(678, number_of_tiles),
+                ]
+            )
         elif i == 51:
             rotate = 112.3
+            skip_tiles = set(
+                [
+                    *range(16, 19),
+                    *range(34, 133),
+                    *range(145, 423),
+                    *range(456, 503),
+                    *range(516, 563),
+                    *range(591, 660),
+                    *range(674, 683),
+                    *range(688, number_of_tiles),
+                ]
+            )
         elif i == 52:
             number_of_tiles += 1
             rotate = 112.55
+            skip_tiles = set(
+                [
+                    *range(15, 19),
+                    *range(33, 137),
+                    *range(148, 430),
+                    *range(461, 513),
+                    *range(527, 573),
+                    *range(601, 670),
+                    *range(684, number_of_tiles),
+                ]
+            )
         elif i == 53:
             rotate = 111.08
+            skip_tiles = set(
+                [
+                    *range(21, 25),
+                    *range(40, 147),
+                    *range(158, 448),
+                    *range(479, 530),
+                    *range(544, 590),
+                    *range(618, 686),
+                    *range(699, number_of_tiles),
+                ]
+            )
         elif i == 54:
             rotate = 110.46
+            skip_tiles = set(
+                [
+                    *range(24, 28),
+                    *range(43, 153),
+                    *range(164, 463),
+                    *range(493, 544),
+                    *range(557, 603),
+                    *range(631, 699),
+                    *range(712, number_of_tiles),
+                ]
+            )
         elif i == 55:
             rotate = 111.35
+            skip_tiles = set(
+                [
+                    *range(40, 153),
+                    *range(164, 471),
+                    *range(482, 488),
+                    *range(501, 552),
+                    *range(565, 611),
+                    *range(639, 706),
+                    *range(719, number_of_tiles),
+                ]
+            )
         elif i == 56:
             rotate = 112.5
+            skip_tiles = set(
+                [
+                    *range(36, 152),
+                    *range(164, 479),
+                    *range(481, 495),
+                    *range(509, 558),
+                    *range(572, 617),
+                    *range(645, 712),
+                    *range(725, number_of_tiles),
+                ]
+            )
         elif i == 57:
             rotate = 113.3
+            skip_tiles = set(
+                [
+                    *range(33, 153),
+                    *range(164, 504),
+                    *range(517, 566),
+                    *range(580, 625),
+                    *range(653, 719),
+                    *range(732, number_of_tiles),
+                ]
+            )
         elif i == 58:
             number_of_tiles -= 3
             rotate = 114.1
+            skip_tiles = set(
+                [
+                    *range(33, 153),
+                    *range(164, 511),
+                    *range(524, 573),
+                    *range(586, 631),
+                    *range(659, 725),
+                    *range(738, number_of_tiles),
+                ]
+            )
         elif i == 59:
             rotate = 114.9
+            skip_tiles = set(
+                [
+                    *range(46, 153),
+                    *range(161, 519),
+                    *range(532, 581),
+                    *range(594, 639),
+                    *range(667, 732),
+                    *range(749, number_of_tiles),
+                ]
+            )
         elif i == 60:
             number_of_tiles += 3
             rotate = 115.45
+            skip_tiles = set(
+                [
+                    *range(50, 529),
+                    *range(543, 590),
+                    *range(604, 648),
+                    *range(676, 741),
+                    *range(767, number_of_tiles),
+                ]
+            )
         elif i == 61:
             number_of_tiles += 1
             rotate = 116.3
+            skip_tiles = set(
+                [
+                    *range(45, 538),
+                    *range(551, 598),
+                    *range(611, 656),
+                    *range(684, 748),
+                    *range(774, number_of_tiles),
+                ]
+            )
         elif i == 62:
             rotate = 117
+            skip_tiles = set(
+                [
+                    *range(40, 546),
+                    *range(559, 606),
+                    *range(619, 663),
+                    *range(691, 755),
+                    *range(781, number_of_tiles),
+                ]
+            )
         elif i == 63:
             rotate = 117.7
+            skip_tiles = set(
+                [
+                    *range(36, 554),
+                    *range(567, 613),
+                    *range(627, 671),
+                    *range(699, 762),
+                    *range(788, number_of_tiles),
+                ]
+            )
         elif i == 64:
             rotate = 118.15
+            skip_tiles = set(
+                [
+                    *range(33, 563),
+                    *range(576, 622),
+                    *range(635, 679),
+                    *range(707, 770),
+                    *range(783, number_of_tiles),
+                ]
+            )
         elif i == 65:
             rotate = 118.8
+            skip_tiles = set(
+                [
+                    *range(28, 572),
+                    *range(584, 630),
+                    *range(643, 687),
+                    *range(715, 777),
+                    *range(789, number_of_tiles),
+                ]
+            )
         elif i == 66:
             rotate = 119.43
+            skip_tiles = set(
+                [
+                    *range(24, 580),
+                    *range(592, 638),
+                    *range(651, 694),
+                    *range(722, 784),
+                    *range(796, number_of_tiles),
+                ]
+            )
         elif i == 67:
             rotate = 120.03
+            skip_tiles = set(
+                [
+                    *range(19, 588),
+                    *range(601, 645),
+                    *range(658, 702),
+                    *range(730, 791),
+                    *range(804, number_of_tiles),
+                ]
+            )
         elif i == 68:
             number_of_tiles += 1
             rotate = 120.53
+            skip_tiles = set(
+                [
+                    *range(15, 597),
+                    *range(610, 654),
+                    *range(667, 710),
+                    *range(738, 799),
+                    *range(812, number_of_tiles),
+                ]
+            )
         elif i == 69:
             rotate = 121.1
+            skip_tiles = set(
+                [
+                    *range(11, 605),
+                    *range(618, 662),
+                    *range(675, 718),
+                    *range(746, 806),
+                    *range(819, number_of_tiles),
+                ]
+            )
         elif i == 70:
-            rotate = 121.66
+            rotate = 121.67
+            skip_tiles = set(
+                [
+                    *range(6, 613),
+                    *range(626, 669),
+                    *range(683, 725),
+                    *range(753, 813),
+                    *range(833, number_of_tiles),
+                ]
+            )
         elif i == 71:
-            rotate = 245.14
+            rotate = 122.04
+            skip_tiles = set(
+                [
+                    *range(3, 622),
+                    *range(635, 678),
+                    *range(691, 734),
+                    *range(762, 821),
+                    *range(848, number_of_tiles),
+                ]
+            )
 
         radius = draw_circular_tiles(
             center=(4512, 2287),
