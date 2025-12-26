@@ -9,6 +9,7 @@ def draw_circular_tiles(
     center=None,
     rotate=0,
     number_of_tiles=4,
+    skip_tiles=set([]),
     tile_angle=90,
     number_of_rows=1,
     line_id=uuid.uuid4(),
@@ -41,11 +42,12 @@ def draw_circular_tiles(
         )
 
         for tile in range(number_of_tiles):
-            print(
-                f"""    <use
+            if tile not in skip_tiles:
+                print(
+                    f"""    <use
       xlink:href="#{line_id}"
       transform="rotate({tile_angle * (tile + 1)},{center[0]},{center[1]})" />"""
-            )
+                )
 
         print("  </g>")
 
@@ -74,6 +76,7 @@ def main():
     for i in range(123):
         offset = 34.72
         rotate = 0
+        skip_tiles = set([])
 
         if i > 3:
             number_of_tiles += 25
@@ -95,6 +98,7 @@ def main():
             number_of_tiles += 1
         elif i == 6:
             rotate = 0.6
+            skip_tiles = set(range(132, 149))
         elif i == 7:
             rotate = 0.8
         elif i == 8:
@@ -239,6 +243,7 @@ def main():
             initial_radius=radius,
             offset=offset,
             number_of_tiles=number_of_tiles,
+            skip_tiles=skip_tiles,
             tile_angle=360 / number_of_tiles,
             rotate=rotate,
             line_id=f"line{i + 1}",
