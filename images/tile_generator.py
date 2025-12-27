@@ -81,9 +81,6 @@ def main():
         if i > 3:
             number_of_tiles += 25
 
-        if i > 71:
-            number_of_tiles = 1
-
         if i == 0:
             offset = 51
         elif i == 1:
@@ -883,106 +880,498 @@ def main():
             )
         elif i == 72:
             rotate = 245.38
+            skip_tiles = set(
+                [
+                    *range(13, 56),
+                    *range(69, 111),
+                    *range(139, 198),
+                    *range(231, number_of_tiles),
+                ]
+            )
         elif i == 73:
             rotate = 244.46
+            skip_tiles = set(
+                [
+                    *range(20, 63),
+                    *range(76, 118),
+                    *range(146, 204),
+                    *range(216, 219),
+                    *range(246, number_of_tiles),
+                ]
+            )
         elif i == 74:
             rotate = 242.8
+            skip_tiles = set(
+                [
+                    *range(13, 19),
+                    *range(31, 73),
+                    *range(86, 128),
+                    *range(156, 214),
+                    *range(227, 239),
+                    *range(263, number_of_tiles),
+                ]
+            )
         elif i == 75:
             rotate = 241
+            skip_tiles = set(
+                [
+                    *range(16, 31),
+                    *range(43, 85),
+                    *range(98, 140),
+                    *range(168, 225),
+                    *range(238, 260),
+                    *range(281, number_of_tiles),
+                ]
+            )
         elif i == 76:
             rotate = 239.6
+            skip_tiles = set(
+                [
+                    *range(17, 41),
+                    *range(53, 95),
+                    *range(108, 149),
+                    *range(177, 234),
+                    *range(247, 279),
+                    *range(297, number_of_tiles),
+                ]
+            )
         elif i == 77:
             rotate = 238.25
+            skip_tiles = set(
+                [
+                    *range(18, 51),
+                    *range(63, 105),
+                    *range(117, 159),
+                    *range(187, 243),
+                    *range(256, 298),
+                    *range(312, number_of_tiles),
+                ]
+            )
         elif i == 78:
             rotate = 236.95
+            skip_tiles = set(
+                [
+                    *range(20, 61),
+                    *range(73, 114),
+                    *range(127, 168),
+                    *range(196, 252),
+                    *range(265, 316),
+                    *range(323, number_of_tiles),
+                ]
+            )
         elif i == 79:
             rotate = 237.08
+            skip_tiles = set(
+                [
+                    *range(13, 63),
+                    *range(75, 116),
+                    *range(129, 170),
+                    *range(198, 253),
+                    *range(266, number_of_tiles),
+                ]
+            )
         elif i == 80:
             rotate = 237.55
+            skip_tiles = set(
+                [
+                    *range(6, 63),
+                    *range(75, 116),
+                    *range(128, 169),
+                    *range(197, 252),
+                    *range(265, number_of_tiles),
+                ]
+            )
         elif i == 81:
             rotate = 249.15
+            skip_tiles = set(
+                [
+                    *range(11, 51),
+                    *range(64, 105),
+                    *range(133, 187),
+                    *range(200, number_of_tiles),
+                ]
+            )
         elif i == 82:
             rotate = 249.5
+            skip_tiles = set(
+                [
+                    *range(11, 51),
+                    *range(64, 104),
+                    *range(132, 186),
+                    *range(199, number_of_tiles),
+                ]
+            )
         elif i == 83:
             rotate = 249.83
+            skip_tiles = set(
+                [
+                    *range(11, 51),
+                    *range(64, 104),
+                    *range(132, 185),
+                    *range(198, number_of_tiles),
+                ]
+            )
         elif i == 84:
             rotate = 250.14
+            skip_tiles = set(
+                [
+                    *range(11, 51),
+                    *range(63, 103),
+                    *range(131, 184),
+                    *range(197, number_of_tiles),
+                ]
+            )
         elif i == 85:
             rotate = 250.45
+            skip_tiles = set(
+                [
+                    *range(11, 50),
+                    *range(63, 103),
+                    *range(131, 184),
+                    *range(196, number_of_tiles),
+                ]
+            )
         elif i == 86:
             rotate = 250.75
+            skip_tiles = set(
+                [
+                    *range(11, 50),
+                    *range(63, 102),
+                    *range(130, 183),
+                    *range(195, number_of_tiles),
+                ]
+            )
         elif i == 87:
             rotate = 251.04
+            skip_tiles = set(
+                [
+                    *range(11, 50),
+                    *range(62, 102),
+                    *range(130, 182),
+                    *range(194, number_of_tiles),
+                ]
+            )
         elif i == 88:
             rotate = 251.35
+            skip_tiles = set(
+                [
+                    *range(11, 49),
+                    *range(62, 101),
+                    *range(129, 181),
+                    *range(193, number_of_tiles),
+                ]
+            )
         elif i == 89:
             rotate = 251.63
+            skip_tiles = set(
+                [
+                    *range(11, 49),
+                    *range(62, 101),
+                    *range(129, 180),
+                    *range(192, number_of_tiles),
+                ]
+            )
         elif i == 90:
+            number_of_tiles += 2
             rotate = 251.93
+            skip_tiles = set(
+                [
+                    *range(11, 49),
+                    *range(61, 100),
+                    *range(128, 179),
+                    *range(191, number_of_tiles),
+                ]
+            )
         elif i == 91:
             rotate = 252.18
+            skip_tiles = set(
+                [
+                    *range(11, 48),
+                    *range(61, 100),
+                    *range(128, 178),
+                    *range(190, number_of_tiles),
+                ]
+            )
         elif i == 92:
             rotate = 252.45
+            skip_tiles = set(
+                [
+                    *range(11, 40),
+                    *range(66, 99),
+                    *range(133, 177),
+                    *range(189, number_of_tiles),
+                ]
+            )
         elif i == 93:
             rotate = 252.7
+            skip_tiles = set(
+                [
+                    *range(12, 17),
+                    *range(27, 32),
+                    *range(42, 47),
+                    *range(61, 66),
+                    *range(77, 82),
+                    *range(93, 98),
+                    *range(127, 132),
+                    *range(141, 146),
+                    *range(156, 161),
+                    *range(170, 175),
+                    *range(188, number_of_tiles),
+                ]
+            )
         elif i == 94:
             rotate = 252.95
+            skip_tiles = set(
+                [
+                    *range(187, number_of_tiles),
+                ]
+            )
         elif i == 95:
             rotate = 253.2
+            skip_tiles = set(
+                [
+                    *range(186, 243),
+                    *range(256, number_of_tiles),
+                ]
+            )
         elif i == 96:
             rotate = 253.45
+            skip_tiles = set(
+                [
+                    *range(185, 241),
+                    *range(269, number_of_tiles),
+                ]
+            )
         elif i == 97:
+            number_of_tiles += 1
             rotate = 253.7
+            skip_tiles = set(
+                [
+                    *range(203, 240),
+                    *range(277, number_of_tiles),
+                ]
+            )
         elif i == 98:
             rotate = 253.94
+            skip_tiles = set(
+                [
+                    *range(227, 238),
+                    *range(277, number_of_tiles),
+                ]
+            )
         elif i == 99:
             rotate = 254.15
+            skip_tiles = set(
+                [
+                    *range(276, number_of_tiles),
+                ]
+            )
         elif i == 100:
             rotate = 254.24
+            skip_tiles = set(
+                [
+                    *range(277, number_of_tiles),
+                ]
+            )
         elif i == 101:
             rotate = 253.05
+            skip_tiles = set(
+                [
+                    *range(286, number_of_tiles),
+                ]
+            )
         elif i == 102:
+            number_of_tiles += 1
             rotate = 250.53
+            skip_tiles = set(
+                [
+                    *range(305, number_of_tiles),
+                ]
+            )
         elif i == 103:
             rotate = 248.17
+            skip_tiles = set(
+                [
+                    *range(324, number_of_tiles),
+                ]
+            )
         elif i == 104:
             rotate = 246.28
+            skip_tiles = set(
+                [
+                    *range(339, number_of_tiles),
+                ]
+            )
         elif i == 105:
             rotate = 244.54
+            skip_tiles = set(
+                [
+                    *range(180, 194),
+                    *range(355, 362),
+                    *range(370, number_of_tiles),
+                ]
+            )
         elif i == 106:
             rotate = 242.71
+            skip_tiles = set(
+                [
+                    *range(123, 147),
+                    *range(191, 215),
+                    *range(406, number_of_tiles),
+                ]
+            )
         elif i == 107:
             rotate = 243.16
+            skip_tiles = set(
+                [
+                    *range(99, 146),
+                    *range(153, 158),
+                    *range(164, 169),
+                    *range(175, 180),
+                    *range(186, 217),
+                    *range(223, 228),
+                    *range(235, 240),
+                    *range(247, 252),
+                    *range(260, 263),
+                    *range(271, 282),
+                    *range(425, number_of_tiles),
+                ]
+            )
         elif i == 108:
             rotate = 243.6
+            skip_tiles = set(
+                [
+                    *range(79, 145),
+                    *range(183, 217),
+                    *range(269, 299),
+                    *range(425, number_of_tiles),
+                ]
+            )
         elif i == 109:
+            number_of_tiles += 1
             rotate = 244.04
+            skip_tiles = set(
+                [
+                    *range(62, 144),
+                    *range(181, 216),
+                    *range(267, 314),
+                    *range(425, number_of_tiles),
+                ]
+            )
         elif i == 110:
             rotate = 244.46
+            skip_tiles = set(
+                [
+                    *range(46, 144),
+                    *range(179, 215),
+                    *range(265, 326),
+                    *range(424, number_of_tiles),
+                ]
+            )
         elif i == 111:
             rotate = 244.62
+            skip_tiles = set(
+                [
+                    *range(33, 145),
+                    *range(180, 214),
+                    *range(265, 330),
+                    *range(426, number_of_tiles),
+                ]
+            )
         elif i == 112:
             rotate = 244.91
+            skip_tiles = set(
+                [
+                    *range(20, 145),
+                    *range(181, 213),
+                    *range(265, 330),
+                    *range(427, number_of_tiles),
+                ]
+            )
         elif i == 113:
             rotate = 263.58
+            skip_tiles = set(
+                [
+                    *range(37, 63),
+                    *range(119, 182),
+                    *range(119, 182),
+                    *range(281, 2730),
+                    *range(2739, number_of_tiles),
+                ]
+            )
         elif i == 114:
             rotate = 263.7
+            skip_tiles = set(
+                [
+                    *range(42, 56),
+                    *range(119, 154),
+                    *range(282, number_of_tiles),
+                ]
+            )
         elif i == 115:
+            number_of_tiles -= 99
             rotate = 263.73
+            skip_tiles = set(
+                [
+                    *range(111, 150),
+                    *range(273, number_of_tiles),
+                ]
+            )
         elif i == 116:
+            number_of_tiles += 99
             rotate = 263.56
+            skip_tiles = set(
+                [
+                    *range(117, 158),
+                    *range(286, number_of_tiles),
+                ]
+            )
         elif i == 117:
             rotate = 263.56
+            skip_tiles = set(
+                [
+                    *range(117, 159),
+                    *range(288, number_of_tiles),
+                ]
+            )
         elif i == 118:
             rotate = 264.03
+            skip_tiles = set(
+                [
+                    *range(113, 157),
+                    *range(286, number_of_tiles),
+                ]
+            )
         elif i == 119:
             rotate = 264.13
+            skip_tiles = set(
+                [
+                    *range(112, 233),
+                    *range(286, number_of_tiles),
+                ]
+            )
         elif i == 120:
             rotate = 264.24
+            skip_tiles = set(
+                [
+                    *range(111, 268),
+                    *range(287, number_of_tiles),
+                ]
+            )
         elif i == 121:
             rotate = 264.23
+            skip_tiles = set(
+                [
+                    *range(111, number_of_tiles),
+                ]
+            )
         elif i == 122:
             rotate = 264.1
+            skip_tiles = set(
+                [
+                    *range(25, number_of_tiles),
+                ]
+            )
 
         radius = draw_circular_tiles(
             center=(4512, 2287),
