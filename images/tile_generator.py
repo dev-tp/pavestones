@@ -42,6 +42,8 @@ def draw_circular_tiles(
         )
 
         for tile in range(number_of_tiles):
+            if tile == number_of_tiles - 1:
+                break
             if tile not in skip_tiles:
                 print(
                     f"""    <use
