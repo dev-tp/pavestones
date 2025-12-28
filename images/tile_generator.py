@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import svg
 import uuid
 
 
@@ -20,57 +21,48 @@ def draw_circular_tiles(
             initial_radius + offset * number_of_rows,
         )
 
+    groups = []
+
     for row in range(number_of_rows):
         inner_radius = initial_radius + offset * row
         outer_radius = initial_radius + offset * (row + 1)
 
-        print(
-            f"""  <g
-    style="fill:none;stroke:#ff6600"
-    transform="rotate({rotate}, {center[0]}, {center[1]})">
-    <circle
-      cx="{center[0]}"
-      cy="{center[1]}"
-      r="{inner_radius}" />
-    <circle
-      cx="{center[0]}"
-      cy="{center[1]}"
-      r="{outer_radius}" />
-    <path
-      id="{line_id}"
-      d="m {center[0]},{center[1] - initial_radius} v {-offset * (row + 1)}" />"""
-        )
+        elements = [
+            svg.circle(*center, inner_radius),
+            svg.circle(*center, outer_radius),
+            svg.path(
+                id=line_id,
+                d=[
+                    svg.m(center[0], center[1] - initial_radius),
+                    svg.v(-offset * (row + 1)),
+                ],
+            ),
+        ]
 
         for tile in range(number_of_tiles):
             if tile == number_of_tiles - 1:
                 break
             if tile not in skip_tiles:
-                print(
-                    f"""    <use
-      xlink:href="#{line_id}"
-      transform="rotate({tile_angle * (tile + 1)},{center[0]},{center[1]})" />"""
+                elements.append(
+                    svg.use(
+                        href=line_id,
+                        transform=f"rotate({tile_angle * (tile + 1)},{center[0]},{center[1]})",
+                    )
                 )
 
-        print("  </g>")
+        groups.append(
+            svg.g(
+                style="fill: none; stroke: #f60",
+                transform=f"rotate({rotate}, {center[0]}, {center[1]})",
+                elements=elements,
+            )
+        )
 
-    return outer_radius
+    return outer_radius, ''.join(groups)
 
 
 def main():
-    page_width = 7000
-    page_height = 5500
-
-    print(
-        f"""<svg
-  width="{page_width}"
-  height="{page_height}"
-  viewBox="0 0 {page_width} {page_height}"
-  version="1.1"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:svg="http://www.w3.org/2000/svg">
-  <image xlink:href="cathedral-color.png" style="display:inline" /> """
-    )
+    elements = [svg.image("cathedral-color.png")]
 
     number_of_tiles = 12
     radius = 35
@@ -1375,7 +1367,7 @@ def main():
                 ]
             )
 
-        radius = draw_circular_tiles(
+        radius, element = draw_circular_tiles(
             center=(4512, 2287),
             initial_radius=radius,
             offset=offset,
@@ -1386,8 +1378,9 @@ def main():
             line_id=f"line{i + 1}",
         )
 
-    print("</svg>")
+        elements.append(element)
 
+    print(svg.svg(7000, 5500, elements))
 
 if __name__ == "__main__":
     main()
