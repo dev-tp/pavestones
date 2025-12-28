@@ -42,7 +42,7 @@ def draw_circular_tiles(
                 )
             )
 
-    return outer_radius, svg.g(
+    return svg.g(
         style="fill: none; stroke: #f60",
         transform=f"rotate({rotate}, {center[0]}, {center[1]})",
         elements=elements,
@@ -1355,20 +1355,23 @@ def main():
                 ]
             )
 
-        radius, element = draw_circular_tiles(
-            center=(4512, 2287),
-            inner_radius=radius,
-            offset=offset,
-            number_of_tiles=number_of_tiles,
-            skip_tiles=skip_tiles,
-            tile_angle=360 / number_of_tiles,
-            rotate=rotate,
-            line_id=f"line{i + 1}",
+        elements.append(
+            draw_circular_tiles(
+                center=(4512, 2287),
+                inner_radius=radius,
+                offset=offset,
+                number_of_tiles=number_of_tiles,
+                skip_tiles=skip_tiles,
+                tile_angle=360 / number_of_tiles,
+                rotate=rotate,
+                line_id=f"line{i + 1}",
+            )
         )
 
-        elements.append(element)
+        radius += offset
 
     print(svg.svg(7000, 5500, elements))
+
 
 if __name__ == "__main__":
     main()
