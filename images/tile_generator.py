@@ -5,60 +5,48 @@ import uuid
 
 
 def draw_circular_tiles(
-    initial_radius=50,
+    inner_radius=50,
     offset=50,
     center=None,
     rotate=0,
     number_of_tiles=4,
     skip_tiles=set([]),
     tile_angle=90,
-    number_of_rows=1,
     line_id=uuid.uuid4(),
 ):
+    outer_radius = inner_radius + offset
+
     if center is None:
-        center = (
-            initial_radius + offset * number_of_rows,
-            initial_radius + offset * number_of_rows,
-        )
+        center = (outer_radius, outer_radius)
 
-    groups = []
+    elements = [
+        svg.circle(*center, inner_radius),
+        svg.circle(*center, outer_radius),
+        svg.path(
+            id=line_id,
+            d=[
+                svg.m(center[0], center[1] - inner_radius),
+                svg.v(-offset),
+            ],
+        ),
+    ]
 
-    for row in range(number_of_rows):
-        inner_radius = initial_radius + offset * row
-        outer_radius = initial_radius + offset * (row + 1)
-
-        elements = [
-            svg.circle(*center, inner_radius),
-            svg.circle(*center, outer_radius),
-            svg.path(
-                id=line_id,
-                d=[
-                    svg.m(center[0], center[1] - initial_radius),
-                    svg.v(-offset * (row + 1)),
-                ],
-            ),
-        ]
-
-        for tile in range(number_of_tiles):
-            if tile == number_of_tiles - 1:
-                break
-            if tile not in skip_tiles:
-                elements.append(
-                    svg.use(
-                        href=line_id,
-                        transform=f"rotate({tile_angle * (tile + 1)},{center[0]},{center[1]})",
-                    )
+    for tile in range(number_of_tiles):
+        if tile == number_of_tiles - 1:
+            break
+        if tile not in skip_tiles:
+            elements.append(
+                svg.use(
+                    href=line_id,
+                    transform=f"rotate({tile_angle * (tile + 1)},{center[0]},{center[1]})",
                 )
-
-        groups.append(
-            svg.g(
-                style="fill: none; stroke: #f60",
-                transform=f"rotate({rotate}, {center[0]}, {center[1]})",
-                elements=elements,
             )
-        )
 
-    return outer_radius, ''.join(groups)
+    return outer_radius, svg.g(
+        style="fill: none; stroke: #f60",
+        transform=f"rotate({rotate}, {center[0]}, {center[1]})",
+        elements=elements,
+    )
 
 
 def main():
@@ -1369,7 +1357,7 @@ def main():
 
         radius, element = draw_circular_tiles(
             center=(4512, 2287),
-            initial_radius=radius,
+            inner_radius=radius,
             offset=offset,
             number_of_tiles=number_of_tiles,
             skip_tiles=skip_tiles,
