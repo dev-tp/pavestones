@@ -1,49 +1,86 @@
 #!/usr/bin/python
 
+import math
 import svg
-import uuid
 
 
-def draw_circular_tiles(
-    inner_radius=50,
-    offset=50,
-    center=None,
-    rotate=0,
-    number_of_tiles=4,
-    skip_tiles=set([]),
-    tile_angle=90,
-    line_id=uuid.uuid4(),
+# https://stackoverflow.com/questions/11479185/svg-donut-slice-as-path-element-annular-sector
+def annular_sector(
+    center: tuple[int, int],
+    start_angle: int,
+    end_angle: int,
+    inner_radius: int,
+    outer_radius: int,
+):
+    start_angle = math.radians(start_angle + 270)
+    end_angle = math.radians(end_angle + 270)
+
+    points = (
+        (
+            center[0] + inner_radius * math.cos(start_angle),
+            center[1] + inner_radius * math.sin(start_angle),
+        ),
+        (
+            center[0] + outer_radius * math.cos(start_angle),
+            center[1] + outer_radius * math.sin(start_angle),
+        ),
+        (
+            center[0] + outer_radius * math.cos(end_angle),
+            center[1] + outer_radius * math.sin(end_angle),
+        ),
+        (
+            center[0] + inner_radius * math.cos(end_angle),
+            center[1] + inner_radius * math.sin(end_angle),
+        ),
+    )
+
+    large_arc = 0
+
+    if (end_angle - start_angle) % (math.pi * 2) > math.pi:
+        large_arc = 1
+
+    return svg.path(
+        d=[
+            svg.M(*points[0]),
+            svg.L(*points[1]),
+            svg.A(outer_radius, outer_radius, 0, large_arc, 1, *points[2]),
+            svg.L(*points[3]),
+            svg.A(inner_radius, inner_radius, 0, large_arc, 0, *points[0]),
+            svg.Z(),
+        ]
+    )
+
+
+def draw_annular_tiles(
+    inner_radius: int = 50,
+    offset: int = 50,
+    center: tuple[int, int] = None,
+    rotate: int = 0,
+    number_of_tiles: int = 4,
+    skip_tiles: set[int] = set([]),
+    tile_angle: int = 90,
 ):
     outer_radius = inner_radius + offset
 
     if center is None:
         center = (outer_radius, outer_radius)
 
-    elements = [
-        svg.circle(*center, inner_radius),
-        svg.circle(*center, outer_radius),
-        svg.path(
-            id=line_id,
-            d=[
-                svg.m(center[0], center[1] - inner_radius),
-                svg.v(-offset),
-            ],
-        ),
-    ]
+    elements = []
 
     for tile in range(number_of_tiles):
-        if tile == number_of_tiles - 1:
-            break
         if tile not in skip_tiles:
             elements.append(
-                svg.use(
-                    href=line_id,
-                    transform=f"rotate({tile_angle * (tile + 1)},{center[0]},{center[1]})",
+                annular_sector(
+                    center=center,
+                    start_angle=tile_angle * tile,
+                    end_angle=tile_angle * (tile + 1),
+                    inner_radius=inner_radius,
+                    outer_radius=outer_radius,
                 )
             )
 
     return svg.g(
-        style="fill: none; stroke: #f60",
+        style="fill-opacity: 0; stroke: #fff",
         transform=f"rotate({rotate}, {center[0]}, {center[1]})",
         elements=elements,
     )
@@ -1356,7 +1393,7 @@ def main():
             )
 
         elements.append(
-            draw_circular_tiles(
+            draw_annular_tiles(
                 center=(4512, 2287),
                 inner_radius=radius,
                 offset=offset,
@@ -1364,7 +1401,6 @@ def main():
                 skip_tiles=skip_tiles,
                 tile_angle=360 / number_of_tiles,
                 rotate=rotate,
-                line_id=f"line{i + 1}",
             )
         )
 

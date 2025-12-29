@@ -1,3 +1,29 @@
+def A(
+    rx: float,
+    ry: float,
+    angle: float,
+    large_arc_flag: int,
+    sweep_flag: int,
+    x: float,
+    y: float,
+):
+    return (
+        f"A {rx:.2f} {ry:.2f} {angle:.2f} {large_arc_flag} {sweep_flag} {x:.2f} {y:.2f}"
+    )
+
+
+def L(x: float, y: float):
+    return f"L {x:.2f},{y:.2f}"
+
+
+def M(x: int, y: int):
+    return f"M {x}, {y}"
+
+
+def Z():
+    return "Z"
+
+
 def circle(cx: int, cy: int, r: int):
     return f'<circle cx="{cx}" cy="{cy}" r="{r}" />'
 
@@ -16,10 +42,6 @@ def g(elements: list[str], style: str = "", transform: str = ""):
 
 def image(href: str):
     return f'<image href="{href}" style="display: inline" />'
-
-
-def m(x: int, y: int):
-    return f"m {x}, {y}"
 
 
 def path(d: list[str], id: str = ""):
@@ -54,7 +76,3 @@ def use(href: str, transform: str = ""):
         attributes.append(f'transform="{transform}"')
 
     return f'<use href="#{href}" {" ".join(attributes)} />'
-
-
-def v(v: int):
-    return f"v {v}"
