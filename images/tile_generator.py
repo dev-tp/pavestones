@@ -1406,7 +1406,7 @@ def main():
 
         radius += offset
 
-    print(svg.svg(7000, 5500, elements))
+    print(svg.svg(6901, 5139, elements))
 
 
 if __name__ == "__main__":
