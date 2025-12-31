@@ -44,11 +44,17 @@ def image(href: str):
     return f'<image href="{href}" style="display: inline" />'
 
 
-def path(d: list[str], id: str = ""):
+def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
     attributes = []
 
     if id != "":
         attributes.append(f'id="{id}"')
+
+    if fill != "":
+        attributes.append(f'fill="{fill}"')
+
+    if stroke != "":
+        attributes.append(f'stroke="{stroke}"')
 
     return f'<path d="{''.join(d)}" {" ".join(attributes)} />'
 

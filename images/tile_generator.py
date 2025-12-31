@@ -11,6 +11,8 @@ def annular_sector(
     end_angle: int,
     inner_radius: int,
     outer_radius: int,
+    fill: str = "",
+    stroke: str = "",
 ):
     start_angle = math.radians(start_angle + 270)
     end_angle = math.radians(end_angle + 270)
@@ -47,7 +49,9 @@ def annular_sector(
             svg.L(*points[3]),
             svg.A(inner_radius, inner_radius, 0, large_arc, 0, *points[0]),
             svg.Z(),
-        ]
+        ],
+        fill=fill,
+        stroke=stroke,
     )
 
 
@@ -59,6 +63,8 @@ def draw_annular_tiles(
     number_of_tiles: int = 4,
     skip_tiles: set[int] = set([]),
     tile_angle: int = 90,
+    fill: str = "#fff",
+    fill_different_when=None,
 ):
     outer_radius = inner_radius + offset
 
@@ -69,6 +75,11 @@ def draw_annular_tiles(
 
     for tile in range(number_of_tiles):
         if tile not in skip_tiles:
+            tile_color = ""
+
+            if fill_different_when:
+                tile_color = fill_different_when(tile)
+
             elements.append(
                 annular_sector(
                     center=center,
@@ -76,23 +87,35 @@ def draw_annular_tiles(
                     end_angle=tile_angle * (tile + 1),
                     inner_radius=inner_radius,
                     outer_radius=outer_radius,
+                    fill=tile_color,
+                    stroke=tile_color,
                 )
             )
 
     return svg.g(
-        style="fill-opacity: 0; stroke: #fff",
+        style=f"fill: {fill}; stroke: {fill}",
         transform=f"rotate({rotate}, {center[0]}, {center[1]})",
         elements=elements,
     )
 
 
 def main():
-    elements = [svg.image("cathedral-color.png")]
+    elements = [
+        svg.image("cathedral-color.png"),
+        "<style>path { fill-opacity: 0; } path:hover { fill-opacity: 1; }</style>",
+    ]
 
+    cyan = "#527ca5"
+    green = "#5f7f3f"
+    purple = "#5f007f"
+    rose = "#ff9f7f"
+
+    fill = purple
     number_of_tiles = 12
     radius = 35
 
     for i in range(123):
+        fill_different_when = None
         offset = 34.72
         rotate = 0
         skip_tiles = set([])
@@ -170,6 +193,7 @@ def main():
                 ]
             )
         elif i == 14:
+            fill = green
             skip_tiles = set(
                 [
                     *range(226, 245),
@@ -250,6 +274,9 @@ def main():
                 ]
             )
         elif i == 22:
+            fill_different_when = lambda tile: (
+                purple if 420 <= tile and tile <= 453 else ""
+            )
             rotate = 0.5
             skip_tiles = set(
                 [
@@ -265,6 +292,9 @@ def main():
                 ]
             )
         elif i == 23:
+            fill_different_when = lambda tile: (
+                purple if 429 <= tile and tile <= 464 else ""
+            )
             rotate = 5.2
             skip_tiles = set(
                 [
@@ -277,6 +307,9 @@ def main():
                 ]
             )
         elif i == 24:
+            fill_different_when = lambda tile: (
+                purple if 429 <= tile and tile <= 472 else ""
+            )
             rotate = 11.3
             skip_tiles = set(
                 [
@@ -291,6 +324,15 @@ def main():
                 ]
             )
         elif i == 25:
+
+            def fill_different_when(tile):
+                if 401 <= tile and tile <= 405:
+                    return rose
+                elif 429 <= tile and tile <= 479:
+                    return purple
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 17.4
             skip_tiles = set(
@@ -304,6 +346,15 @@ def main():
                 ]
             )
         elif i == 26:
+
+            def fill_different_when(tile):
+                if 398 <= tile and tile <= 405:
+                    return rose
+                elif 429 <= tile and tile <= 486:
+                    return purple
+                else:
+                    return ""
+
             rotate = 23.1
             skip_tiles = set(
                 [
@@ -316,7 +367,25 @@ def main():
                 ]
             )
         elif i == 27:
+
+            def fill_different_when(tile):
+                if 398 <= tile and tile <= 405:
+                    return rose
+                elif 429 <= tile and tile <= 486:
+                    return purple
+                else:
+                    return ""
+
             rotate = 24.9
+
+            def fill_different_when(tile):
+                if 398 <= tile and tile <= 417:
+                    return rose
+                elif 429 <= tile and tile <= 499:
+                    return purple
+                else:
+                    return ""
+
             skip_tiles = set(
                 [
                     *range(198, 203),
@@ -328,6 +397,15 @@ def main():
                 ]
             )
         elif i == 28:
+
+            def fill_different_when(tile):
+                if 417 <= tile and tile <= 429:
+                    return rose
+                elif 485 <= tile and tile <= 511:
+                    return purple
+                else:
+                    return ""
+
             rotate = 27.6
             skip_tiles = set(
                 [
@@ -340,6 +418,15 @@ def main():
                 ]
             )
         elif i == 29:
+
+            def fill_different_when(tile):
+                if 485 <= tile and tile <= 521:
+                    return purple
+                elif 428 <= tile and tile <= 604:
+                    return rose
+                else:
+                    return ""
+
             rotate = 30.6
             skip_tiles = set(
                 [
@@ -354,6 +441,15 @@ def main():
                 ]
             )
         elif i == 30:
+
+            def fill_different_when(tile):
+                if 502 <= tile and tile <= 528:
+                    return purple
+                elif 435 <= tile and tile <= 624:
+                    return rose
+                else:
+                    return ""
+
             rotate = 35.2
             skip_tiles = set(
                 [
@@ -368,6 +464,15 @@ def main():
                 ]
             )
         elif i == 31:
+
+            def fill_different_when(tile):
+                if 517 <= tile and tile <= 542:
+                    return purple
+                elif 450 <= tile and tile <= 649:
+                    return rose
+                else:
+                    return ""
+
             rotate = 36
             skip_tiles = set(
                 [
@@ -383,6 +488,15 @@ def main():
                 ]
             )
         elif i == 32:
+
+            def fill_different_when(tile):
+                if 532 <= tile and tile <= 558:
+                    return purple
+                elif 466 <= tile and tile <= 662:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 36.55
             skip_tiles = set(
@@ -400,6 +514,15 @@ def main():
                 ]
             )
         elif i == 33:
+
+            def fill_different_when(tile):
+                if 542 <= tile and tile <= 567:
+                    return purple
+                elif 476 <= tile and tile <= 669:
+                    return rose
+                else:
+                    return ""
+
             rotate = 39.35
             skip_tiles = set(
                 [
@@ -413,6 +536,15 @@ def main():
                 ]
             )
         elif i == 34:
+
+            def fill_different_when(tile):
+                if 556 <= tile and tile <= 582:
+                    return purple
+                elif 429 <= tile and tile <= 682:
+                    return rose
+                else:
+                    return ""
+
             rotate = 40
             skip_tiles = set(
                 [
@@ -426,6 +558,15 @@ def main():
                 ]
             )
         elif i == 35:
+
+            def fill_different_when(tile):
+                if 512 <= tile and tile <= 537:
+                    return purple
+                elif 377 <= tile and tile <= 638:
+                    return rose
+                else:
+                    return ""
+
             rotate = 63.7
             skip_tiles = set(
                 [
@@ -440,6 +581,15 @@ def main():
                 ]
             )
         elif i == 36:
+
+            def fill_different_when(tile):
+                if 510 <= tile and tile <= 536:
+                    return purple
+                elif 371 <= tile and tile <= 640:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles -= 25
             rotate = 64.3
             skip_tiles = set(
@@ -454,6 +604,15 @@ def main():
                 ]
             )
         elif i == 37:
+
+            def fill_different_when(tile):
+                if 539 <= tile and tile <= 564:
+                    return purple
+                elif 387 <= tile and tile <= 660:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 26
             rotate = 64.5
             skip_tiles = set(
@@ -470,6 +629,15 @@ def main():
                 ]
             )
         elif i == 38:
+
+            def fill_different_when(tile):
+                if 551 <= tile and tile <= 577:
+                    return purple
+                elif 395 <= tile and tile <= 671:
+                    return rose
+                else:
+                    return ""
+
             rotate = 65.1
             skip_tiles = set(
                 [
@@ -485,6 +653,15 @@ def main():
                 ]
             )
         elif i == 39:
+
+            def fill_different_when(tile):
+                if 568 <= tile and tile <= 593:
+                    return purple
+                elif 416 <= tile and tile <= 687:
+                    return rose
+                else:
+                    return ""
+
             rotate = 64.3
             skip_tiles = set(
                 [
@@ -498,6 +675,15 @@ def main():
                 ]
             )
         elif i == 40:
+
+            def fill_different_when(tile):
+                if 588 <= tile and tile <= 614:
+                    return purple
+                elif 440 <= tile and tile <= 706:
+                    return rose
+                else:
+                    return ""
+
             rotate = 62.2
             skip_tiles = set(
                 [
@@ -511,6 +697,15 @@ def main():
                 ]
             )
         elif i == 41:
+
+            def fill_different_when(tile):
+                if 614 <= tile and tile <= 642:
+                    return purple
+                elif 470 <= tile and tile <= 731:
+                    return rose
+                else:
+                    return ""
+
             rotate = 58.1
             skip_tiles = set(
                 [
@@ -524,6 +719,15 @@ def main():
                 ]
             )
         elif i == 42:
+
+            def fill_different_when(tile):
+                if 628 <= tile and tile <= 658:
+                    return purple
+                elif 488 <= tile and tile <= 746:
+                    return rose
+                else:
+                    return ""
+
             rotate = 57.9
             skip_tiles = set(
                 [
@@ -537,6 +741,15 @@ def main():
                 ]
             )
         elif i == 43:
+
+            def fill_different_when(tile):
+                if 642 <= tile and tile <= 671:
+                    return purple
+                elif 504 <= tile and tile <= 758:
+                    return rose
+                else:
+                    return ""
+
             rotate = 58.3
             skip_tiles = set(
                 [
@@ -550,6 +763,15 @@ def main():
                 ]
             )
         elif i == 44:
+
+            def fill_different_when(tile):
+                if 656 <= tile and tile <= 685:
+                    return purple
+                elif 520 <= tile and tile <= 771:
+                    return rose
+                else:
+                    return ""
+
             rotate = 58.6
             skip_tiles = set(
                 [
@@ -564,6 +786,15 @@ def main():
                 ]
             )
         elif i == 45:
+
+            def fill_different_when(tile):
+                if 669 <= tile and tile <= 698:
+                    return purple
+                elif 535 <= tile and tile <= 785:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 59.2
             skip_tiles = set(
@@ -578,6 +809,17 @@ def main():
                 ]
             )
         elif i == 46:
+
+            def fill_different_when(tile):
+                if 801 <= tile and tile <= 802:
+                    return cyan
+                elif 682 <= tile and tile <= 712:
+                    return purple
+                elif 550 <= tile and tile <= 800:
+                    return rose
+                else:
+                    return ""
+
             rotate = 59.5
             skip_tiles = set(
                 [
@@ -590,6 +832,17 @@ def main():
                 ]
             )
         elif i == 47:
+
+            def fill_different_when(tile):
+                if 863 <= tile and tile <= 873:
+                    return cyan
+                elif 740 <= tile and tile <= 768:
+                    return purple
+                elif 599 <= tile and tile <= 872:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 74
             rotate = 59.85
             skip_tiles = set(
@@ -605,6 +858,17 @@ def main():
                 ]
             )
         elif i == 48:
+
+            def fill_different_when(tile):
+                if 647 <= tile and tile <= 658:
+                    return cyan
+                elif 532 <= tile and tile <= 558:
+                    return purple
+                elif 401 <= tile and tile <= 646:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles -= 75
             rotate = 111.94
             skip_tiles = set(
@@ -619,6 +883,17 @@ def main():
                 ]
             )
         elif i == 49:
+
+            def fill_different_when(tile):
+                if 657 <= tile and tile <= 668:
+                    return cyan
+                elif 543 <= tile and tile <= 569:
+                    return purple
+                elif 412 <= tile and tile <= 656:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 112.08
             skip_tiles = set(
@@ -633,6 +908,17 @@ def main():
                 ]
             )
         elif i == 50:
+
+            def fill_different_when(tile):
+                if 667 <= tile and tile <= 677:
+                    return cyan
+                elif 553 <= tile and tile <= 579:
+                    return purple
+                elif 420 <= tile and tile <= 666:
+                    return rose
+                else:
+                    return ""
+
             rotate = 112.2
             skip_tiles = set(
                 [
@@ -646,6 +932,17 @@ def main():
                 ]
             )
         elif i == 51:
+
+            def fill_different_when(tile):
+                if 564 <= tile and tile <= 590:
+                    return purple
+                elif 434 <= tile and tile <= 673:
+                    return rose
+                elif 424 <= tile and tile <= 687:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 112.3
             skip_tiles = set(
                 [
@@ -660,6 +957,17 @@ def main():
                 ]
             )
         elif i == 52:
+
+            def fill_different_when(tile):
+                if 574 <= tile and tile <= 600:
+                    return purple
+                elif 446 <= tile and tile <= 683:
+                    return rose
+                elif 424 <= tile and tile <= 445:
+                    return cyan
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 112.55
             skip_tiles = set(
@@ -674,6 +982,17 @@ def main():
                 ]
             )
         elif i == 53:
+
+            def fill_different_when(tile):
+                if 591 <= tile and tile <= 617:
+                    return purple
+                elif 463 <= tile and tile <= 698:
+                    return rose
+                elif 449 <= tile and tile <= 462:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 111.08
             skip_tiles = set(
                 [
@@ -687,6 +1006,17 @@ def main():
                 ]
             )
         elif i == 54:
+
+            def fill_different_when(tile):
+                if 604 <= tile and tile <= 630:
+                    return purple
+                elif 477 <= tile and tile <= 711:
+                    return rose
+                elif 464 <= tile and tile <= 476:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 110.46
             skip_tiles = set(
                 [
@@ -700,6 +1030,17 @@ def main():
                 ]
             )
         elif i == 55:
+
+            def fill_different_when(tile):
+                if 612 <= tile and tile <= 638:
+                    return purple
+                elif 489 <= tile and tile <= 718:
+                    return rose
+                elif 472 <= tile and tile <= 481:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 111.35
             skip_tiles = set(
                 [
@@ -713,6 +1054,17 @@ def main():
                 ]
             )
         elif i == 56:
+
+            def fill_different_when(tile):
+                if 618 <= tile and tile <= 644:
+                    return purple
+                elif 496 <= tile and tile <= 724:
+                    return rose
+                elif tile == 480:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 112.5
             skip_tiles = set(
                 [
@@ -726,6 +1078,15 @@ def main():
                 ]
             )
         elif i == 57:
+
+            def fill_different_when(tile):
+                if 626 <= tile and tile <= 652:
+                    return purple
+                elif 505 <= tile and tile <= 731:
+                    return rose
+                else:
+                    return ""
+
             rotate = 113.3
             skip_tiles = set(
                 [
@@ -738,6 +1099,15 @@ def main():
                 ]
             )
         elif i == 58:
+
+            def fill_different_when(tile):
+                if 632 <= tile and tile <= 658:
+                    return purple
+                elif 512 <= tile and tile <= 737:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles -= 3
             rotate = 114.1
             skip_tiles = set(
@@ -751,6 +1121,17 @@ def main():
                 ]
             )
         elif i == 59:
+
+            def fill_different_when(tile):
+                if 640 <= tile and tile <= 666:
+                    return purple
+                elif 520 <= tile and tile <= 746:
+                    return rose
+                elif 747 <= tile and tile <= 748:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 114.9
             skip_tiles = set(
                 [
@@ -763,6 +1144,17 @@ def main():
                 ]
             )
         elif i == 60:
+
+            def fill_different_when(tile):
+                if 649 <= tile and tile <= 675:
+                    return purple
+                elif 530 <= tile and tile <= 755:
+                    return rose
+                elif 756 <= tile and tile <= 766:
+                    return cyan
+                else:
+                    return ""
+
             number_of_tiles += 3
             rotate = 115.45
             skip_tiles = set(
@@ -775,6 +1167,17 @@ def main():
                 ]
             )
         elif i == 61:
+
+            def fill_different_when(tile):
+                if 657 <= tile and tile <= 683:
+                    return purple
+                elif 539 <= tile and tile <= 762:
+                    return rose
+                elif 763 <= tile and tile <= 773:
+                    return cyan
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 116.3
             skip_tiles = set(
@@ -787,6 +1190,17 @@ def main():
                 ]
             )
         elif i == 62:
+
+            def fill_different_when(tile):
+                if 664 <= tile and tile <= 690:
+                    return purple
+                elif 547 <= tile and tile <= 769:
+                    return rose
+                elif 770 <= tile and tile <= 780:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 117
             skip_tiles = set(
                 [
@@ -798,6 +1212,17 @@ def main():
                 ]
             )
         elif i == 63:
+
+            def fill_different_when(tile):
+                if 672 <= tile and tile <= 698:
+                    return purple
+                elif 555 <= tile and tile <= 776:
+                    return rose
+                elif 777 <= tile and tile <= 787:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 117.7
             skip_tiles = set(
                 [
@@ -809,6 +1234,15 @@ def main():
                 ]
             )
         elif i == 64:
+
+            def fill_different_when(tile):
+                if 680 <= tile and tile <= 706:
+                    return purple
+                elif 564 <= tile and tile <= 782:
+                    return rose
+                else:
+                    return ""
+
             rotate = 118.15
             skip_tiles = set(
                 [
@@ -820,6 +1254,15 @@ def main():
                 ]
             )
         elif i == 65:
+
+            def fill_different_when(tile):
+                if 688 <= tile and tile <= 714:
+                    return purple
+                elif 573 <= tile and tile <= 788:
+                    return rose
+                else:
+                    return ""
+
             rotate = 118.8
             skip_tiles = set(
                 [
@@ -831,6 +1274,15 @@ def main():
                 ]
             )
         elif i == 66:
+
+            def fill_different_when(tile):
+                if 695 <= tile and tile <= 721:
+                    return purple
+                elif 581 <= tile and tile <= 795:
+                    return rose
+                else:
+                    return ""
+
             rotate = 119.43
             skip_tiles = set(
                 [
@@ -842,6 +1294,15 @@ def main():
                 ]
             )
         elif i == 67:
+
+            def fill_different_when(tile):
+                if 703 <= tile and tile <= 729:
+                    return purple
+                elif 589 <= tile and tile <= 803:
+                    return rose
+                else:
+                    return ""
+
             rotate = 120.03
             skip_tiles = set(
                 [
@@ -853,6 +1314,15 @@ def main():
                 ]
             )
         elif i == 68:
+
+            def fill_different_when(tile):
+                if 711 <= tile and tile <= 737:
+                    return purple
+                elif 598 <= tile and tile <= 811:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 120.53
             skip_tiles = set(
@@ -865,6 +1335,15 @@ def main():
                 ]
             )
         elif i == 69:
+
+            def fill_different_when(tile):
+                if 719 <= tile and tile <= 745:
+                    return purple
+                elif 606 <= tile and tile <= 818:
+                    return rose
+                else:
+                    return ""
+
             rotate = 121.1
             skip_tiles = set(
                 [
@@ -876,6 +1355,17 @@ def main():
                 ]
             )
         elif i == 70:
+
+            def fill_different_when(tile):
+                if 726 <= tile and tile <= 752:
+                    return purple
+                elif 614 <= tile and tile <= 827:
+                    return rose
+                elif 828 <= tile and tile <= 832:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 121.67
             skip_tiles = set(
                 [
@@ -887,6 +1377,17 @@ def main():
                 ]
             )
         elif i == 71:
+
+            def fill_different_when(tile):
+                if 735 <= tile and tile <= 761:
+                    return purple
+                elif 623 <= tile and tile <= 834:
+                    return rose
+                elif 835 <= tile and tile <= 847:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 122.04
             skip_tiles = set(
                 [
@@ -898,6 +1399,17 @@ def main():
                 ]
             )
         elif i == 72:
+
+            def fill_different_when(tile):
+                if 112 <= tile and tile <= 138:
+                    return purple
+                elif 0 <= tile and tile <= 211:
+                    return rose
+                elif 212 <= tile and tile <= 230:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 245.38
             skip_tiles = set(
                 [
@@ -908,6 +1420,17 @@ def main():
                 ]
             )
         elif i == 73:
+
+            def fill_different_when(tile):
+                if 119 <= tile and tile <= 145:
+                    return purple
+                elif 7 <= tile and tile <= 215:
+                    return rose
+                elif 0 <= tile and tile <= 245:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 244.46
             skip_tiles = set(
                 [
@@ -919,6 +1442,17 @@ def main():
                 ]
             )
         elif i == 74:
+
+            def fill_different_when(tile):
+                if 129 <= tile and tile <= 155:
+                    return purple
+                elif 20 <= tile and tile <= 226:
+                    return rose
+                elif 0 <= tile and tile <= 262:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 242.8
             skip_tiles = set(
                 [
@@ -931,6 +1465,17 @@ def main():
                 ]
             )
         elif i == 75:
+
+            def fill_different_when(tile):
+                if 141 <= tile and tile <= 167:
+                    return purple
+                elif 32 <= tile and tile <= 237:
+                    return rose
+                elif 0 <= tile and tile <= 280:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 241
             skip_tiles = set(
                 [
@@ -943,6 +1488,17 @@ def main():
                 ]
             )
         elif i == 76:
+
+            def fill_different_when(tile):
+                if 150 <= tile and tile <= 176:
+                    return purple
+                elif 42 <= tile and tile <= 246:
+                    return rose
+                elif 0 <= tile and tile <= 296:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 239.6
             skip_tiles = set(
                 [
@@ -955,6 +1511,17 @@ def main():
                 ]
             )
         elif i == 77:
+
+            def fill_different_when(tile):
+                if 160 <= tile and tile <= 186:
+                    return purple
+                elif 52 <= tile and tile <= 255:
+                    return rose
+                elif 0 <= tile and tile <= 311:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 238.25
             skip_tiles = set(
                 [
@@ -967,6 +1534,17 @@ def main():
                 ]
             )
         elif i == 78:
+
+            def fill_different_when(tile):
+                if 169 <= tile and tile <= 195:
+                    return purple
+                elif 62 <= tile and tile <= 264:
+                    return rose
+                elif 0 <= tile and tile <= 322:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 236.95
             skip_tiles = set(
                 [
@@ -979,6 +1557,17 @@ def main():
                 ]
             )
         elif i == 79:
+
+            def fill_different_when(tile):
+                if 171 <= tile and tile <= 197:
+                    return purple
+                elif 64 <= tile and tile <= 265:
+                    return rose
+                elif 0 <= tile and tile <= 12:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 237.08
             skip_tiles = set(
                 [
@@ -990,10 +1579,21 @@ def main():
                 ]
             )
         elif i == 80:
+
+            def fill_different_when(tile):
+                if 170 <= tile and tile <= 197:
+                    return purple
+                elif 64 <= tile and tile <= 264:
+                    return rose
+                elif 0 <= tile and tile <= 4:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 237.55
             skip_tiles = set(
                 [
-                    *range(6, 64),
+                    *range(5, 64),
                     *range(75, 117),
                     *range(128, 170),
                     *range(197, 253),
@@ -1001,6 +1601,15 @@ def main():
                 ]
             )
         elif i == 81:
+
+            def fill_different_when(tile):
+                if 106 <= tile and tile <= 132:
+                    return purple
+                elif 0 <= tile and tile <= 199:
+                    return rose
+                else:
+                    return ""
+
             rotate = 249.15
             skip_tiles = set(
                 [
@@ -1011,6 +1620,15 @@ def main():
                 ]
             )
         elif i == 82:
+
+            def fill_different_when(tile):
+                if 105 <= tile and tile <= 131:
+                    return purple
+                elif 0 <= tile and tile <= 198:
+                    return rose
+                else:
+                    return ""
+
             rotate = 249.5
             skip_tiles = set(
                 [
@@ -1021,6 +1639,15 @@ def main():
                 ]
             )
         elif i == 83:
+
+            def fill_different_when(tile):
+                if 105 <= tile and tile <= 131:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 249.83
             skip_tiles = set(
                 [
@@ -1031,6 +1658,15 @@ def main():
                 ]
             )
         elif i == 84:
+
+            def fill_different_when(tile):
+                if 104 <= tile and tile <= 131:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 250.14
             skip_tiles = set(
                 [
@@ -1041,6 +1677,15 @@ def main():
                 ]
             )
         elif i == 85:
+
+            def fill_different_when(tile):
+                if 104 <= tile and tile <= 131:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 250.45
             skip_tiles = set(
                 [
@@ -1051,6 +1696,15 @@ def main():
                 ]
             )
         elif i == 86:
+
+            def fill_different_when(tile):
+                if 103 <= tile and tile <= 129:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 250.75
             skip_tiles = set(
                 [
@@ -1061,6 +1715,15 @@ def main():
                 ]
             )
         elif i == 87:
+
+            def fill_different_when(tile):
+                if 103 <= tile and tile <= 129:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 251.04
             skip_tiles = set(
                 [
@@ -1071,6 +1734,15 @@ def main():
                 ]
             )
         elif i == 88:
+
+            def fill_different_when(tile):
+                if 102 <= tile and tile <= 128:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 251.35
             skip_tiles = set(
                 [
@@ -1081,6 +1753,15 @@ def main():
                 ]
             )
         elif i == 89:
+
+            def fill_different_when(tile):
+                if 102 <= tile and tile <= 128:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             rotate = 251.63
             skip_tiles = set(
                 [
@@ -1091,6 +1772,15 @@ def main():
                 ]
             )
         elif i == 90:
+
+            def fill_different_when(tile):
+                if 101 <= tile and tile <= 127:
+                    return purple
+                elif 0 <= tile and tile <= 197:
+                    return rose
+                else:
+                    return ""
+
             number_of_tiles += 2
             rotate = 251.93
             skip_tiles = set(
@@ -1102,6 +1792,15 @@ def main():
                 ]
             )
         elif i == 91:
+
+            def fill_different_when(tile):
+                if 101 <= tile and tile <= 127:
+                    return purple
+                elif 0 <= tile and tile <= 189:
+                    return rose
+                else:
+                    return ""
+
             rotate = 252.18
             skip_tiles = set(
                 [
@@ -1112,6 +1811,7 @@ def main():
                 ]
             )
         elif i == 92:
+            fill_different_when = lambda tile: rose if 0 <= tile and tile <= 188 else ""
             rotate = 252.45
             skip_tiles = set(
                 [
@@ -1122,6 +1822,7 @@ def main():
                 ]
             )
         elif i == 93:
+            fill_different_when = lambda tile: rose if 0 <= tile and tile <= 187 else ""
             rotate = 252.7
             skip_tiles = set(
                 [
@@ -1139,6 +1840,7 @@ def main():
                 ]
             )
         elif i == 94:
+            fill_different_when = lambda tile: rose if 0 <= tile and tile <= 187 else ""
             rotate = 252.95
             skip_tiles = set(
                 [
@@ -1146,6 +1848,15 @@ def main():
                 ]
             )
         elif i == 95:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 185:
+                    return rose
+                elif tile >= 186:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 253.2
             skip_tiles = set(
                 [
@@ -1154,6 +1865,15 @@ def main():
                 ]
             )
         elif i == 96:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 184:
+                    return rose
+                elif tile >= 185:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 253.45
             skip_tiles = set(
                 [
@@ -1162,6 +1882,15 @@ def main():
                 ]
             )
         elif i == 97:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 185:
+                    return rose
+                elif tile >= 186:
+                    return cyan
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 253.7
             skip_tiles = set(
@@ -1171,6 +1900,15 @@ def main():
                 ]
             )
         elif i == 98:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 185:
+                    return rose
+                elif tile >= 186:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 253.94
             skip_tiles = set(
                 [
@@ -1179,6 +1917,15 @@ def main():
                 ]
             )
         elif i == 99:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 183:
+                    return rose
+                elif tile >= 184:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 254.15
             skip_tiles = set(
                 [
@@ -1186,6 +1933,15 @@ def main():
                 ]
             )
         elif i == 100:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 183:
+                    return rose
+                elif tile >= 184:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 254.24
             skip_tiles = set(
                 [
@@ -1193,6 +1949,15 @@ def main():
                 ]
             )
         elif i == 101:
+
+            def fill_different_when(tile):
+                if 9 <= tile and tile <= 193:
+                    return rose
+                elif tile >= 0:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 253.05
             skip_tiles = set(
                 [
@@ -1200,6 +1965,15 @@ def main():
                 ]
             )
         elif i == 102:
+
+            def fill_different_when(tile):
+                if 28 <= tile and tile <= 212:
+                    return rose
+                elif tile >= 0:
+                    return cyan
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 250.53
             skip_tiles = set(
@@ -1208,6 +1982,15 @@ def main():
                 ]
             )
         elif i == 103:
+
+            def fill_different_when(tile):
+                if 48 <= tile and tile <= 230:
+                    return rose
+                elif tile >= 0:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 248.17
             skip_tiles = set(
                 [
@@ -1215,6 +1998,15 @@ def main():
                 ]
             )
         elif i == 104:
+
+            def fill_different_when(tile):
+                if 64 <= tile and tile <= 244:
+                    return rose
+                elif tile >= 0:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 246.28
             skip_tiles = set(
                 [
@@ -1222,6 +2014,15 @@ def main():
                 ]
             )
         elif i == 105:
+
+            def fill_different_when(tile):
+                if 78 <= tile and tile <= 258:
+                    return rose
+                elif tile >= 0:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 244.54
             skip_tiles = set(
                 [
@@ -1231,6 +2032,19 @@ def main():
                 ]
             )
         elif i == 106:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 93:
+                    return cyan
+                elif 94 <= tile and tile <= 172:
+                    return rose
+                elif 233 <= tile and tile <= 273:
+                    return rose
+                elif tile >= 274:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 242.71
             skip_tiles = set(
                 [
@@ -1240,6 +2054,19 @@ def main():
                 ]
             )
         elif i == 107:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 92:
+                    return cyan
+                elif 93 <= tile and tile <= 98:
+                    return rose
+                elif 259 <= tile and tile <= 270:
+                    return rose
+                elif tile >= 274:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 243.16
             skip_tiles = set(
                 [
@@ -1257,6 +2084,15 @@ def main():
                 ]
             )
         elif i == 108:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 78:
+                    return cyan
+                elif tile >= 300:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 243.6
             skip_tiles = set(
                 [
@@ -1267,6 +2103,15 @@ def main():
                 ]
             )
         elif i == 109:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 61:
+                    return cyan
+                elif tile >= 315:
+                    return cyan
+                else:
+                    return ""
+
             number_of_tiles += 1
             rotate = 244.04
             skip_tiles = set(
@@ -1278,6 +2123,15 @@ def main():
                 ]
             )
         elif i == 110:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 45:
+                    return cyan
+                elif tile >= 327:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 244.46
             skip_tiles = set(
                 [
@@ -1288,6 +2142,15 @@ def main():
                 ]
             )
         elif i == 111:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 32:
+                    return cyan
+                elif tile >= 331:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 244.62
             skip_tiles = set(
                 [
@@ -1298,6 +2161,15 @@ def main():
                 ]
             )
         elif i == 112:
+
+            def fill_different_when(tile):
+                if 0 <= tile and tile <= 19:
+                    return cyan
+                elif tile >= 331:
+                    return cyan
+                else:
+                    return ""
+
             rotate = 244.91
             skip_tiles = set(
                 [
@@ -1308,6 +2180,7 @@ def main():
                 ]
             )
         elif i == 113:
+            fill_different_when = lambda tile: cyan if tile >= 183 else ""
             rotate = 263.58
             skip_tiles = set(
                 [
@@ -1319,6 +2192,7 @@ def main():
                 ]
             )
         elif i == 114:
+            fill_different_when = lambda tile: cyan if tile >= 155 else ""
             rotate = 263.7
             skip_tiles = set(
                 [
@@ -1328,6 +2202,7 @@ def main():
                 ]
             )
         elif i == 115:
+            fill_different_when = lambda tile: cyan if tile >= 151 else ""
             number_of_tiles -= 99
             rotate = 263.73
             skip_tiles = set(
@@ -1337,6 +2212,7 @@ def main():
                 ]
             )
         elif i == 116:
+            fill_different_when = lambda tile: cyan if tile >= 159 else ""
             number_of_tiles += 99
             rotate = 263.56
             skip_tiles = set(
@@ -1346,6 +2222,7 @@ def main():
                 ]
             )
         elif i == 117:
+            fill_different_when = lambda tile: cyan if tile >= 160 else ""
             rotate = 263.56
             skip_tiles = set(
                 [
@@ -1354,6 +2231,7 @@ def main():
                 ]
             )
         elif i == 118:
+            fill_different_when = lambda tile: cyan if tile >= 158 else ""
             rotate = 264.03
             skip_tiles = set(
                 [
@@ -1362,6 +2240,7 @@ def main():
                 ]
             )
         elif i == 119:
+            fill_different_when = lambda tile: cyan if tile >= 234 else ""
             rotate = 264.13
             skip_tiles = set(
                 [
@@ -1370,6 +2249,7 @@ def main():
                 ]
             )
         elif i == 120:
+            fill_different_when = lambda tile: cyan if tile >= 269 else ""
             rotate = 264.24
             skip_tiles = set(
                 [
@@ -1393,6 +2273,8 @@ def main():
                 skip_tiles=skip_tiles,
                 tile_angle=360 / number_of_tiles,
                 rotate=rotate,
+                fill=fill,
+                fill_different_when=fill_different_when,
             )
         )
 
