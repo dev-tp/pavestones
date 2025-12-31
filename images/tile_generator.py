@@ -107,6 +107,7 @@ def main():
 
     cyan = "#527ca5"
     green = "#5f7f3f"
+    magenta = "#a5527c"
     purple = "#5f007f"
     rose = "#ff9f7f"
 
@@ -275,7 +276,7 @@ def main():
             )
         elif i == 22:
             fill_different_when = lambda tile: (
-                purple if 420 <= tile and tile <= 453 else ""
+                magenta if 420 <= tile and tile <= 453 else ""
             )
             rotate = 0.5
             skip_tiles = set(
@@ -293,7 +294,7 @@ def main():
             )
         elif i == 23:
             fill_different_when = lambda tile: (
-                purple if 429 <= tile and tile <= 464 else ""
+                magenta if 429 <= tile and tile <= 464 else ""
             )
             rotate = 5.2
             skip_tiles = set(
@@ -308,7 +309,7 @@ def main():
             )
         elif i == 24:
             fill_different_when = lambda tile: (
-                purple if 429 <= tile and tile <= 472 else ""
+                magenta if 429 <= tile and tile <= 472 else ""
             )
             rotate = 11.3
             skip_tiles = set(
@@ -329,7 +330,7 @@ def main():
                 if 401 <= tile and tile <= 405:
                     return rose
                 elif 429 <= tile and tile <= 479:
-                    return purple
+                    return magenta
                 else:
                     return ""
 
@@ -351,7 +352,7 @@ def main():
                 if 398 <= tile and tile <= 405:
                     return rose
                 elif 429 <= tile and tile <= 486:
-                    return purple
+                    return magenta
                 else:
                     return ""
 
@@ -372,7 +373,7 @@ def main():
                 if 398 <= tile and tile <= 405:
                     return rose
                 elif 429 <= tile and tile <= 486:
-                    return purple
+                    return magenta
                 else:
                     return ""
 
@@ -382,7 +383,7 @@ def main():
                 if 398 <= tile and tile <= 417:
                     return rose
                 elif 429 <= tile and tile <= 499:
-                    return purple
+                    return magenta
                 else:
                     return ""
 
@@ -402,7 +403,7 @@ def main():
                 if 417 <= tile and tile <= 429:
                     return rose
                 elif 485 <= tile and tile <= 511:
-                    return purple
+                    return magenta
                 else:
                     return ""
 
@@ -421,7 +422,7 @@ def main():
 
             def fill_different_when(tile):
                 if 485 <= tile and tile <= 521:
-                    return purple
+                    return magenta
                 elif 428 <= tile and tile <= 604:
                     return rose
                 else:
@@ -444,7 +445,7 @@ def main():
 
             def fill_different_when(tile):
                 if 502 <= tile and tile <= 528:
-                    return purple
+                    return magenta
                 elif 435 <= tile and tile <= 624:
                     return rose
                 else:
@@ -467,7 +468,7 @@ def main():
 
             def fill_different_when(tile):
                 if 517 <= tile and tile <= 542:
-                    return purple
+                    return magenta
                 elif 450 <= tile and tile <= 649:
                     return rose
                 else:
@@ -491,7 +492,7 @@ def main():
 
             def fill_different_when(tile):
                 if 532 <= tile and tile <= 558:
-                    return purple
+                    return magenta
                 elif 466 <= tile and tile <= 662:
                     return rose
                 else:
@@ -517,7 +518,7 @@ def main():
 
             def fill_different_when(tile):
                 if 542 <= tile and tile <= 567:
-                    return purple
+                    return magenta
                 elif 476 <= tile and tile <= 669:
                     return rose
                 else:
@@ -539,7 +540,7 @@ def main():
 
             def fill_different_when(tile):
                 if 556 <= tile and tile <= 582:
-                    return purple
+                    return magenta
                 elif 429 <= tile and tile <= 682:
                     return rose
                 else:
@@ -561,7 +562,7 @@ def main():
 
             def fill_different_when(tile):
                 if 512 <= tile and tile <= 537:
-                    return purple
+                    return magenta
                 elif 377 <= tile and tile <= 638:
                     return rose
                 else:
@@ -584,7 +585,7 @@ def main():
 
             def fill_different_when(tile):
                 if 510 <= tile and tile <= 536:
-                    return purple
+                    return magenta
                 elif 371 <= tile and tile <= 640:
                     return rose
                 else:
@@ -607,7 +608,7 @@ def main():
 
             def fill_different_when(tile):
                 if 539 <= tile and tile <= 564:
-                    return purple
+                    return magenta
                 elif 387 <= tile and tile <= 660:
                     return rose
                 else:
@@ -632,7 +633,7 @@ def main():
 
             def fill_different_when(tile):
                 if 551 <= tile and tile <= 577:
-                    return purple
+                    return magenta
                 elif 395 <= tile and tile <= 671:
                     return rose
                 else:
@@ -656,7 +657,7 @@ def main():
 
             def fill_different_when(tile):
                 if 568 <= tile and tile <= 593:
-                    return purple
+                    return magenta
                 elif 416 <= tile and tile <= 687:
                     return rose
                 else:
@@ -678,7 +679,7 @@ def main():
 
             def fill_different_when(tile):
                 if 588 <= tile and tile <= 614:
-                    return purple
+                    return magenta
                 elif 440 <= tile and tile <= 706:
                     return rose
                 else:
@@ -700,7 +701,7 @@ def main():
 
             def fill_different_when(tile):
                 if 614 <= tile and tile <= 642:
-                    return purple
+                    return magenta
                 elif 470 <= tile and tile <= 731:
                     return rose
                 else:
@@ -722,7 +723,7 @@ def main():
 
             def fill_different_when(tile):
                 if 628 <= tile and tile <= 658:
-                    return purple
+                    return magenta
                 elif 488 <= tile and tile <= 746:
                     return rose
                 else:
@@ -744,7 +745,7 @@ def main():
 
             def fill_different_when(tile):
                 if 642 <= tile and tile <= 671:
-                    return purple
+                    return magenta
                 elif 504 <= tile and tile <= 758:
                     return rose
                 else:
@@ -766,7 +767,7 @@ def main():
 
             def fill_different_when(tile):
                 if 656 <= tile and tile <= 685:
-                    return purple
+                    return magenta
                 elif 520 <= tile and tile <= 771:
                     return rose
                 else:
@@ -789,7 +790,7 @@ def main():
 
             def fill_different_when(tile):
                 if 669 <= tile and tile <= 698:
-                    return purple
+                    return magenta
                 elif 535 <= tile and tile <= 785:
                     return rose
                 else:
@@ -814,7 +815,7 @@ def main():
                 if 801 <= tile and tile <= 802:
                     return cyan
                 elif 682 <= tile and tile <= 712:
-                    return purple
+                    return magenta
                 elif 550 <= tile and tile <= 800:
                     return rose
                 else:
@@ -837,7 +838,7 @@ def main():
                 if 863 <= tile and tile <= 873:
                     return cyan
                 elif 740 <= tile and tile <= 768:
-                    return purple
+                    return magenta
                 elif 599 <= tile and tile <= 872:
                     return rose
                 else:
@@ -863,7 +864,7 @@ def main():
                 if 647 <= tile and tile <= 658:
                     return cyan
                 elif 532 <= tile and tile <= 558:
-                    return purple
+                    return magenta
                 elif 401 <= tile and tile <= 646:
                     return rose
                 else:
@@ -888,7 +889,7 @@ def main():
                 if 657 <= tile and tile <= 668:
                     return cyan
                 elif 543 <= tile and tile <= 569:
-                    return purple
+                    return magenta
                 elif 412 <= tile and tile <= 656:
                     return rose
                 else:
@@ -913,7 +914,7 @@ def main():
                 if 667 <= tile and tile <= 677:
                     return cyan
                 elif 553 <= tile and tile <= 579:
-                    return purple
+                    return magenta
                 elif 420 <= tile and tile <= 666:
                     return rose
                 else:
@@ -935,7 +936,7 @@ def main():
 
             def fill_different_when(tile):
                 if 564 <= tile and tile <= 590:
-                    return purple
+                    return magenta
                 elif 434 <= tile and tile <= 673:
                     return rose
                 elif 424 <= tile and tile <= 687:
@@ -960,7 +961,7 @@ def main():
 
             def fill_different_when(tile):
                 if 574 <= tile and tile <= 600:
-                    return purple
+                    return magenta
                 elif 446 <= tile and tile <= 683:
                     return rose
                 elif 424 <= tile and tile <= 445:
@@ -985,7 +986,7 @@ def main():
 
             def fill_different_when(tile):
                 if 591 <= tile and tile <= 617:
-                    return purple
+                    return magenta
                 elif 463 <= tile and tile <= 698:
                     return rose
                 elif 449 <= tile and tile <= 462:
@@ -1009,7 +1010,7 @@ def main():
 
             def fill_different_when(tile):
                 if 604 <= tile and tile <= 630:
-                    return purple
+                    return magenta
                 elif 477 <= tile and tile <= 711:
                     return rose
                 elif 464 <= tile and tile <= 476:
@@ -1033,7 +1034,7 @@ def main():
 
             def fill_different_when(tile):
                 if 612 <= tile and tile <= 638:
-                    return purple
+                    return magenta
                 elif 489 <= tile and tile <= 718:
                     return rose
                 elif 472 <= tile and tile <= 481:
@@ -1057,7 +1058,7 @@ def main():
 
             def fill_different_when(tile):
                 if 618 <= tile and tile <= 644:
-                    return purple
+                    return magenta
                 elif 496 <= tile and tile <= 724:
                     return rose
                 elif tile == 480:
@@ -1081,7 +1082,7 @@ def main():
 
             def fill_different_when(tile):
                 if 626 <= tile and tile <= 652:
-                    return purple
+                    return magenta
                 elif 505 <= tile and tile <= 731:
                     return rose
                 else:
@@ -1102,7 +1103,7 @@ def main():
 
             def fill_different_when(tile):
                 if 632 <= tile and tile <= 658:
-                    return purple
+                    return magenta
                 elif 512 <= tile and tile <= 737:
                     return rose
                 else:
@@ -1124,7 +1125,7 @@ def main():
 
             def fill_different_when(tile):
                 if 640 <= tile and tile <= 666:
-                    return purple
+                    return magenta
                 elif 520 <= tile and tile <= 746:
                     return rose
                 elif 747 <= tile and tile <= 748:
@@ -1147,7 +1148,7 @@ def main():
 
             def fill_different_when(tile):
                 if 649 <= tile and tile <= 675:
-                    return purple
+                    return magenta
                 elif 530 <= tile and tile <= 755:
                     return rose
                 elif 756 <= tile and tile <= 766:
@@ -1170,7 +1171,7 @@ def main():
 
             def fill_different_when(tile):
                 if 657 <= tile and tile <= 683:
-                    return purple
+                    return magenta
                 elif 539 <= tile and tile <= 762:
                     return rose
                 elif 763 <= tile and tile <= 773:
@@ -1193,7 +1194,7 @@ def main():
 
             def fill_different_when(tile):
                 if 664 <= tile and tile <= 690:
-                    return purple
+                    return magenta
                 elif 547 <= tile and tile <= 769:
                     return rose
                 elif 770 <= tile and tile <= 780:
@@ -1215,7 +1216,7 @@ def main():
 
             def fill_different_when(tile):
                 if 672 <= tile and tile <= 698:
-                    return purple
+                    return magenta
                 elif 555 <= tile and tile <= 776:
                     return rose
                 elif 777 <= tile and tile <= 787:
@@ -1237,7 +1238,7 @@ def main():
 
             def fill_different_when(tile):
                 if 680 <= tile and tile <= 706:
-                    return purple
+                    return magenta
                 elif 564 <= tile and tile <= 782:
                     return rose
                 else:
@@ -1257,7 +1258,7 @@ def main():
 
             def fill_different_when(tile):
                 if 688 <= tile and tile <= 714:
-                    return purple
+                    return magenta
                 elif 573 <= tile and tile <= 788:
                     return rose
                 else:
@@ -1277,7 +1278,7 @@ def main():
 
             def fill_different_when(tile):
                 if 695 <= tile and tile <= 721:
-                    return purple
+                    return magenta
                 elif 581 <= tile and tile <= 795:
                     return rose
                 else:
@@ -1297,7 +1298,7 @@ def main():
 
             def fill_different_when(tile):
                 if 703 <= tile and tile <= 729:
-                    return purple
+                    return magenta
                 elif 589 <= tile and tile <= 803:
                     return rose
                 else:
@@ -1317,7 +1318,7 @@ def main():
 
             def fill_different_when(tile):
                 if 711 <= tile and tile <= 737:
-                    return purple
+                    return magenta
                 elif 598 <= tile and tile <= 811:
                     return rose
                 else:
@@ -1338,7 +1339,7 @@ def main():
 
             def fill_different_when(tile):
                 if 719 <= tile and tile <= 745:
-                    return purple
+                    return magenta
                 elif 606 <= tile and tile <= 818:
                     return rose
                 else:
@@ -1358,7 +1359,7 @@ def main():
 
             def fill_different_when(tile):
                 if 726 <= tile and tile <= 752:
-                    return purple
+                    return magenta
                 elif 614 <= tile and tile <= 827:
                     return rose
                 elif 828 <= tile and tile <= 832:
@@ -1380,7 +1381,7 @@ def main():
 
             def fill_different_when(tile):
                 if 735 <= tile and tile <= 761:
-                    return purple
+                    return magenta
                 elif 623 <= tile and tile <= 834:
                     return rose
                 elif 835 <= tile and tile <= 847:
@@ -1402,7 +1403,7 @@ def main():
 
             def fill_different_when(tile):
                 if 112 <= tile and tile <= 138:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 211:
                     return rose
                 elif 212 <= tile and tile <= 230:
@@ -1423,7 +1424,7 @@ def main():
 
             def fill_different_when(tile):
                 if 119 <= tile and tile <= 145:
-                    return purple
+                    return magenta
                 elif 7 <= tile and tile <= 215:
                     return rose
                 elif 0 <= tile and tile <= 245:
@@ -1445,7 +1446,7 @@ def main():
 
             def fill_different_when(tile):
                 if 129 <= tile and tile <= 155:
-                    return purple
+                    return magenta
                 elif 20 <= tile and tile <= 226:
                     return rose
                 elif 0 <= tile and tile <= 262:
@@ -1468,7 +1469,7 @@ def main():
 
             def fill_different_when(tile):
                 if 141 <= tile and tile <= 167:
-                    return purple
+                    return magenta
                 elif 32 <= tile and tile <= 237:
                     return rose
                 elif 0 <= tile and tile <= 280:
@@ -1491,7 +1492,7 @@ def main():
 
             def fill_different_when(tile):
                 if 150 <= tile and tile <= 176:
-                    return purple
+                    return magenta
                 elif 42 <= tile and tile <= 246:
                     return rose
                 elif 0 <= tile and tile <= 296:
@@ -1514,7 +1515,7 @@ def main():
 
             def fill_different_when(tile):
                 if 160 <= tile and tile <= 186:
-                    return purple
+                    return magenta
                 elif 52 <= tile and tile <= 255:
                     return rose
                 elif 0 <= tile and tile <= 311:
@@ -1537,7 +1538,7 @@ def main():
 
             def fill_different_when(tile):
                 if 169 <= tile and tile <= 195:
-                    return purple
+                    return magenta
                 elif 62 <= tile and tile <= 264:
                     return rose
                 elif 0 <= tile and tile <= 322:
@@ -1560,7 +1561,7 @@ def main():
 
             def fill_different_when(tile):
                 if 171 <= tile and tile <= 197:
-                    return purple
+                    return magenta
                 elif 64 <= tile and tile <= 265:
                     return rose
                 elif 0 <= tile and tile <= 12:
@@ -1582,7 +1583,7 @@ def main():
 
             def fill_different_when(tile):
                 if 170 <= tile and tile <= 197:
-                    return purple
+                    return magenta
                 elif 64 <= tile and tile <= 264:
                     return rose
                 elif 0 <= tile and tile <= 4:
@@ -1604,7 +1605,7 @@ def main():
 
             def fill_different_when(tile):
                 if 106 <= tile and tile <= 132:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 199:
                     return rose
                 else:
@@ -1623,7 +1624,7 @@ def main():
 
             def fill_different_when(tile):
                 if 105 <= tile and tile <= 131:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 198:
                     return rose
                 else:
@@ -1642,7 +1643,7 @@ def main():
 
             def fill_different_when(tile):
                 if 105 <= tile and tile <= 131:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1661,7 +1662,7 @@ def main():
 
             def fill_different_when(tile):
                 if 104 <= tile and tile <= 131:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1680,7 +1681,7 @@ def main():
 
             def fill_different_when(tile):
                 if 104 <= tile and tile <= 131:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1699,7 +1700,7 @@ def main():
 
             def fill_different_when(tile):
                 if 103 <= tile and tile <= 129:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1718,7 +1719,7 @@ def main():
 
             def fill_different_when(tile):
                 if 103 <= tile and tile <= 129:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1737,7 +1738,7 @@ def main():
 
             def fill_different_when(tile):
                 if 102 <= tile and tile <= 128:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1756,7 +1757,7 @@ def main():
 
             def fill_different_when(tile):
                 if 102 <= tile and tile <= 128:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1775,7 +1776,7 @@ def main():
 
             def fill_different_when(tile):
                 if 101 <= tile and tile <= 127:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 197:
                     return rose
                 else:
@@ -1795,7 +1796,7 @@ def main():
 
             def fill_different_when(tile):
                 if 101 <= tile and tile <= 127:
-                    return purple
+                    return magenta
                 elif 0 <= tile and tile <= 189:
                     return rose
                 else:
