@@ -74,7 +74,7 @@ def svg(
     width: int,
     height: int,
     elements: list[str] = [],
-    viewbox: tuple[int, int, int, int] = None,
+    viewbox: tuple[int, int, int, int] | None = None,
 ):
     attributes = []
 
