@@ -13,11 +13,11 @@ def A(
 
 
 def L(x: float, y: float):
-    return f"L {x:.2f},{y:.2f}"
+    return f"L{x:.2f},{y:.2f}"
 
 
-def M(x: int, y: int):
-    return f"M {x}, {y}"
+def M(x: float, y: float):
+    return f"M{x},{y}"
 
 
 def Z():
@@ -40,12 +40,20 @@ def g(elements: list[str], style: str = "", transform: str = ""):
     return f"<g {' '.join(attributes)}>{''.join(elements)}</g>"
 
 
+def h(x: float):
+    return f"h{x}"
+
+
 def image(href: str):
     return f'<image href="{href}" style="display: inline" />'
 
 
+def m(x: float, y: float):
+    return f"m{x:.2f},{y:.2f}"
+
+
 def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
-    attributes = []
+    attributes: list[str] = []
 
     if id != "":
         attributes.append(f'id="{id}"')
@@ -56,7 +64,10 @@ def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
     if stroke != "":
         attributes.append(f'stroke="{stroke}"')
 
-    return f'<path d="{''.join(d)}" {" ".join(attributes)} />'
+    if len(d) != 0:
+        attributes.append(f'd="{''.join(d)}"')
+
+    return f"<path {' '.join(attributes)}/>"
 
 
 def svg(
@@ -82,3 +93,11 @@ def use(href: str, transform: str = ""):
         attributes.append(f'transform="{transform}"')
 
     return f'<use href="#{href}" {" ".join(attributes)} />'
+
+
+def v(y: float):
+    return f"v{y}"
+
+
+def z():
+    return "z"
