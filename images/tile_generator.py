@@ -7,7 +7,7 @@ from typing import Callable
 
 
 # https://stackoverflow.com/questions/11479185/svg-donut-slice-as-path-element-annular-sector
-def annular_sector(
+def draw_annular_tile(
     center: tuple[float, float],
     start_angle: float,
     end_angle: float,
@@ -83,7 +83,7 @@ def draw_annular_tiles(
                 tile_color = fill_different_when(tile)
 
             elements.append(
-                annular_sector(
+                draw_annular_tile(
                     center=center,
                     start_angle=tile_angle * tile,
                     end_angle=tile_angle * (tile + 1),
@@ -98,6 +98,922 @@ def draw_annular_tiles(
         style=f"fill: {fill}; stroke: {fill}",
         transform=f"rotate({rotate}, {center[0]}, {center[1]})",
         elements=elements,
+    )
+
+
+def draw_column(
+    width: float,
+    height: float,
+    number_of_tiles: int,
+    offset: tuple[float, float] | None = None,
+) -> str:
+    if offset is None:
+        offset = (0, 0)
+
+    return "".join(
+        draw_tile(offset[0], offset[1] + height * i, width, height)
+        for i in range(number_of_tiles)
+    )
+
+
+def draw_sectors() -> str:
+    elements = []
+    sectors = []
+
+    height = 8.68
+    number_of_tiles = 75
+    offset_y = 0
+    width = 34.76
+
+    for i in range(19):
+        if i == 0:
+            offset_y = -3.6
+        elif i == 2:
+            number_of_tiles = 74
+        elif i == 5:
+            number_of_tiles = 73
+            offset_y = -3.5
+        elif i == 8:
+            number_of_tiles = 72
+        elif i == 10:
+            number_of_tiles = 71
+        elif i == 13:
+            number_of_tiles = 91
+            offset_y = -17.5
+        elif i == 14:
+            number_of_tiles = 92
+            offset_y = -17.1
+        elif i == 15:
+            offset_y = -16.2
+        elif i == 16:
+            number_of_tiles = 34
+            offset_y = -9.4
+        elif i == 17:
+            number_of_tiles = 22
+            offset_y = -2.9
+        elif i == 18:
+            number_of_tiles = 5
+            offset_y = 2.8
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1412, 888) rotate(4.42)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 83
+    offset_y = 0
+
+    for i in range(17):
+        if i == 1:
+            offset_y = 5
+        elif i == 3:
+            number_of_tiles = 84
+            offset_y = 2
+        elif i == 4:
+            number_of_tiles = 76
+            offset_y = 3
+        elif i == 5:
+            number_of_tiles = 67
+            offset_y = 3.4
+        elif i == 6:
+            number_of_tiles = 58
+            offset_y = 3.6
+        elif i == 7:
+            number_of_tiles = 75
+            offset_y = 3.8
+        elif i == 8:
+            number_of_tiles = 76
+            offset_y = 3
+        elif i == 9:
+            number_of_tiles = 76
+            offset_y = 3.2
+        elif i == 10:
+            offset_y = 3.4
+        elif i == 11:
+            number_of_tiles = 61
+            offset_y = 3.6
+        elif i == 12:
+            number_of_tiles = 40
+            offset_y = 3.7
+        elif i == 13:
+            number_of_tiles = 39
+            offset_y = 3.8
+        elif i == 14:
+            number_of_tiles = 40
+            offset_y = 3.25
+        elif i == 15:
+            number_of_tiles = 23
+            offset_y = 3.4
+        elif i == 16:
+            number_of_tiles = 5
+            offset_y = 3.5
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1997, 682) rotate(-14.6)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 97
+    offset_y = 0
+
+    for i in range(14):
+        if i == 1:
+            offset_y = -3.45
+        elif i == 5:
+            number_of_tiles = 70
+        elif i == 6:
+            number_of_tiles = 38
+        elif i == 8:
+            number_of_tiles = 37
+        elif i == 9:
+            number_of_tiles = 73
+        elif i == 10:
+            number_of_tiles = 69
+            offset_y = 0
+        elif i == 11:
+            number_of_tiles = 53
+            offset_y = 12.35
+        elif i == 12:
+            number_of_tiles = 37
+            offset_y = 22.55
+        elif i == 13:
+            number_of_tiles = 2
+            offset_y = 30.55
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2600, 584) rotate(-1.66)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 97
+    offset_y = 0
+
+    for i in range(34):
+        if i == 1:
+            offset_y = 5
+        elif i == 6:
+            number_of_tiles = 98
+            offset_y = 3.6
+        elif i == 7:
+            offset_y = 3.9
+        elif i == 8:
+            offset_y = 4
+        elif i == 9:
+            offset_y = 4.1
+        elif i == 10:
+            offset_y = 4.3
+        elif i == 12:
+            offset_y = 4.4
+        elif i == 13:
+            number_of_tiles = 99
+            offset_y = 4.5
+        elif i == 15:
+            number_of_tiles = 89
+            offset_y = 10.3
+        elif i == 16:
+            offset_y = 10
+        elif i == 17:
+            number_of_tiles = 83
+            offset_y = 9.75
+        elif i == 18:
+            number_of_tiles = 78
+            offset_y = 9.5
+        elif i == 19:
+            number_of_tiles = 72
+            offset_y = 9.25
+        elif i == 20:
+            number_of_tiles = 66
+            offset_y = 9.1
+        elif i == 21:
+            number_of_tiles = 61
+            offset_y = 8.9
+        elif i == 22:
+            number_of_tiles = 55
+            offset_y = 8.7
+        elif i == 23:
+            number_of_tiles = 49
+            offset_y = 8.55
+        elif i == 24:
+            number_of_tiles = 44
+            offset_y = 8
+        elif i == 25:
+            number_of_tiles = 38
+            offset_y = 7.9
+        elif i == 26:
+            number_of_tiles = 33
+            offset_y = 7.8
+        elif i == 27:
+            number_of_tiles = 27
+            offset_y = 7.7
+        elif i == 28:
+            number_of_tiles = 23
+            offset_y = 7.6
+        elif i == 29:
+            number_of_tiles = 24
+            offset_y = 6.95
+        elif i == 30:
+            number_of_tiles = 22
+            offset_y = 6.9
+        elif i == 31:
+            number_of_tiles = 16
+            offset_y = 6.8
+        elif i == 32:
+            number_of_tiles = 10
+            offset_y = 6.75
+        elif i == 33:
+            number_of_tiles = 4
+            offset_y = 6.7
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2980, 533) rotate(-15.7)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 23
+    offset_y = 0
+
+    for i in range(50):
+        if i % 4 == 0:
+            offset_y = -1.3
+            number_of_tiles = 23
+        elif i % 4 == 1:
+            number_of_tiles = 22
+
+        if i == 1:
+            offset_y = 5
+        elif i == 2:
+            offset_y = 1
+        elif i == 3:
+            offset_y = -0.5
+        elif i == 5:
+            offset_y = 0
+        elif i == 6:
+            offset_y = -0.5
+        elif i == 7:
+            offset_y = -1
+        elif i == 9:
+            offset_y = -0.6
+        elif i == 10:
+            offset_y = -0.9
+        elif i == 11:
+            offset_y = -1.1
+        elif i == 13:
+            offset_y = -0.8
+        elif i == 14:
+            offset_y = -1
+        elif i == 15:
+            offset_y = -1.2
+        elif i == 17:
+            offset_y = -0.9
+        elif i == 18:
+            offset_y = -1.1
+        elif i == 19:
+            offset_y = -1.2
+        elif i == 21:
+            offset_y = -1
+        elif i == 22:
+            offset_y = -1.1
+        elif i == 23:
+            offset_y = -1.2
+        elif i == 25:
+            offset_y = -1
+        elif i == 26:
+            offset_y = -1.1
+        elif i == 27:
+            offset_y = -1.2
+        elif i == 29:
+            offset_y = -1.05
+        elif i == 30:
+            offset_y = -1.15
+        elif i == 31:
+            offset_y = -1.25
+        elif i == 33:
+            offset_y = -1.1
+        elif i == 34:
+            offset_y = -1.15
+        elif i == 35:
+            number_of_tiles = 36
+            offset_y = -1.25
+        elif i == 36:
+            number_of_tiles = 36
+        elif i == 37:
+            number_of_tiles = 34
+            offset_y = -0.9
+        elif i == 38:
+            number_of_tiles = 35
+            offset_y = -0.95
+        elif i == 39:
+            number_of_tiles = 35
+            offset_y = -1
+        elif i == 40:
+            number_of_tiles = 35
+            offset_y = -0.85
+        elif i == 41:
+            number_of_tiles = 35
+            offset_y = -0.95
+        elif i == 42:
+            number_of_tiles = 35
+            offset_y = -1
+        elif i == 43:
+            number_of_tiles = 36
+            offset_y = -1.05
+        elif i == 44:
+            number_of_tiles = 35
+            offset_y = -0.9
+        elif i == 45:
+            number_of_tiles = 40
+            offset_y = -0.95
+        elif i == 46:
+            number_of_tiles = 40
+            offset_y = -1
+        elif i == 47:
+            number_of_tiles = 41
+            offset_y = -1.05
+        elif i == 48:
+            number_of_tiles = 41
+            offset_y = -0.95
+        elif i == 49:
+            number_of_tiles = 41
+            offset_y = -1
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(4418, 383) rotate(-6.35)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 43
+    offset_y = 0
+
+    for i in range(9):
+        if i == 1:
+            number_of_tiles = 44
+            offset_y = -3
+        elif i == 2:
+            offset_y = 1
+        elif i == 3:
+            offset_y = -0.5
+        elif i == 4:
+            number_of_tiles = 41
+            offset_y = 3
+        elif i == 5:
+            number_of_tiles = 40
+            offset_y = 3.5
+        elif i == 6:
+            number_of_tiles = 39
+            offset_y = 3.8
+        elif i == 7:
+            number_of_tiles = 38
+            offset_y = 4
+        elif i == 8:
+            number_of_tiles = 36
+            offset_y = 5.3
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(6173, 124) rotate(-7.4)",
+            elements=elements,
+        )
+    )
+
+    # Lower transept
+    elements = []
+    number_of_tiles = 50
+    offset_y = 0
+
+    for i in range(6):
+        if i == 1:
+            number_of_tiles = 80
+            offset_y = 3.5
+        elif i == 2:
+            number_of_tiles = 81
+        elif i == 4:
+            number_of_tiles = 82
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1179, 3321) rotate(1.1)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 3
+    offset_y = 0
+
+    for i in range(8):
+        if i == 1:
+            number_of_tiles = 12
+            offset_y = -14
+        elif i == 2:
+            number_of_tiles = 20
+            offset_y = -9.5
+        elif i == 3:
+            number_of_tiles = 54
+            offset_y = -11
+        elif i == 4:
+            number_of_tiles = 67
+            offset_y = -11.5
+        elif i == 5:
+            number_of_tiles = 77
+            offset_y = -10.5
+        elif i == 6:
+            number_of_tiles = 86
+            offset_y = -11
+        elif i == 7:
+            offset_y = -10.2
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1455, 3348) rotate(22)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 2
+    offset_y = 0
+
+    for i in range(15):
+        if i == 1:
+            number_of_tiles = 15
+            offset_y = -101
+        elif i == 2:
+            number_of_tiles = 29
+            offset_y = -220
+        elif i == 3:
+            number_of_tiles = 37
+            offset_y = -285
+        elif i == 4:
+            number_of_tiles = 38
+            offset_y = -290
+        elif i == 5:
+            number_of_tiles = 46
+            offset_y = -356
+        elif i == 6:
+            number_of_tiles = 58
+            offset_y = -449
+        elif i == 7:
+            number_of_tiles = 69
+            offset_y = -540
+        elif i == 8:
+            number_of_tiles = 79
+            offset_y = -624
+        elif i == 9:
+            number_of_tiles = 88
+            offset_y = -698
+        elif i == 10:
+            number_of_tiles = 89
+            offset_y = -703
+        elif i == 11:
+            offset_y = -700
+        elif i == 12:
+            offset_y = -697
+        elif i == 13:
+            number_of_tiles = 91
+            offset_y = -701
+        elif i == 14:
+            offset_y = -698
+
+        elements.append(
+            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1471, 4062) rotate(4.7)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 17
+    offset_y = 0
+
+    for i in range(12):
+        if i == 1:
+            number_of_tiles = 42
+            offset_y = -30
+        elif i == 2:
+            number_of_tiles = 43
+            offset_y = -36
+        elif i == 3:
+            number_of_tiles = 94
+            offset_y = -484
+        elif i == 4:
+            number_of_tiles = 95
+            offset_y = -489
+        elif i == 5:
+            offset_y = -495
+        elif i == 6:
+            number_of_tiles = 96
+            offset_y = -499
+        elif i == 7:
+            offset_y = -505
+        elif i == 8:
+            number_of_tiles = 97
+            offset_y = -510
+        elif i == 9:
+            offset_y = -515
+        elif i == 10:
+            number_of_tiles = 98
+            offset_y = -520
+        elif i == 11:
+            offset_y = -525
+
+        elements.append(
+            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2042, 3865) rotate(14.5)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 16
+    offset_y = 0
+
+    for i in range(12):
+        if i == 1:
+            number_of_tiles = 33
+            offset_y = -136
+        elif i == 2:
+            number_of_tiles = 42
+            offset_y = -211
+        elif i == 3:
+            number_of_tiles = 43
+            offset_y = -207
+        elif i == 4:
+            number_of_tiles = 44
+            offset_y = -212
+        elif i == 5:
+            number_of_tiles = 66
+            offset_y = -391
+        elif i == 6:
+            number_of_tiles = 87
+            offset_y = -570
+        elif i == 7:
+            number_of_tiles = 102
+            offset_y = -688
+        elif i == 8:
+            offset_y = -685
+        elif i == 9:
+            number_of_tiles = 103
+            offset_y = -681
+        elif i == 10:
+            offset_y = -678
+        elif i == 11:
+            number_of_tiles = 104
+            offset_y = -675
+
+        elements.append(
+            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2402, 4158) rotate(0.4)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 3
+    offset_y = 0
+
+    for i in range(68):
+        if i == 1:
+            number_of_tiles = 60
+            offset_y = -309
+        elif i == 2:
+            number_of_tiles = 81
+            offset_y = -314
+        elif i == 3:
+            offset_y = -311
+        elif i == 4:
+            number_of_tiles = 82
+            offset_y = -316
+        elif i == 5:
+            offset_y = -321
+        elif i == 6:
+            number_of_tiles = 83
+            offset_y = -327
+        elif i == 7:
+            number_of_tiles = 62
+            offset_y = -142
+        elif i == 8:
+            offset_y = -138
+        elif i == 9:
+            number_of_tiles = 106
+            offset_y = -517
+        elif i == 10:
+            offset_y = -522
+        elif i == 11:
+            number_of_tiles = 107
+            offset_y = -527
+        elif i == 12:
+            offset_y = -524
+        elif i == 13:
+            offset_y = -529
+        elif i == 14:
+            number_of_tiles = 108
+            offset_y = -534
+        elif i == 15:
+            offset_y = -531
+        elif i == 16:
+            number_of_tiles = 109
+            offset_y = -536
+        elif i == 17:
+            number_of_tiles = 110
+            offset_y = -541
+        elif i == 18:
+            number_of_tiles = 111
+            offset_y = -546
+        elif i == 19:
+            number_of_tiles = 110
+            offset_y = -544
+        elif i == 20:
+            number_of_tiles = 111
+            offset_y = -549
+        elif i == 21:
+            number_of_tiles = 112
+            offset_y = -553
+        elif i == 22:
+            number_of_tiles = 113
+            offset_y = -558
+        elif i == 23:
+            offset_y = -555
+        elif i == 24:
+            offset_y = -561
+        elif i == 25:
+            number_of_tiles = 114
+            offset_y = -566
+        elif i == 26:
+            offset_y = -563
+        elif i == 27:
+            number_of_tiles = 110
+            offset_y = -524
+        elif i == 28:
+            number_of_tiles = 103
+            offset_y = -460
+        elif i == 29:
+            number_of_tiles = 95
+            offset_y = -396
+        elif i == 30:
+            number_of_tiles = 89
+            offset_y = -340
+        elif i == 31:
+            number_of_tiles = 72
+            offset_y = -190
+        elif i == 32:
+            number_of_tiles = 65
+            offset_y = -126
+        elif i == 33:
+            number_of_tiles = 38
+            offset_y = 103
+        elif i == 34:
+            number_of_tiles = 39
+            offset_y = 98
+        elif i == 35:
+            offset_y = 101
+        elif i == 36:
+            number_of_tiles = 40
+            offset_y = 97
+        elif i == 37:
+            number_of_tiles = 41
+            offset_y = 91
+        elif i == 38:
+            offset_y = 85
+        elif i == 39:
+            offset_y = 88
+        elif i == 40:
+            number_of_tiles = 42
+            offset_y = 84
+        elif i == 41:
+            number_of_tiles = 43
+            offset_y = 79
+        elif i == 42:
+            number_of_tiles = 44
+            offset_y = 74
+        elif i == 43:
+            number_of_tiles = 43
+            offset_y = 77
+        elif i == 44:
+            number_of_tiles = 44
+            offset_y = 71
+        elif i == 45:
+            number_of_tiles = 45
+            offset_y = 66
+        elif i == 46:
+            number_of_tiles = 46
+            offset_y = 61
+        elif i == 47:
+            offset_y = 64
+        elif i == 48:
+            offset_y = 60
+        elif i == 49:
+            number_of_tiles = 47
+            offset_y = 54
+        elif i == 50:
+            number_of_tiles = 48
+            offset_y = 48
+        elif i == 51:
+            offset_y = 52
+        elif i == 52:
+            number_of_tiles = 49
+            offset_y = 47
+        elif i == 53:
+            offset_y = 42
+        elif i == 54:
+            number_of_tiles = 50
+            offset_y = 37
+        elif i == 55:
+            offset_y = 40
+        elif i == 56:
+            number_of_tiles = 51
+            offset_y = 35
+        elif i == 57:
+            number_of_tiles = 52
+            offset_y = 30
+        elif i == 58:
+            offset_y = 24
+        elif i == 59:
+            offset_y = 28
+        elif i == 60:
+            offset_y = 30
+        elif i == 61:
+            offset_y = 33
+        elif i == 62:
+            number_of_tiles = 53
+            offset_y = 29
+        elif i == 63:
+            offset_y = 24
+        elif i == 64:
+            offset_y = 27
+        elif i == 65:
+            number_of_tiles = 54
+            offset_y = 21
+        elif i == 66:
+            number_of_tiles = 55
+            offset_y = 16
+        elif i == 67:
+            number_of_tiles = 56
+            offset_y = 11
+
+        elements.append(
+            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2827, 4003) rotate(10.37)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 60
+    offset_y = 0
+
+    for i in range(17):
+        if i == 1:
+            number_of_tiles = 61
+            offset_y = -5
+        if i == 2:
+            offset_y = -10
+        if i == 3:
+            offset_y = -6
+        if i == 4:
+            number_of_tiles = 62
+            offset_y = -11
+        if i == 5:
+            number_of_tiles = 63
+            offset_y = -16
+        if i == 6:
+            offset_y = -12
+        if i == 7:
+            number_of_tiles = 64
+            offset_y = -17
+        if i == 8:
+            number_of_tiles = 63
+            offset_y = -14
+        if i == 9:
+            number_of_tiles = 62
+            offset_y = -12
+        if i == 10:
+            number_of_tiles = 61
+            offset_y = -8
+        if i == 11:
+            offset_y = -4
+        if i == 12:
+            number_of_tiles = 60
+            offset_y = 0
+        if i == 13:
+            number_of_tiles = 59
+            offset_y = 3
+        if i == 14:
+            offset_y = 7
+        if i == 15:
+            number_of_tiles = 58
+            offset_y = 11
+        if i == 16:
+            number_of_tiles = 57
+            offset_y = 14
+
+        elements.append(
+            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(5227, 4436) rotate(9)",
+            elements=elements,
+        )
+    )
+
+    return "".join(sectors)
+
+
+def draw_tile(x: float, y: float, width: float, height: float) -> str:
+    return svg.path(
+        d=[svg.m(x, y), svg.h(width), svg.v(height), svg.h(width * -1), svg.z()]
     )
 
 
@@ -2390,6 +3306,8 @@ def main():
         )
 
         radius += offset
+
+    elements.append(draw_sectors())
 
     print(svg.svg(6901, 5139, elements))
 
