@@ -106,6 +106,7 @@ def draw_column(
     height: float,
     number_of_tiles: int,
     offset: tuple[float, float] | None = None,
+    skip_tiles: set[int] = set(),
 ) -> str:
     if offset is None:
         offset = (0, 0)
@@ -113,6 +114,7 @@ def draw_column(
     return "".join(
         draw_tile(offset[0], offset[1] + height * i, width, height)
         for i in range(number_of_tiles)
+        if i not in skip_tiles
     )
 
 
@@ -126,6 +128,8 @@ def draw_sectors() -> str:
     width = 34.76
 
     for i in range(19):
+        skip_tiles = set()
+
         if i == 0:
             offset_y = -3.6
         elif i == 2:
@@ -133,18 +137,34 @@ def draw_sectors() -> str:
         elif i == 5:
             number_of_tiles = 73
             offset_y = -3.5
+            skip_tiles = set(range(27, 37))
+        elif i == 6:
+            skip_tiles = set(range(27, 36))
+        elif i == 7:
+            skip_tiles = set(range(26, 36))
         elif i == 8:
             number_of_tiles = 72
+            skip_tiles = set(range(26, 35))
+        elif i == 9:
+            skip_tiles = set(range(25, 34))
         elif i == 10:
             number_of_tiles = 71
+            skip_tiles = set(range(24, 34))
+        elif i == 11:
+            skip_tiles = set(range(24, 33))
+        elif i == 12:
+            skip_tiles = set(range(23, 32))
         elif i == 13:
             number_of_tiles = 91
             offset_y = -17.5
+            skip_tiles = set(range(43, 53))
         elif i == 14:
             number_of_tiles = 92
             offset_y = -17.1
+            skip_tiles = set(range(44, 63))
         elif i == 15:
             offset_y = -16.2
+            skip_tiles = set(range(43, 84))
         elif i == 16:
             number_of_tiles = 34
             offset_y = -9.4
@@ -157,7 +177,11 @@ def draw_sectors() -> str:
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -174,7 +198,11 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(17):
-        if i == 1:
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set([*range(62, 66), *range(76, 80)])
+        elif i == 1:
             offset_y = 5
         elif i == 3:
             number_of_tiles = 84
@@ -191,14 +219,18 @@ def draw_sectors() -> str:
         elif i == 7:
             number_of_tiles = 75
             offset_y = 3.8
+            skip_tiles = set(range(49, 74))
         elif i == 8:
             number_of_tiles = 76
             offset_y = 3
+            skip_tiles = set(range(41, 66))
         elif i == 9:
             number_of_tiles = 76
             offset_y = 3.2
+            skip_tiles = set(range(40, 57))
         elif i == 10:
             offset_y = 3.4
+            skip_tiles = set(range(40, 48))
         elif i == 11:
             number_of_tiles = 61
             offset_y = 3.6
@@ -220,7 +252,11 @@ def draw_sectors() -> str:
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -237,7 +273,11 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(14):
-        if i == 1:
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set([*range(62, 66), *range(76, 80), *range(90, 94)])
+        elif i == 1:
             offset_y = -3.45
         elif i == 5:
             number_of_tiles = 70
@@ -247,6 +287,7 @@ def draw_sectors() -> str:
             number_of_tiles = 37
         elif i == 9:
             number_of_tiles = 73
+            skip_tiles = set(range(38, 53))
         elif i == 10:
             number_of_tiles = 69
             offset_y = 0
@@ -262,7 +303,11 @@ def draw_sectors() -> str:
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -279,44 +324,70 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(34):
+        skip_tiles = set()
+
         if i == 1:
             offset_y = 5
+        elif i == 3:
+            skip_tiles = set(range(37, 76))
+        elif i == 4:
+            skip_tiles = set(range(36, 76))
+        elif i == 5:
+            skip_tiles = set(range(36, 69))
         elif i == 6:
             number_of_tiles = 98
             offset_y = 3.6
+            skip_tiles = set(range(37, 70))
         elif i == 7:
             offset_y = 3.9
+            skip_tiles = set(range(36, 70))
         elif i == 8:
             offset_y = 4
+            skip_tiles = set(range(36, 69))
         elif i == 9:
             offset_y = 4.1
+            skip_tiles = set(range(36, 69))
         elif i == 10:
             offset_y = 4.3
+            skip_tiles = set(range(36, 69))
+        elif i == 11:
+            skip_tiles = set(range(35, 69))
         elif i == 12:
             offset_y = 4.4
+            skip_tiles = set(range(35, 69))
         elif i == 13:
             number_of_tiles = 99
             offset_y = 4.5
+            skip_tiles = set(range(35, 69))
+        elif i == 14:
+            skip_tiles = set([*range(5, 11), *range(35, 69)])
         elif i == 15:
             number_of_tiles = 89
             offset_y = 10.3
+            skip_tiles = set(range(24, 59))
         elif i == 16:
             offset_y = 10
+            skip_tiles = set(range(24, 59))
         elif i == 17:
             number_of_tiles = 83
             offset_y = 9.75
+            skip_tiles = set(range(24, 59))
         elif i == 18:
             number_of_tiles = 78
             offset_y = 9.5
+            skip_tiles = set(range(24, 59))
         elif i == 19:
             number_of_tiles = 72
             offset_y = 9.25
+            skip_tiles = set(range(24, 58))
         elif i == 20:
             number_of_tiles = 66
             offset_y = 9.1
+            skip_tiles = set(range(23, 46))
         elif i == 21:
             number_of_tiles = 61
             offset_y = 8.9
+            skip_tiles = set(range(23, 29))
         elif i == 22:
             number_of_tiles = 55
             offset_y = 8.7
@@ -353,9 +424,14 @@ def draw_sectors() -> str:
         elif i == 33:
             number_of_tiles = 4
             offset_y = 6.7
+
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -372,6 +448,8 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(50):
+        skip_tiles = set()
+
         if i % 4 == 0:
             offset_y = -1.3
             number_of_tiles = 23
@@ -433,6 +511,7 @@ def draw_sectors() -> str:
         elif i == 35:
             number_of_tiles = 36
             offset_y = -1.25
+            skip_tiles = set(range(23, 28))
         elif i == 36:
             number_of_tiles = 36
         elif i == 37:
@@ -477,7 +556,11 @@ def draw_sectors() -> str:
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -537,17 +620,28 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(6):
-        if i == 1:
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set(range(7, 44))
+        elif i == 1:
             number_of_tiles = 80
             offset_y = 3.5
+            skip_tiles = set(range(25, 44))
         elif i == 2:
             number_of_tiles = 81
         elif i == 4:
             number_of_tiles = 82
+        elif i == 5:
+            skip_tiles = set([*range(2, 8), *range(16, 22), *range(30, 36)])
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -564,6 +658,8 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(8):
+        skip_tiles = set()
+
         if i == 1:
             number_of_tiles = 12
             offset_y = -14
@@ -573,9 +669,11 @@ def draw_sectors() -> str:
         elif i == 3:
             number_of_tiles = 54
             offset_y = -11
+            skip_tiles = set(range(30, 48))
         elif i == 4:
             number_of_tiles = 67
             offset_y = -11.5
+            skip_tiles = set(range(39, 49))
         elif i == 5:
             number_of_tiles = 77
             offset_y = -10.5
@@ -584,10 +682,15 @@ def draw_sectors() -> str:
             offset_y = -11
         elif i == 7:
             offset_y = -10.2
+            skip_tiles = set([*range(1, 7), *range(15, 21), *range(29, 35)])
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
             )
         )
 
@@ -604,6 +707,8 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(15):
+        skip_tiles = set()
+
         if i == 1:
             number_of_tiles = 15
             offset_y = -101
@@ -643,9 +748,16 @@ def draw_sectors() -> str:
             offset_y = -701
         elif i == 14:
             offset_y = -698
+            skip_tiles = set([*range(2, 8), *range(16, 22), *range(30, 36)])
 
         elements.append(
-            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y),
+                skip_tiles=skip_tiles,
+            )
         )
 
     sectors.append(
@@ -661,6 +773,8 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(12):
+        skip_tiles = set()
+
         if i == 1:
             number_of_tiles = 42
             offset_y = -30
@@ -670,14 +784,18 @@ def draw_sectors() -> str:
         elif i == 3:
             number_of_tiles = 94
             offset_y = -484
+            skip_tiles = set(range(1, 51))
         elif i == 4:
             number_of_tiles = 95
             offset_y = -489
+            skip_tiles = set(range(17, 54))
         elif i == 5:
             offset_y = -495
+            skip_tiles = set(range(33, 55))
         elif i == 6:
             number_of_tiles = 96
             offset_y = -499
+            skip_tiles = set(range(50, 55))
         elif i == 7:
             offset_y = -505
         elif i == 8:
@@ -690,9 +808,16 @@ def draw_sectors() -> str:
             offset_y = -520
         elif i == 11:
             offset_y = -525
+            skip_tiles = set([*range(2, 8), *range(16, 22), *range(30, 36)])
 
         elements.append(
-            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y),
+                skip_tiles=skip_tiles,
+            )
         )
 
     sectors.append(
@@ -708,6 +833,8 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(12):
+        skip_tiles = set()
+
         if i == 1:
             number_of_tiles = 33
             offset_y = -136
@@ -739,9 +866,25 @@ def draw_sectors() -> str:
         elif i == 11:
             number_of_tiles = 104
             offset_y = -675
+            skip_tiles = set(
+                [
+                    *range(2, 8),
+                    *range(11, 16),
+                    *range(18, 23),
+                    *range(27, 32),
+                    *range(34, 40),
+                    *range(42, 48),
+                ]
+            )
 
         elements.append(
-            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y),
+                skip_tiles=skip_tiles,
+            )
         )
 
     sectors.append(
@@ -757,12 +900,16 @@ def draw_sectors() -> str:
     offset_y = 0
 
     for i in range(68):
+        skip_tiles = set()
+
         if i == 1:
             number_of_tiles = 60
             offset_y = -309
+            skip_tiles = set(range(7, 36))
         elif i == 2:
             number_of_tiles = 81
             offset_y = -314
+            skip_tiles = set(range(29, 36))
         elif i == 3:
             offset_y = -311
         elif i == 4:
@@ -776,67 +923,131 @@ def draw_sectors() -> str:
         elif i == 7:
             number_of_tiles = 62
             offset_y = -142
+            skip_tiles = set(range(8, 17))
         elif i == 8:
             offset_y = -138
+            skip_tiles = set(range(8, 16))
         elif i == 9:
             number_of_tiles = 106
             offset_y = -517
+            skip_tiles = set([*range(34, 44), *range(51, 60)])
         elif i == 10:
             offset_y = -522
+            skip_tiles = set(range(52, 60))
         elif i == 11:
             number_of_tiles = 107
             offset_y = -527
+            skip_tiles = set(
+                [
+                    *range(8, 12),
+                    *range(16, 22),
+                    *range(27, 33),
+                    *range(37, 41),
+                    *range(52, 61),
+                ]
+            )
         elif i == 12:
             offset_y = -524
+            skip_tiles = set(
+                [
+                    *range(7, 11),
+                    *range(16, 22),
+                    *range(26, 32),
+                    *range(36, 40),
+                    *range(52, 61),
+                ]
+            )
         elif i == 13:
             offset_y = -529
+            skip_tiles = set(
+                [
+                    *range(8, 11),
+                    *range(15, 22),
+                    *range(27, 32),
+                    *range(36, 42),
+                    *range(53, 61),
+                ]
+            )
         elif i == 14:
             number_of_tiles = 108
             offset_y = -534
+            skip_tiles = set(
+                [
+                    *range(7, 13),
+                    *range(16, 22),
+                    *range(27, 33),
+                    *range(37, 42),
+                    *range(53, 62),
+                ]
+            )
         elif i == 15:
             offset_y = -531
+            skip_tiles = set(
+                [
+                    *range(6, 12),
+                    *range(15, 22),
+                    *range(26, 33),
+                    *range(36, 42),
+                    *range(53, 61),
+                ]
+            )
         elif i == 16:
             number_of_tiles = 109
             offset_y = -536
+            skip_tiles = set([*range(7, 12), *range(37, 42), *range(53, 62)])
         elif i == 17:
             number_of_tiles = 110
             offset_y = -541
+            skip_tiles = set([*range(7, 13), *range(38, 43), *range(54, 63)])
         elif i == 18:
             number_of_tiles = 111
             offset_y = -546
+            skip_tiles = set([*range(7, 13), *range(39, 44), *range(55, 63)])
         elif i == 19:
             number_of_tiles = 110
             offset_y = -544
+            skip_tiles = set([*range(7, 12), *range(38, 43), *range(54, 63)])
         elif i == 20:
             number_of_tiles = 111
             offset_y = -549
+            skip_tiles = set([*range(7, 12), *range(39, 44), *range(55, 64)])
         elif i == 21:
             number_of_tiles = 112
             offset_y = -553
+            skip_tiles = set([*range(39, 44), *range(56, 65)])
         elif i == 22:
             number_of_tiles = 113
             offset_y = -558
+            skip_tiles = set(range(56, 65))
         elif i == 23:
             offset_y = -555
+            skip_tiles = set(range(56, 64))
         elif i == 24:
             offset_y = -561
+            skip_tiles = set(range(57, 65))
         elif i == 25:
             number_of_tiles = 114
             offset_y = -566
+            skip_tiles = set(range(57, 66))
         elif i == 26:
             offset_y = -563
+            skip_tiles = set(range(37, 65))
         elif i == 27:
             number_of_tiles = 110
             offset_y = -524
+            skip_tiles = set(range(31, 61))
         elif i == 28:
             number_of_tiles = 103
             offset_y = -460
+            skip_tiles = set(range(23, 33))
         elif i == 29:
             number_of_tiles = 95
             offset_y = -396
+            skip_tiles = set(range(14, 25))
         elif i == 30:
             number_of_tiles = 89
             offset_y = -340
+            skip_tiles = set(range(6, 18))
         elif i == 31:
             number_of_tiles = 72
             offset_y = -190
@@ -936,7 +1147,13 @@ def draw_sectors() -> str:
             offset_y = 11
 
         elements.append(
-            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y),
+                skip_tiles=skip_tiles,
+            )
         )
 
     sectors.append(
