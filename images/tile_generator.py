@@ -107,15 +107,28 @@ def draw_column(
     number_of_tiles: int,
     offset: tuple[float, float] | None = None,
     skip_tiles: set[int] = set(),
+    is_horizontal: bool = False,
 ) -> str:
     if offset is None:
         offset = (0, 0)
 
-    return "".join(
-        draw_tile(offset[0], offset[1] + height * i, width, height)
-        for i in range(number_of_tiles)
-        if i not in skip_tiles
-    )
+    paths = []
+
+    for i in range(number_of_tiles):
+        x = 0
+        y = 0
+
+        if i in skip_tiles:
+            continue
+
+        if is_horizontal:
+            x = width * i
+        else:
+            y = height * i
+
+        paths.append(draw_tile(x + offset[0], y + offset[1], width, height))
+
+    return "".join(paths)
 
 
 def draw_sectors() -> str:
@@ -1221,6 +1234,265 @@ def draw_sectors() -> str:
         svg.g(
             style="fill: white; stroke: white;",
             transform="translate(5227, 4436) rotate(9)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    height = 12.5
+    number_of_tiles = 27
+    offset_x = 0
+    width = 52.1
+
+    for i in range(26):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set(range(6))
+        elif i == 1:
+            offset_x = 5
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, *range(22, 26)])
+        elif i == 2:
+            offset_x = 10
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, 22, 24, 25])
+        elif i == 3:
+            offset_x = 15
+            skip_tiles = set([*range(6), 7, 9, 12, 14, *range(17, 21), 22, 24, 25])
+        elif i == 4:
+            offset_x = 20
+            skip_tiles = set(range(6))
+        elif i == 5:
+            offset_x = 25
+            skip_tiles = set(range(6))
+        elif i == 6:
+            offset_x = 31
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, 22, 24, 25])
+        elif i == 7:
+            offset_x = 36
+            skip_tiles = set([*range(6), 7, 9, 12, 14, *range(17, 21), 22, 24, 25])
+        elif i == 8:
+            offset_x = 41
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 19, 20, 22, 24, 25])
+        elif i == 9:
+            offset_x = 47
+            skip_tiles = set(range(5))
+        elif i == 10:
+            offset_x = 51
+            skip_tiles = set(range(3))
+        elif i == 11:
+            offset_x = 57
+            skip_tiles = set([0])
+        elif i == 12:
+            offset_x = 61
+        elif i == 13:
+            offset_x = 67
+        elif i == 14:
+            offset_x = 73
+        elif i == 15:
+            offset_x = 78
+        elif i == 16:
+            number_of_tiles = 29
+            offset_x = 83
+            skip_tiles = set([27])
+        elif i == 17:
+            offset_x = 88
+        elif i == 18:
+            offset_x = 93
+        elif i == 19:
+            offset_x = 98
+        elif i == 20:
+            offset_x = 104
+        elif i == 21:
+            offset_x = 109
+        elif i == 22:
+            offset_x = 114
+        elif i == 23:
+            offset_x = 119
+            skip_tiles = set([0])
+        elif i == 24:
+            offset_x = 124
+            skip_tiles = set(range(11))
+        elif i == 25:
+            offset_x = 129
+            skip_tiles = set(range(21))
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(3956, 3854) rotate(5.75)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 25
+    offset_x = -5.60
+
+    for i in range(47):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 1:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 2:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 3:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 4:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 5:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 6:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 7:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 8:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 9:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 10:
+            skip_tiles = set(range(4, 25))
+        elif i == 11:
+            skip_tiles = set(range(4, 25))
+        elif i == 12:
+            skip_tiles = set(range(4, 25))
+        elif i == 13:
+            skip_tiles = set(range(4, 25))
+        elif i == 14:
+            skip_tiles = set(range(5, 25))
+        elif i == 15:
+            skip_tiles = set(range(5, 25))
+        elif i == 16:
+            skip_tiles = set(range(5, 23))
+        elif i == 17:
+            skip_tiles = set(range(5, 17))
+        elif i == 18:
+            skip_tiles = set(range(5, 11))
+        elif i == 29:
+            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
+        elif i == 30:
+            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
+        elif i == 31:
+            skip_tiles = set([3, 11, 15, 16, 23, 24])
+        elif i == 32:
+            number_of_tiles = 26
+        elif i == 34:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 35:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 36:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 41:
+            number_of_tiles = 1
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x * i, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(4216, 412) rotate(-6.3)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    height = 11.6
+    number_of_tiles = 12
+    offset_x = 4
+
+    for i in range(36):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set(range(7))
+        elif i == 1:
+            skip_tiles = set([0])
+        elif i == 2:
+            skip_tiles = set([0])
+        elif i == 3:
+            skip_tiles = set([0])
+        elif i == 4:
+            skip_tiles = set([0])
+        elif i == 5:
+            skip_tiles = set([0])
+        elif i == 6:
+            skip_tiles = set([0])
+        elif i == 7:
+            skip_tiles = set([*range(3), *range(4, 8), 10])
+        elif i == 8:
+            skip_tiles = set([*range(3), *range(4, 8), 10])
+        elif i == 12:
+            number_of_tiles = 11
+            skip_tiles = set([0])
+        elif i == 13:
+            skip_tiles = set([*range(2), *range(4, 8), 10])
+        elif i == 14:
+            skip_tiles = set([*range(2), *range(4, 8), 10])
+        elif i == 15:
+            skip_tiles = set([0])
+        elif i == 16:
+            skip_tiles = set([0])
+        elif i == 17:
+            skip_tiles = set([0])
+        elif i == 18:
+            skip_tiles = set([0])
+        elif i == 19:
+            skip_tiles = set([0, 4, 6, 10])
+        elif i == 20:
+            skip_tiles = set([0, 4, 6, 10])
+        elif i == 21:
+            skip_tiles = set([0])
+        elif i == 22:
+            skip_tiles = set([0])
+        elif i == 23:
+            skip_tiles = set([0])
+        elif i == 24:
+            skip_tiles = set([0])
+        elif i == 25:
+            skip_tiles = set([0, *range(3, 7), 10])
+        elif i == 26:
+            skip_tiles = set([0, *range(3, 7), 10])
+        elif i == 31:
+            skip_tiles = set([*range(3, 7), 10])
+        elif i == 32:
+            skip_tiles = set([*range(3, 7), 10])
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x * i, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(6238, 3337) rotate(114.8)",
             elements=elements,
         )
     )
