@@ -17,7 +17,7 @@ def L(x: float, y: float):
 
 
 def M(x: float, y: float):
-    return f"M{x},{y}"
+    return f"M{x:.2f},{y:.2f}"
 
 
 def Z():
@@ -67,7 +67,7 @@ def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
     if len(d) != 0:
         attributes.append(f'd="{''.join(d)}"')
 
-    return f"<path {' '.join(attributes)}/>"
+    return f"<path {' '.join(attributes)}/>".replace(".00", "")
 
 
 def svg(
