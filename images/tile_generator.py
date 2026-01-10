@@ -142,6 +142,7 @@ def horizontal_sections() -> str:
     elements: list[str] = []
     sectors: list[str] = []
 
+    fill = GREEN
     height = 12.5
     number_of_tiles = 27
     offset_x = 0
@@ -232,7 +233,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(3956, 3854) rotate(5.75)",
             elements=elements,
         )
@@ -313,13 +314,14 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(4216, 412) rotate(-6.3)",
             elements=elements,
         )
     )
 
     elements = []
+    fill = ROSE
     height = 11.6
     number_of_tiles = 12
     offset_x = 4
@@ -394,7 +396,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(6238, 3337) rotate(114.8)",
             elements=elements,
         )
@@ -407,6 +409,7 @@ def lower_transept() -> str:
     elements: list[str] = []
     sectors: list[str] = []
 
+    fill = CYAN
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
@@ -440,7 +443,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(1179, 3321) rotate(1.1)",
             elements=elements,
         )
@@ -489,7 +492,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(1455, 3348) rotate(22)",
             elements=elements,
         )
@@ -555,7 +558,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(1471, 4062) rotate(4.7)",
             elements=elements,
         )
@@ -615,7 +618,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(2042, 3865) rotate(14.5)",
             elements=elements,
         )
@@ -682,7 +685,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(2402, 4158) rotate(0.4)",
             elements=elements,
         )
@@ -951,7 +954,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(2827, 4003) rotate(10.37)",
             elements=elements,
         )
@@ -1012,7 +1015,7 @@ def lower_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(5227, 4436) rotate(9)",
             elements=elements,
         )
@@ -3315,6 +3318,7 @@ def upper_transept() -> str:
     elements: list[str] = []
     sectors: list[str] = []
 
+    fill = CYAN
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
@@ -3380,7 +3384,7 @@ def upper_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(1412, 888) rotate(4.42)",
             elements=elements,
         )
@@ -3455,7 +3459,7 @@ def upper_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(1997, 682) rotate(-14.6)",
             elements=elements,
         )
@@ -3506,7 +3510,7 @@ def upper_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(2600, 584) rotate(-1.66)",
             elements=elements,
         )
@@ -3630,7 +3634,7 @@ def upper_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(2980, 533) rotate(-15.7)",
             elements=elements,
         )
@@ -3759,7 +3763,7 @@ def upper_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(4418, 383) rotate(-6.35)",
             elements=elements,
         )
@@ -3801,7 +3805,7 @@ def upper_transept() -> str:
 
     sectors.append(
         svg.g(
-            style="fill: white; stroke: white;",
+            style=f"fill: {fill}; stroke: {fill};",
             transform="translate(6173, 124) rotate(-7.4)",
             elements=elements,
         )
