@@ -6,8 +6,15 @@ import svg
 from typing import Callable
 
 
+CYAN = "#527ca5"
+GREEN = "#5f7f3f"
+MAGENTA = "#a5527c"
+PURPLE = "#5f007f"
+ROSE = "#ff9f7f"
+
+
 # https://stackoverflow.com/questions/11479185/svg-donut-slice-as-path-element-annular-sector
-def draw_annular_tile(
+def annular_tile(
     center: tuple[float, float],
     start_angle: float,
     end_angle: float,
@@ -83,7 +90,7 @@ def draw_annular_tiles(
                 tile_color = fill_different_when(tile)
 
             elements.append(
-                draw_annular_tile(
+                annular_tile(
                     center=center,
                     start_angle=tile_angle * tile,
                     end_angle=tile_angle * (tile + 1),
@@ -112,7 +119,7 @@ def draw_column(
     if offset is None:
         offset = (0, 0)
 
-    paths = []
+    paths: list[str] = []
 
     for i in range(number_of_tiles):
         x = 0
@@ -126,511 +133,284 @@ def draw_column(
         else:
             y = height * i
 
-        paths.append(draw_tile(x + offset[0], y + offset[1], width, height))
+        paths.append(tile(x + offset[0], y + offset[1], width, height))
 
     return "".join(paths)
 
 
-def draw_sectors() -> str:
+def horizontal_sections() -> str:
+    elements: list[str] = []
+    sectors: list[str] = []
+
+    height = 12.5
+    number_of_tiles = 27
+    offset_x = 0
+    width = 52.1
+
+    for i in range(26):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set(range(6))
+        elif i == 1:
+            offset_x = 5
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, *range(22, 26)])
+        elif i == 2:
+            offset_x = 10
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, 22, 24, 25])
+        elif i == 3:
+            offset_x = 15
+            skip_tiles = set([*range(6), 7, 9, 12, 14, *range(17, 21), 22, 24, 25])
+        elif i == 4:
+            offset_x = 20
+            skip_tiles = set(range(6))
+        elif i == 5:
+            offset_x = 25
+            skip_tiles = set(range(6))
+        elif i == 6:
+            offset_x = 31
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, 22, 24, 25])
+        elif i == 7:
+            offset_x = 36
+            skip_tiles = set([*range(6), 7, 9, 12, 14, *range(17, 21), 22, 24, 25])
+        elif i == 8:
+            offset_x = 41
+            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 19, 20, 22, 24, 25])
+        elif i == 9:
+            offset_x = 47
+            skip_tiles = set(range(5))
+        elif i == 10:
+            offset_x = 51
+            skip_tiles = set(range(3))
+        elif i == 11:
+            offset_x = 57
+            skip_tiles = set([0])
+        elif i == 12:
+            offset_x = 61
+        elif i == 13:
+            offset_x = 67
+        elif i == 14:
+            offset_x = 73
+        elif i == 15:
+            offset_x = 78
+        elif i == 16:
+            number_of_tiles = 29
+            offset_x = 83
+            skip_tiles = set([27])
+        elif i == 17:
+            offset_x = 88
+        elif i == 18:
+            offset_x = 93
+        elif i == 19:
+            offset_x = 98
+        elif i == 20:
+            offset_x = 104
+        elif i == 21:
+            offset_x = 109
+        elif i == 22:
+            offset_x = 114
+        elif i == 23:
+            offset_x = 119
+            skip_tiles = set([0])
+        elif i == 24:
+            offset_x = 124
+            skip_tiles = set(range(11))
+        elif i == 25:
+            offset_x = 129
+            skip_tiles = set(range(21))
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(3956, 3854) rotate(5.75)",
+            elements=elements,
+        )
+    )
+
     elements = []
-    sectors = []
+    number_of_tiles = 25
+    offset_x = -5.60
+
+    for i in range(47):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 1:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 2:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 3:
+            skip_tiles = set([0, *range(3, 25)])
+        elif i == 4:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 5:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 6:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 7:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 8:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 9:
+            skip_tiles = set([0, *range(4, 25)])
+        elif i == 10:
+            skip_tiles = set(range(4, 25))
+        elif i == 11:
+            skip_tiles = set(range(4, 25))
+        elif i == 12:
+            skip_tiles = set(range(4, 25))
+        elif i == 13:
+            skip_tiles = set(range(4, 25))
+        elif i == 14:
+            skip_tiles = set(range(5, 25))
+        elif i == 15:
+            skip_tiles = set(range(5, 25))
+        elif i == 16:
+            skip_tiles = set(range(5, 23))
+        elif i == 17:
+            skip_tiles = set(range(5, 17))
+        elif i == 18:
+            skip_tiles = set(range(5, 11))
+        elif i == 29:
+            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
+        elif i == 30:
+            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
+        elif i == 31:
+            skip_tiles = set([3, 11, 15, 16, 23, 24])
+        elif i == 32:
+            number_of_tiles = 26
+        elif i == 34:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 35:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 36:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 41:
+            number_of_tiles = 1
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x * i, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(4216, 412) rotate(-6.3)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    height = 11.6
+    number_of_tiles = 12
+    offset_x = 4
+
+    for i in range(36):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set(range(7))
+        elif i == 1:
+            skip_tiles = set([0])
+        elif i == 2:
+            skip_tiles = set([0])
+        elif i == 3:
+            skip_tiles = set([0])
+        elif i == 4:
+            skip_tiles = set([0])
+        elif i == 5:
+            skip_tiles = set([0])
+        elif i == 6:
+            skip_tiles = set([0])
+        elif i == 7:
+            skip_tiles = set([*range(3), *range(4, 8), 10])
+        elif i == 8:
+            skip_tiles = set([*range(3), *range(4, 8), 10])
+        elif i == 12:
+            number_of_tiles = 11
+            skip_tiles = set([0])
+        elif i == 13:
+            skip_tiles = set([*range(2), *range(4, 8), 10])
+        elif i == 14:
+            skip_tiles = set([*range(2), *range(4, 8), 10])
+        elif i == 15:
+            skip_tiles = set([0])
+        elif i == 16:
+            skip_tiles = set([0])
+        elif i == 17:
+            skip_tiles = set([0])
+        elif i == 18:
+            skip_tiles = set([0])
+        elif i == 19:
+            skip_tiles = set([0, 4, 6, 10])
+        elif i == 20:
+            skip_tiles = set([0, 4, 6, 10])
+        elif i == 21:
+            skip_tiles = set([0])
+        elif i == 22:
+            skip_tiles = set([0])
+        elif i == 23:
+            skip_tiles = set([0])
+        elif i == 24:
+            skip_tiles = set([0])
+        elif i == 25:
+            skip_tiles = set([0, *range(3, 7), 10])
+        elif i == 26:
+            skip_tiles = set([0, *range(3, 7), 10])
+        elif i == 31:
+            skip_tiles = set([*range(3, 7), 10])
+        elif i == 32:
+            skip_tiles = set([*range(3, 7), 10])
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x * i, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(6238, 3337) rotate(114.8)",
+            elements=elements,
+        )
+    )
+
+    return "".join(sectors)
+
+
+def lower_transept() -> str:
+    elements: list[str] = []
+    sectors: list[str] = []
 
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
     width = 34.76
-
-    for i in range(19):
-        skip_tiles = set()
-
-        if i == 0:
-            offset_y = -3.6
-        elif i == 2:
-            number_of_tiles = 74
-        elif i == 5:
-            number_of_tiles = 73
-            offset_y = -3.5
-            skip_tiles = set(range(27, 37))
-        elif i == 6:
-            skip_tiles = set(range(27, 36))
-        elif i == 7:
-            skip_tiles = set(range(26, 36))
-        elif i == 8:
-            number_of_tiles = 72
-            skip_tiles = set(range(26, 35))
-        elif i == 9:
-            skip_tiles = set(range(25, 34))
-        elif i == 10:
-            number_of_tiles = 71
-            skip_tiles = set(range(24, 34))
-        elif i == 11:
-            skip_tiles = set(range(24, 33))
-        elif i == 12:
-            skip_tiles = set(range(23, 32))
-        elif i == 13:
-            number_of_tiles = 91
-            offset_y = -17.5
-            skip_tiles = set(range(43, 53))
-        elif i == 14:
-            number_of_tiles = 92
-            offset_y = -17.1
-            skip_tiles = set(range(44, 63))
-        elif i == 15:
-            offset_y = -16.2
-            skip_tiles = set(range(43, 84))
-        elif i == 16:
-            number_of_tiles = 34
-            offset_y = -9.4
-        elif i == 17:
-            number_of_tiles = 22
-            offset_y = -2.9
-        elif i == 18:
-            number_of_tiles = 5
-            offset_y = 2.8
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(width * i, offset_y * i),
-                skip_tiles=skip_tiles,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(1412, 888) rotate(4.42)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    number_of_tiles = 83
-    offset_y = 0
-
-    for i in range(17):
-        skip_tiles = set()
-
-        if i == 0:
-            skip_tiles = set([*range(62, 66), *range(76, 80)])
-        elif i == 1:
-            offset_y = 5
-        elif i == 3:
-            number_of_tiles = 84
-            offset_y = 2
-        elif i == 4:
-            number_of_tiles = 76
-            offset_y = 3
-        elif i == 5:
-            number_of_tiles = 67
-            offset_y = 3.4
-        elif i == 6:
-            number_of_tiles = 58
-            offset_y = 3.6
-        elif i == 7:
-            number_of_tiles = 75
-            offset_y = 3.8
-            skip_tiles = set(range(49, 74))
-        elif i == 8:
-            number_of_tiles = 76
-            offset_y = 3
-            skip_tiles = set(range(41, 66))
-        elif i == 9:
-            number_of_tiles = 76
-            offset_y = 3.2
-            skip_tiles = set(range(40, 57))
-        elif i == 10:
-            offset_y = 3.4
-            skip_tiles = set(range(40, 48))
-        elif i == 11:
-            number_of_tiles = 61
-            offset_y = 3.6
-        elif i == 12:
-            number_of_tiles = 40
-            offset_y = 3.7
-        elif i == 13:
-            number_of_tiles = 39
-            offset_y = 3.8
-        elif i == 14:
-            number_of_tiles = 40
-            offset_y = 3.25
-        elif i == 15:
-            number_of_tiles = 23
-            offset_y = 3.4
-        elif i == 16:
-            number_of_tiles = 5
-            offset_y = 3.5
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(width * i, offset_y * i),
-                skip_tiles=skip_tiles,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(1997, 682) rotate(-14.6)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    number_of_tiles = 97
-    offset_y = 0
-
-    for i in range(14):
-        skip_tiles = set()
-
-        if i == 0:
-            skip_tiles = set([*range(62, 66), *range(76, 80), *range(90, 94)])
-        elif i == 1:
-            offset_y = -3.45
-        elif i == 5:
-            number_of_tiles = 70
-        elif i == 6:
-            number_of_tiles = 38
-        elif i == 8:
-            number_of_tiles = 37
-        elif i == 9:
-            number_of_tiles = 73
-            skip_tiles = set(range(38, 53))
-        elif i == 10:
-            number_of_tiles = 69
-            offset_y = 0
-        elif i == 11:
-            number_of_tiles = 53
-            offset_y = 12.35
-        elif i == 12:
-            number_of_tiles = 37
-            offset_y = 22.55
-        elif i == 13:
-            number_of_tiles = 2
-            offset_y = 30.55
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(width * i, offset_y * i),
-                skip_tiles=skip_tiles,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(2600, 584) rotate(-1.66)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    number_of_tiles = 97
-    offset_y = 0
-
-    for i in range(34):
-        skip_tiles = set()
-
-        if i == 1:
-            offset_y = 5
-        elif i == 3:
-            skip_tiles = set(range(37, 76))
-        elif i == 4:
-            skip_tiles = set(range(36, 76))
-        elif i == 5:
-            skip_tiles = set(range(36, 69))
-        elif i == 6:
-            number_of_tiles = 98
-            offset_y = 3.6
-            skip_tiles = set(range(37, 70))
-        elif i == 7:
-            offset_y = 3.9
-            skip_tiles = set(range(36, 70))
-        elif i == 8:
-            offset_y = 4
-            skip_tiles = set(range(36, 69))
-        elif i == 9:
-            offset_y = 4.1
-            skip_tiles = set(range(36, 69))
-        elif i == 10:
-            offset_y = 4.3
-            skip_tiles = set(range(36, 69))
-        elif i == 11:
-            skip_tiles = set(range(35, 69))
-        elif i == 12:
-            offset_y = 4.4
-            skip_tiles = set(range(35, 69))
-        elif i == 13:
-            number_of_tiles = 99
-            offset_y = 4.5
-            skip_tiles = set(range(35, 69))
-        elif i == 14:
-            skip_tiles = set([*range(5, 11), *range(35, 69)])
-        elif i == 15:
-            number_of_tiles = 89
-            offset_y = 10.3
-            skip_tiles = set(range(24, 59))
-        elif i == 16:
-            offset_y = 10
-            skip_tiles = set(range(24, 59))
-        elif i == 17:
-            number_of_tiles = 83
-            offset_y = 9.75
-            skip_tiles = set(range(24, 59))
-        elif i == 18:
-            number_of_tiles = 78
-            offset_y = 9.5
-            skip_tiles = set(range(24, 59))
-        elif i == 19:
-            number_of_tiles = 72
-            offset_y = 9.25
-            skip_tiles = set(range(24, 58))
-        elif i == 20:
-            number_of_tiles = 66
-            offset_y = 9.1
-            skip_tiles = set(range(23, 46))
-        elif i == 21:
-            number_of_tiles = 61
-            offset_y = 8.9
-            skip_tiles = set(range(23, 29))
-        elif i == 22:
-            number_of_tiles = 55
-            offset_y = 8.7
-        elif i == 23:
-            number_of_tiles = 49
-            offset_y = 8.55
-        elif i == 24:
-            number_of_tiles = 44
-            offset_y = 8
-        elif i == 25:
-            number_of_tiles = 38
-            offset_y = 7.9
-        elif i == 26:
-            number_of_tiles = 33
-            offset_y = 7.8
-        elif i == 27:
-            number_of_tiles = 27
-            offset_y = 7.7
-        elif i == 28:
-            number_of_tiles = 23
-            offset_y = 7.6
-        elif i == 29:
-            number_of_tiles = 24
-            offset_y = 6.95
-        elif i == 30:
-            number_of_tiles = 22
-            offset_y = 6.9
-        elif i == 31:
-            number_of_tiles = 16
-            offset_y = 6.8
-        elif i == 32:
-            number_of_tiles = 10
-            offset_y = 6.75
-        elif i == 33:
-            number_of_tiles = 4
-            offset_y = 6.7
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(width * i, offset_y * i),
-                skip_tiles=skip_tiles,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(2980, 533) rotate(-15.7)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    number_of_tiles = 23
-    offset_y = 0
-
-    for i in range(50):
-        skip_tiles = set()
-
-        if i % 4 == 0:
-            offset_y = -1.3
-            number_of_tiles = 23
-        elif i % 4 == 1:
-            number_of_tiles = 22
-
-        if i == 1:
-            offset_y = 5
-        elif i == 2:
-            offset_y = 1
-        elif i == 3:
-            offset_y = -0.5
-        elif i == 5:
-            offset_y = 0
-        elif i == 6:
-            offset_y = -0.5
-        elif i == 7:
-            offset_y = -1
-        elif i == 9:
-            offset_y = -0.6
-        elif i == 10:
-            offset_y = -0.9
-        elif i == 11:
-            offset_y = -1.1
-        elif i == 13:
-            offset_y = -0.8
-        elif i == 14:
-            offset_y = -1
-        elif i == 15:
-            offset_y = -1.2
-        elif i == 17:
-            offset_y = -0.9
-        elif i == 18:
-            offset_y = -1.1
-        elif i == 19:
-            offset_y = -1.2
-        elif i == 21:
-            offset_y = -1
-        elif i == 22:
-            offset_y = -1.1
-        elif i == 23:
-            offset_y = -1.2
-        elif i == 25:
-            offset_y = -1
-        elif i == 26:
-            offset_y = -1.1
-        elif i == 27:
-            offset_y = -1.2
-        elif i == 29:
-            offset_y = -1.05
-        elif i == 30:
-            offset_y = -1.15
-        elif i == 31:
-            offset_y = -1.25
-        elif i == 33:
-            offset_y = -1.1
-        elif i == 34:
-            offset_y = -1.15
-        elif i == 35:
-            number_of_tiles = 36
-            offset_y = -1.25
-            skip_tiles = set(range(23, 28))
-        elif i == 36:
-            number_of_tiles = 36
-        elif i == 37:
-            number_of_tiles = 34
-            offset_y = -0.9
-        elif i == 38:
-            number_of_tiles = 35
-            offset_y = -0.95
-        elif i == 39:
-            number_of_tiles = 35
-            offset_y = -1
-        elif i == 40:
-            number_of_tiles = 35
-            offset_y = -0.85
-        elif i == 41:
-            number_of_tiles = 35
-            offset_y = -0.95
-        elif i == 42:
-            number_of_tiles = 35
-            offset_y = -1
-        elif i == 43:
-            number_of_tiles = 36
-            offset_y = -1.05
-        elif i == 44:
-            number_of_tiles = 35
-            offset_y = -0.9
-        elif i == 45:
-            number_of_tiles = 40
-            offset_y = -0.95
-        elif i == 46:
-            number_of_tiles = 40
-            offset_y = -1
-        elif i == 47:
-            number_of_tiles = 41
-            offset_y = -1.05
-        elif i == 48:
-            number_of_tiles = 41
-            offset_y = -0.95
-        elif i == 49:
-            number_of_tiles = 41
-            offset_y = -1
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(width * i, offset_y * i),
-                skip_tiles=skip_tiles,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(4418, 383) rotate(-6.35)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    number_of_tiles = 43
-    offset_y = 0
-
-    for i in range(9):
-        if i == 1:
-            number_of_tiles = 44
-            offset_y = -3
-        elif i == 2:
-            offset_y = 1
-        elif i == 3:
-            offset_y = -0.5
-        elif i == 4:
-            number_of_tiles = 41
-            offset_y = 3
-        elif i == 5:
-            number_of_tiles = 40
-            offset_y = 3.5
-        elif i == 6:
-            number_of_tiles = 39
-            offset_y = 3.8
-        elif i == 7:
-            number_of_tiles = 38
-            offset_y = 4
-        elif i == 8:
-            number_of_tiles = 36
-            offset_y = 5.3
-
-        elements.append(
-            draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(6173, 124) rotate(-7.4)",
-            elements=elements,
-        )
-    )
-
-    # Lower transept
-    elements = []
-    number_of_tiles = 50
-    offset_y = 0
 
     for i in range(6):
         skip_tiles = set()
@@ -1238,289 +1018,15 @@ def draw_sectors() -> str:
         )
     )
 
-    elements = []
-    height = 12.5
-    number_of_tiles = 27
-    offset_x = 0
-    width = 52.1
-
-    for i in range(26):
-        skip_tiles = set()
-
-        if i == 0:
-            skip_tiles = set(range(6))
-        elif i == 1:
-            offset_x = 5
-            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, *range(22, 26)])
-        elif i == 2:
-            offset_x = 10
-            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, 22, 24, 25])
-        elif i == 3:
-            offset_x = 15
-            skip_tiles = set([*range(6), 7, 9, 12, 14, *range(17, 21), 22, 24, 25])
-        elif i == 4:
-            offset_x = 20
-            skip_tiles = set(range(6))
-        elif i == 5:
-            offset_x = 25
-            skip_tiles = set(range(6))
-        elif i == 6:
-            offset_x = 31
-            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 18, 20, 22, 24, 25])
-        elif i == 7:
-            offset_x = 36
-            skip_tiles = set([*range(6), 7, 9, 12, 14, *range(17, 21), 22, 24, 25])
-        elif i == 8:
-            offset_x = 41
-            skip_tiles = set([*range(6), 7, 9, 12, 14, 17, 19, 20, 22, 24, 25])
-        elif i == 9:
-            offset_x = 47
-            skip_tiles = set(range(5))
-        elif i == 10:
-            offset_x = 51
-            skip_tiles = set(range(3))
-        elif i == 11:
-            offset_x = 57
-            skip_tiles = set([0])
-        elif i == 12:
-            offset_x = 61
-        elif i == 13:
-            offset_x = 67
-        elif i == 14:
-            offset_x = 73
-        elif i == 15:
-            offset_x = 78
-        elif i == 16:
-            number_of_tiles = 29
-            offset_x = 83
-            skip_tiles = set([27])
-        elif i == 17:
-            offset_x = 88
-        elif i == 18:
-            offset_x = 93
-        elif i == 19:
-            offset_x = 98
-        elif i == 20:
-            offset_x = 104
-        elif i == 21:
-            offset_x = 109
-        elif i == 22:
-            offset_x = 114
-        elif i == 23:
-            offset_x = 119
-            skip_tiles = set([0])
-        elif i == 24:
-            offset_x = 124
-            skip_tiles = set(range(11))
-        elif i == 25:
-            offset_x = 129
-            skip_tiles = set(range(21))
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(offset_x, height * i),
-                skip_tiles=skip_tiles,
-                is_horizontal=True,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(3956, 3854) rotate(5.75)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    number_of_tiles = 25
-    offset_x = -5.60
-
-    for i in range(47):
-        skip_tiles = set()
-
-        if i == 0:
-            skip_tiles = set([0, *range(3, 25)])
-        elif i == 1:
-            skip_tiles = set([0, *range(3, 25)])
-        elif i == 2:
-            skip_tiles = set([0, *range(3, 25)])
-        elif i == 3:
-            skip_tiles = set([0, *range(3, 25)])
-        elif i == 4:
-            skip_tiles = set([0, *range(4, 25)])
-        elif i == 5:
-            skip_tiles = set([0, *range(4, 25)])
-        elif i == 6:
-            skip_tiles = set([0, *range(4, 25)])
-        elif i == 7:
-            skip_tiles = set([0, *range(4, 25)])
-        elif i == 8:
-            skip_tiles = set([0, *range(4, 25)])
-        elif i == 9:
-            skip_tiles = set([0, *range(4, 25)])
-        elif i == 10:
-            skip_tiles = set(range(4, 25))
-        elif i == 11:
-            skip_tiles = set(range(4, 25))
-        elif i == 12:
-            skip_tiles = set(range(4, 25))
-        elif i == 13:
-            skip_tiles = set(range(4, 25))
-        elif i == 14:
-            skip_tiles = set(range(5, 25))
-        elif i == 15:
-            skip_tiles = set(range(5, 25))
-        elif i == 16:
-            skip_tiles = set(range(5, 23))
-        elif i == 17:
-            skip_tiles = set(range(5, 17))
-        elif i == 18:
-            skip_tiles = set(range(5, 11))
-        elif i == 29:
-            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
-        elif i == 30:
-            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
-        elif i == 31:
-            skip_tiles = set([3, 11, 15, 16, 23, 24])
-        elif i == 32:
-            number_of_tiles = 26
-        elif i == 34:
-            skip_tiles = set([4, 10, 16, 17, 23])
-        elif i == 35:
-            skip_tiles = set([4, 10, 16, 17, 23])
-        elif i == 36:
-            skip_tiles = set([4, 10, 16, 17, 23])
-        elif i == 41:
-            number_of_tiles = 1
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(offset_x * i, height * i),
-                skip_tiles=skip_tiles,
-                is_horizontal=True,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(4216, 412) rotate(-6.3)",
-            elements=elements,
-        )
-    )
-
-    elements = []
-    height = 11.6
-    number_of_tiles = 12
-    offset_x = 4
-
-    for i in range(36):
-        skip_tiles = set()
-
-        if i == 0:
-            skip_tiles = set(range(7))
-        elif i == 1:
-            skip_tiles = set([0])
-        elif i == 2:
-            skip_tiles = set([0])
-        elif i == 3:
-            skip_tiles = set([0])
-        elif i == 4:
-            skip_tiles = set([0])
-        elif i == 5:
-            skip_tiles = set([0])
-        elif i == 6:
-            skip_tiles = set([0])
-        elif i == 7:
-            skip_tiles = set([*range(3), *range(4, 8), 10])
-        elif i == 8:
-            skip_tiles = set([*range(3), *range(4, 8), 10])
-        elif i == 12:
-            number_of_tiles = 11
-            skip_tiles = set([0])
-        elif i == 13:
-            skip_tiles = set([*range(2), *range(4, 8), 10])
-        elif i == 14:
-            skip_tiles = set([*range(2), *range(4, 8), 10])
-        elif i == 15:
-            skip_tiles = set([0])
-        elif i == 16:
-            skip_tiles = set([0])
-        elif i == 17:
-            skip_tiles = set([0])
-        elif i == 18:
-            skip_tiles = set([0])
-        elif i == 19:
-            skip_tiles = set([0, 4, 6, 10])
-        elif i == 20:
-            skip_tiles = set([0, 4, 6, 10])
-        elif i == 21:
-            skip_tiles = set([0])
-        elif i == 22:
-            skip_tiles = set([0])
-        elif i == 23:
-            skip_tiles = set([0])
-        elif i == 24:
-            skip_tiles = set([0])
-        elif i == 25:
-            skip_tiles = set([0, *range(3, 7), 10])
-        elif i == 26:
-            skip_tiles = set([0, *range(3, 7), 10])
-        elif i == 31:
-            skip_tiles = set([*range(3, 7), 10])
-        elif i == 32:
-            skip_tiles = set([*range(3, 7), 10])
-
-        elements.append(
-            draw_column(
-                width,
-                height,
-                number_of_tiles,
-                offset=(offset_x * i, height * i),
-                skip_tiles=skip_tiles,
-                is_horizontal=True,
-            )
-        )
-
-    sectors.append(
-        svg.g(
-            style="fill: white; stroke: white;",
-            transform="translate(6238, 3337) rotate(114.8)",
-            elements=elements,
-        )
-    )
-
     return "".join(sectors)
 
 
-def draw_tile(x: float, y: float, width: float, height: float) -> str:
-    return svg.path(
-        d=[svg.m(x, y), svg.h(width), svg.v(height), svg.h(width * -1), svg.z()]
-    )
-
-
-def main():
-    elements = [
-        svg.image("cathedral-color.png"),
-        "<style>path { fill-opacity: 0; } path:hover { fill-opacity: 1; }</style>",
-    ]
-
-    cyan = "#527ca5"
-    green = "#5f7f3f"
-    magenta = "#a5527c"
-    purple = "#5f007f"
-    rose = "#ff9f7f"
-
-    fill = purple
+def main_section():
+    fill = PURPLE
     number_of_tiles = 12
     radius = 35
+
+    elements: list[str] = []
 
     for i in range(123):
         fill_different_when: Callable[[int], str] | None = None
@@ -1601,7 +1107,7 @@ def main():
                 ]
             )
         elif i == 14:
-            fill = green
+            fill = GREEN
             skip_tiles = set(
                 [
                     *range(226, 245),
@@ -1683,7 +1189,7 @@ def main():
             )
         elif i == 22:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                magenta if 420 <= tile and tile <= 453 else ""
+                MAGENTA if 420 <= tile and tile <= 453 else ""
             )
             rotate = 0.5
             skip_tiles = set(
@@ -1701,7 +1207,7 @@ def main():
             )
         elif i == 23:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                magenta if 429 <= tile and tile <= 464 else ""
+                MAGENTA if 429 <= tile and tile <= 464 else ""
             )
             rotate = 5.2
             skip_tiles = set(
@@ -1716,7 +1222,7 @@ def main():
             )
         elif i == 24:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                magenta if 429 <= tile and tile <= 472 else ""
+                MAGENTA if 429 <= tile and tile <= 472 else ""
             )
             rotate = 11.3
             skip_tiles = set(
@@ -1735,9 +1241,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 401 <= tile and tile <= 405:
-                    return rose
+                    return ROSE
                 elif 429 <= tile and tile <= 479:
-                    return magenta
+                    return MAGENTA
                 else:
                     return ""
 
@@ -1758,9 +1264,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 398 <= tile and tile <= 405:
-                    return rose
+                    return ROSE
                 elif 429 <= tile and tile <= 486:
-                    return magenta
+                    return MAGENTA
                 else:
                     return ""
 
@@ -1780,9 +1286,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 398 <= tile and tile <= 405:
-                    return rose
+                    return ROSE
                 elif 429 <= tile and tile <= 486:
-                    return magenta
+                    return MAGENTA
                 else:
                     return ""
 
@@ -1791,9 +1297,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 398 <= tile and tile <= 417:
-                    return rose
+                    return ROSE
                 elif 429 <= tile and tile <= 499:
-                    return magenta
+                    return MAGENTA
                 else:
                     return ""
 
@@ -1812,9 +1318,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 417 <= tile and tile <= 429:
-                    return rose
+                    return ROSE
                 elif 485 <= tile and tile <= 511:
-                    return magenta
+                    return MAGENTA
                 else:
                     return ""
 
@@ -1834,9 +1340,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 485 <= tile and tile <= 521:
-                    return magenta
+                    return MAGENTA
                 elif 428 <= tile and tile <= 604:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -1858,9 +1364,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 502 <= tile and tile <= 528:
-                    return magenta
+                    return MAGENTA
                 elif 435 <= tile and tile <= 624:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -1882,9 +1388,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 517 <= tile and tile <= 542:
-                    return magenta
+                    return MAGENTA
                 elif 450 <= tile and tile <= 649:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -1907,9 +1413,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 532 <= tile and tile <= 558:
-                    return magenta
+                    return MAGENTA
                 elif 466 <= tile and tile <= 662:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -1934,9 +1440,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 542 <= tile and tile <= 567:
-                    return magenta
+                    return MAGENTA
                 elif 476 <= tile and tile <= 669:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -1957,9 +1463,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 556 <= tile and tile <= 582:
-                    return magenta
+                    return MAGENTA
                 elif 429 <= tile and tile <= 682:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -1980,9 +1486,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 512 <= tile and tile <= 537:
-                    return magenta
+                    return MAGENTA
                 elif 377 <= tile and tile <= 638:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2004,9 +1510,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 510 <= tile and tile <= 536:
-                    return magenta
+                    return MAGENTA
                 elif 371 <= tile and tile <= 640:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2028,9 +1534,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 539 <= tile and tile <= 564:
-                    return magenta
+                    return MAGENTA
                 elif 387 <= tile and tile <= 660:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2054,9 +1560,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 551 <= tile and tile <= 577:
-                    return magenta
+                    return MAGENTA
                 elif 395 <= tile and tile <= 671:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2079,9 +1585,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 568 <= tile and tile <= 593:
-                    return magenta
+                    return MAGENTA
                 elif 416 <= tile and tile <= 687:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2102,9 +1608,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 588 <= tile and tile <= 614:
-                    return magenta
+                    return MAGENTA
                 elif 440 <= tile and tile <= 706:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2125,9 +1631,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 614 <= tile and tile <= 642:
-                    return magenta
+                    return MAGENTA
                 elif 470 <= tile and tile <= 731:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2148,9 +1654,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 628 <= tile and tile <= 658:
-                    return magenta
+                    return MAGENTA
                 elif 488 <= tile and tile <= 746:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2171,9 +1677,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 642 <= tile and tile <= 671:
-                    return magenta
+                    return MAGENTA
                 elif 504 <= tile and tile <= 758:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2194,9 +1700,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 656 <= tile and tile <= 685:
-                    return magenta
+                    return MAGENTA
                 elif 520 <= tile and tile <= 771:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2218,9 +1724,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 669 <= tile and tile <= 698:
-                    return magenta
+                    return MAGENTA
                 elif 535 <= tile and tile <= 785:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2242,11 +1748,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 801 <= tile and tile <= 802:
-                    return cyan
+                    return CYAN
                 elif 682 <= tile and tile <= 712:
-                    return magenta
+                    return MAGENTA
                 elif 550 <= tile and tile <= 800:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2266,11 +1772,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 863 <= tile and tile <= 873:
-                    return cyan
+                    return CYAN
                 elif 740 <= tile and tile <= 768:
-                    return magenta
+                    return MAGENTA
                 elif 599 <= tile and tile <= 872:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2293,11 +1799,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 647 <= tile and tile <= 658:
-                    return cyan
+                    return CYAN
                 elif 532 <= tile and tile <= 558:
-                    return magenta
+                    return MAGENTA
                 elif 401 <= tile and tile <= 646:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2319,11 +1825,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 657 <= tile and tile <= 668:
-                    return cyan
+                    return CYAN
                 elif 543 <= tile and tile <= 569:
-                    return magenta
+                    return MAGENTA
                 elif 412 <= tile and tile <= 656:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2345,11 +1851,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 667 <= tile and tile <= 677:
-                    return cyan
+                    return CYAN
                 elif 553 <= tile and tile <= 579:
-                    return magenta
+                    return MAGENTA
                 elif 420 <= tile and tile <= 666:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2370,11 +1876,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 564 <= tile and tile <= 590:
-                    return magenta
+                    return MAGENTA
                 elif 434 <= tile and tile <= 673:
-                    return rose
+                    return ROSE
                 elif 424 <= tile and tile <= 687:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2396,11 +1902,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 574 <= tile and tile <= 600:
-                    return magenta
+                    return MAGENTA
                 elif 446 <= tile and tile <= 683:
-                    return rose
+                    return ROSE
                 elif 424 <= tile and tile <= 445:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2422,11 +1928,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 591 <= tile and tile <= 617:
-                    return magenta
+                    return MAGENTA
                 elif 463 <= tile and tile <= 698:
-                    return rose
+                    return ROSE
                 elif 449 <= tile and tile <= 462:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2447,11 +1953,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 604 <= tile and tile <= 630:
-                    return magenta
+                    return MAGENTA
                 elif 477 <= tile and tile <= 711:
-                    return rose
+                    return ROSE
                 elif 464 <= tile and tile <= 476:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2472,11 +1978,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 612 <= tile and tile <= 638:
-                    return magenta
+                    return MAGENTA
                 elif 489 <= tile and tile <= 718:
-                    return rose
+                    return ROSE
                 elif 472 <= tile and tile <= 481:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2497,11 +2003,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 618 <= tile and tile <= 644:
-                    return magenta
+                    return MAGENTA
                 elif 496 <= tile and tile <= 724:
-                    return rose
+                    return ROSE
                 elif tile == 480:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2522,9 +2028,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 626 <= tile and tile <= 652:
-                    return magenta
+                    return MAGENTA
                 elif 505 <= tile and tile <= 731:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2544,9 +2050,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 632 <= tile and tile <= 658:
-                    return magenta
+                    return MAGENTA
                 elif 512 <= tile and tile <= 737:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2567,11 +2073,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 640 <= tile and tile <= 666:
-                    return magenta
+                    return MAGENTA
                 elif 520 <= tile and tile <= 746:
-                    return rose
+                    return ROSE
                 elif 747 <= tile and tile <= 748:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2591,11 +2097,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 649 <= tile and tile <= 675:
-                    return magenta
+                    return MAGENTA
                 elif 530 <= tile and tile <= 755:
-                    return rose
+                    return ROSE
                 elif 756 <= tile and tile <= 766:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2615,11 +2121,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 657 <= tile and tile <= 683:
-                    return magenta
+                    return MAGENTA
                 elif 539 <= tile and tile <= 762:
-                    return rose
+                    return ROSE
                 elif 763 <= tile and tile <= 773:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2639,11 +2145,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 664 <= tile and tile <= 690:
-                    return magenta
+                    return MAGENTA
                 elif 547 <= tile and tile <= 769:
-                    return rose
+                    return ROSE
                 elif 770 <= tile and tile <= 780:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2662,11 +2168,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 672 <= tile and tile <= 698:
-                    return magenta
+                    return MAGENTA
                 elif 555 <= tile and tile <= 776:
-                    return rose
+                    return ROSE
                 elif 777 <= tile and tile <= 787:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2685,9 +2191,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 680 <= tile and tile <= 706:
-                    return magenta
+                    return MAGENTA
                 elif 564 <= tile and tile <= 782:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2706,9 +2212,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 688 <= tile and tile <= 714:
-                    return magenta
+                    return MAGENTA
                 elif 573 <= tile and tile <= 788:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2727,9 +2233,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 695 <= tile and tile <= 721:
-                    return magenta
+                    return MAGENTA
                 elif 581 <= tile and tile <= 795:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2748,9 +2254,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 703 <= tile and tile <= 729:
-                    return magenta
+                    return MAGENTA
                 elif 589 <= tile and tile <= 803:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2769,9 +2275,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 711 <= tile and tile <= 737:
-                    return magenta
+                    return MAGENTA
                 elif 598 <= tile and tile <= 811:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2791,9 +2297,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 719 <= tile and tile <= 745:
-                    return magenta
+                    return MAGENTA
                 elif 606 <= tile and tile <= 818:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -2812,11 +2318,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 726 <= tile and tile <= 752:
-                    return magenta
+                    return MAGENTA
                 elif 614 <= tile and tile <= 827:
-                    return rose
+                    return ROSE
                 elif 828 <= tile and tile <= 832:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2835,11 +2341,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 735 <= tile and tile <= 761:
-                    return magenta
+                    return MAGENTA
                 elif 623 <= tile and tile <= 834:
-                    return rose
+                    return ROSE
                 elif 835 <= tile and tile <= 847:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2858,11 +2364,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 112 <= tile and tile <= 138:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 211:
-                    return rose
+                    return ROSE
                 elif 212 <= tile and tile <= 230:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2880,11 +2386,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 119 <= tile and tile <= 145:
-                    return magenta
+                    return MAGENTA
                 elif 7 <= tile and tile <= 215:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 245:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2903,11 +2409,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 129 <= tile and tile <= 155:
-                    return magenta
+                    return MAGENTA
                 elif 20 <= tile and tile <= 226:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 262:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2927,11 +2433,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 141 <= tile and tile <= 167:
-                    return magenta
+                    return MAGENTA
                 elif 32 <= tile and tile <= 237:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 280:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2951,11 +2457,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 150 <= tile and tile <= 176:
-                    return magenta
+                    return MAGENTA
                 elif 42 <= tile and tile <= 246:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 296:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2975,11 +2481,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 160 <= tile and tile <= 186:
-                    return magenta
+                    return MAGENTA
                 elif 52 <= tile and tile <= 255:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 311:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -2999,11 +2505,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 169 <= tile and tile <= 195:
-                    return magenta
+                    return MAGENTA
                 elif 62 <= tile and tile <= 264:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 322:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3023,11 +2529,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 171 <= tile and tile <= 197:
-                    return magenta
+                    return MAGENTA
                 elif 64 <= tile and tile <= 265:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 12:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3046,11 +2552,11 @@ def main():
 
             def callback(tile: int) -> str:
                 if 170 <= tile and tile <= 197:
-                    return magenta
+                    return MAGENTA
                 elif 64 <= tile and tile <= 264:
-                    return rose
+                    return ROSE
                 elif 0 <= tile and tile <= 4:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3069,9 +2575,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 106 <= tile and tile <= 132:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 199:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3089,9 +2595,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 105 <= tile and tile <= 131:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 198:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3109,9 +2615,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 105 <= tile and tile <= 131:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3129,9 +2635,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 104 <= tile and tile <= 131:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3149,9 +2655,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 104 <= tile and tile <= 131:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3169,9 +2675,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 103 <= tile and tile <= 129:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3189,9 +2695,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 103 <= tile and tile <= 129:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3209,9 +2715,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 102 <= tile and tile <= 128:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3229,9 +2735,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 102 <= tile and tile <= 128:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3249,9 +2755,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 101 <= tile and tile <= 127:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 197:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3270,9 +2776,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 101 <= tile and tile <= 127:
-                    return magenta
+                    return MAGENTA
                 elif 0 <= tile and tile <= 189:
-                    return rose
+                    return ROSE
                 else:
                     return ""
 
@@ -3288,7 +2794,7 @@ def main():
             )
         elif i == 92:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                rose if 0 <= tile and tile <= 188 else ""
+                ROSE if 0 <= tile and tile <= 188 else ""
             )
             rotate = 252.45
             skip_tiles = set(
@@ -3301,7 +2807,7 @@ def main():
             )
         elif i == 93:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                rose if 0 <= tile and tile <= 187 else ""
+                ROSE if 0 <= tile and tile <= 187 else ""
             )
             rotate = 252.7
             skip_tiles = set(
@@ -3321,7 +2827,7 @@ def main():
             )
         elif i == 94:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                rose if 0 <= tile and tile <= 187 else ""
+                ROSE if 0 <= tile and tile <= 187 else ""
             )
             rotate = 252.95
             skip_tiles = set(
@@ -3333,9 +2839,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 185:
-                    return rose
+                    return ROSE
                 elif tile >= 186:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3351,9 +2857,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 184:
-                    return rose
+                    return ROSE
                 elif tile >= 185:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3369,9 +2875,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 185:
-                    return rose
+                    return ROSE
                 elif tile >= 186:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3388,9 +2894,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 185:
-                    return rose
+                    return ROSE
                 elif tile >= 186:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3406,9 +2912,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 183:
-                    return rose
+                    return ROSE
                 elif tile >= 184:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3423,9 +2929,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 183:
-                    return rose
+                    return ROSE
                 elif tile >= 184:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3440,9 +2946,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 9 <= tile and tile <= 193:
-                    return rose
+                    return ROSE
                 elif tile >= 0:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3457,9 +2963,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 28 <= tile and tile <= 212:
-                    return rose
+                    return ROSE
                 elif tile >= 0:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3475,9 +2981,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 48 <= tile and tile <= 230:
-                    return rose
+                    return ROSE
                 elif tile >= 0:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3492,9 +2998,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 64 <= tile and tile <= 244:
-                    return rose
+                    return ROSE
                 elif tile >= 0:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3509,9 +3015,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 78 <= tile and tile <= 258:
-                    return rose
+                    return ROSE
                 elif tile >= 0:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3528,13 +3034,13 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 93:
-                    return cyan
+                    return CYAN
                 elif 94 <= tile and tile <= 172:
-                    return rose
+                    return ROSE
                 elif 233 <= tile and tile <= 273:
-                    return rose
+                    return ROSE
                 elif tile >= 274:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3551,13 +3057,13 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 92:
-                    return cyan
+                    return CYAN
                 elif 93 <= tile and tile <= 98:
-                    return rose
+                    return ROSE
                 elif 259 <= tile and tile <= 270:
-                    return rose
+                    return ROSE
                 elif tile >= 274:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3582,9 +3088,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 78:
-                    return cyan
+                    return CYAN
                 elif tile >= 300:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3602,9 +3108,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 61:
-                    return cyan
+                    return CYAN
                 elif tile >= 315:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3623,9 +3129,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 45:
-                    return cyan
+                    return CYAN
                 elif tile >= 327:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3643,9 +3149,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 32:
-                    return cyan
+                    return CYAN
                 elif tile >= 331:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3663,9 +3169,9 @@ def main():
 
             def callback(tile: int) -> str:
                 if 0 <= tile and tile <= 19:
-                    return cyan
+                    return CYAN
                 elif tile >= 331:
-                    return cyan
+                    return CYAN
                 else:
                     return ""
 
@@ -3681,7 +3187,7 @@ def main():
             )
         elif i == 113:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 183 else ""
+                CYAN if tile >= 183 else ""
             )
             rotate = 263.58
             skip_tiles = set(
@@ -3695,7 +3201,7 @@ def main():
             )
         elif i == 114:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 155 else ""
+                CYAN if tile >= 155 else ""
             )
             rotate = 263.7
             skip_tiles = set(
@@ -3707,7 +3213,7 @@ def main():
             )
         elif i == 115:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 151 else ""
+                CYAN if tile >= 151 else ""
             )
             number_of_tiles -= 99
             rotate = 263.73
@@ -3719,7 +3225,7 @@ def main():
             )
         elif i == 116:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 159 else ""
+                CYAN if tile >= 159 else ""
             )
             number_of_tiles += 99
             rotate = 263.56
@@ -3731,7 +3237,7 @@ def main():
             )
         elif i == 117:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 160 else ""
+                CYAN if tile >= 160 else ""
             )
             rotate = 263.56
             skip_tiles = set(
@@ -3742,7 +3248,7 @@ def main():
             )
         elif i == 118:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 158 else ""
+                CYAN if tile >= 158 else ""
             )
             rotate = 264.03
             skip_tiles = set(
@@ -3753,7 +3259,7 @@ def main():
             )
         elif i == 119:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 234 else ""
+                CYAN if tile >= 234 else ""
             )
             rotate = 264.13
             skip_tiles = set(
@@ -3764,7 +3270,7 @@ def main():
             )
         elif i == 120:
             fill_different_when: Callable[[int], str] | None = lambda tile: (
-                cyan if tile >= 269 else ""
+                CYAN if tile >= 269 else ""
             )
             rotate = 264.24
             skip_tiles = set(
@@ -3796,9 +3302,529 @@ def main():
 
         radius += offset
 
-    elements.append(draw_sectors())
+    return "".join(elements)
 
-    print(svg.svg(6901, 5139, elements))
+
+def tile(x: float, y: float, width: float, height: float) -> str:
+    return svg.path(
+        d=[svg.m(x, y), svg.h(width), svg.v(height), svg.h(width * -1), svg.z()]
+    )
+
+
+def upper_transept() -> str:
+    elements: list[str] = []
+    sectors: list[str] = []
+
+    height = 8.68
+    number_of_tiles = 75
+    offset_y = 0
+    width = 34.76
+
+    for i in range(19):
+        skip_tiles = set()
+
+        if i == 0:
+            offset_y = -3.6
+        elif i == 2:
+            number_of_tiles = 74
+        elif i == 5:
+            number_of_tiles = 73
+            offset_y = -3.5
+            skip_tiles = set(range(27, 37))
+        elif i == 6:
+            skip_tiles = set(range(27, 36))
+        elif i == 7:
+            skip_tiles = set(range(26, 36))
+        elif i == 8:
+            number_of_tiles = 72
+            skip_tiles = set(range(26, 35))
+        elif i == 9:
+            skip_tiles = set(range(25, 34))
+        elif i == 10:
+            number_of_tiles = 71
+            skip_tiles = set(range(24, 34))
+        elif i == 11:
+            skip_tiles = set(range(24, 33))
+        elif i == 12:
+            skip_tiles = set(range(23, 32))
+        elif i == 13:
+            number_of_tiles = 91
+            offset_y = -17.5
+            skip_tiles = set(range(43, 53))
+        elif i == 14:
+            number_of_tiles = 92
+            offset_y = -17.1
+            skip_tiles = set(range(44, 63))
+        elif i == 15:
+            offset_y = -16.2
+            skip_tiles = set(range(43, 84))
+        elif i == 16:
+            number_of_tiles = 34
+            offset_y = -9.4
+        elif i == 17:
+            number_of_tiles = 22
+            offset_y = -2.9
+        elif i == 18:
+            number_of_tiles = 5
+            offset_y = 2.8
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1412, 888) rotate(4.42)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 83
+    offset_y = 0
+
+    for i in range(17):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set([*range(62, 66), *range(76, 80)])
+        elif i == 1:
+            offset_y = 5
+        elif i == 3:
+            number_of_tiles = 84
+            offset_y = 2
+        elif i == 4:
+            number_of_tiles = 76
+            offset_y = 3
+        elif i == 5:
+            number_of_tiles = 67
+            offset_y = 3.4
+        elif i == 6:
+            number_of_tiles = 58
+            offset_y = 3.6
+        elif i == 7:
+            number_of_tiles = 75
+            offset_y = 3.8
+            skip_tiles = set(range(49, 74))
+        elif i == 8:
+            number_of_tiles = 76
+            offset_y = 3
+            skip_tiles = set(range(41, 66))
+        elif i == 9:
+            number_of_tiles = 76
+            offset_y = 3.2
+            skip_tiles = set(range(40, 57))
+        elif i == 10:
+            offset_y = 3.4
+            skip_tiles = set(range(40, 48))
+        elif i == 11:
+            number_of_tiles = 61
+            offset_y = 3.6
+        elif i == 12:
+            number_of_tiles = 40
+            offset_y = 3.7
+        elif i == 13:
+            number_of_tiles = 39
+            offset_y = 3.8
+        elif i == 14:
+            number_of_tiles = 40
+            offset_y = 3.25
+        elif i == 15:
+            number_of_tiles = 23
+            offset_y = 3.4
+        elif i == 16:
+            number_of_tiles = 5
+            offset_y = 3.5
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(1997, 682) rotate(-14.6)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 97
+    offset_y = 0
+
+    for i in range(14):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set([*range(62, 66), *range(76, 80), *range(90, 94)])
+        elif i == 1:
+            offset_y = -3.45
+        elif i == 5:
+            number_of_tiles = 70
+        elif i == 6:
+            number_of_tiles = 38
+        elif i == 8:
+            number_of_tiles = 37
+        elif i == 9:
+            number_of_tiles = 73
+            skip_tiles = set(range(38, 53))
+        elif i == 10:
+            number_of_tiles = 69
+            offset_y = 0
+        elif i == 11:
+            number_of_tiles = 53
+            offset_y = 12.35
+        elif i == 12:
+            number_of_tiles = 37
+            offset_y = 22.55
+        elif i == 13:
+            number_of_tiles = 2
+            offset_y = 30.55
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2600, 584) rotate(-1.66)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 97
+    offset_y = 0
+
+    for i in range(34):
+        skip_tiles = set()
+
+        if i == 1:
+            offset_y = 5
+        elif i == 3:
+            skip_tiles = set(range(37, 76))
+        elif i == 4:
+            skip_tiles = set(range(36, 76))
+        elif i == 5:
+            skip_tiles = set(range(36, 69))
+        elif i == 6:
+            number_of_tiles = 98
+            offset_y = 3.6
+            skip_tiles = set(range(37, 70))
+        elif i == 7:
+            offset_y = 3.9
+            skip_tiles = set(range(36, 70))
+        elif i == 8:
+            offset_y = 4
+            skip_tiles = set(range(36, 69))
+        elif i == 9:
+            offset_y = 4.1
+            skip_tiles = set(range(36, 69))
+        elif i == 10:
+            offset_y = 4.3
+            skip_tiles = set(range(36, 69))
+        elif i == 11:
+            skip_tiles = set(range(35, 69))
+        elif i == 12:
+            offset_y = 4.4
+            skip_tiles = set(range(35, 69))
+        elif i == 13:
+            number_of_tiles = 99
+            offset_y = 4.5
+            skip_tiles = set(range(35, 69))
+        elif i == 14:
+            skip_tiles = set([*range(5, 11), *range(35, 69)])
+        elif i == 15:
+            number_of_tiles = 89
+            offset_y = 10.3
+            skip_tiles = set(range(24, 59))
+        elif i == 16:
+            offset_y = 10
+            skip_tiles = set(range(24, 59))
+        elif i == 17:
+            number_of_tiles = 83
+            offset_y = 9.75
+            skip_tiles = set(range(24, 59))
+        elif i == 18:
+            number_of_tiles = 78
+            offset_y = 9.5
+            skip_tiles = set(range(24, 59))
+        elif i == 19:
+            number_of_tiles = 72
+            offset_y = 9.25
+            skip_tiles = set(range(24, 58))
+        elif i == 20:
+            number_of_tiles = 66
+            offset_y = 9.1
+            skip_tiles = set(range(23, 46))
+        elif i == 21:
+            number_of_tiles = 61
+            offset_y = 8.9
+            skip_tiles = set(range(23, 29))
+        elif i == 22:
+            number_of_tiles = 55
+            offset_y = 8.7
+        elif i == 23:
+            number_of_tiles = 49
+            offset_y = 8.55
+        elif i == 24:
+            number_of_tiles = 44
+            offset_y = 8
+        elif i == 25:
+            number_of_tiles = 38
+            offset_y = 7.9
+        elif i == 26:
+            number_of_tiles = 33
+            offset_y = 7.8
+        elif i == 27:
+            number_of_tiles = 27
+            offset_y = 7.7
+        elif i == 28:
+            number_of_tiles = 23
+            offset_y = 7.6
+        elif i == 29:
+            number_of_tiles = 24
+            offset_y = 6.95
+        elif i == 30:
+            number_of_tiles = 22
+            offset_y = 6.9
+        elif i == 31:
+            number_of_tiles = 16
+            offset_y = 6.8
+        elif i == 32:
+            number_of_tiles = 10
+            offset_y = 6.75
+        elif i == 33:
+            number_of_tiles = 4
+            offset_y = 6.7
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(2980, 533) rotate(-15.7)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 23
+    offset_y = 0
+
+    for i in range(50):
+        skip_tiles = set()
+
+        if i % 4 == 0:
+            offset_y = -1.3
+            number_of_tiles = 23
+        elif i % 4 == 1:
+            number_of_tiles = 22
+
+        if i == 1:
+            offset_y = 5
+        elif i == 2:
+            offset_y = 1
+        elif i == 3:
+            offset_y = -0.5
+        elif i == 5:
+            offset_y = 0
+        elif i == 6:
+            offset_y = -0.5
+        elif i == 7:
+            offset_y = -1
+        elif i == 9:
+            offset_y = -0.6
+        elif i == 10:
+            offset_y = -0.9
+        elif i == 11:
+            offset_y = -1.1
+        elif i == 13:
+            offset_y = -0.8
+        elif i == 14:
+            offset_y = -1
+        elif i == 15:
+            offset_y = -1.2
+        elif i == 17:
+            offset_y = -0.9
+        elif i == 18:
+            offset_y = -1.1
+        elif i == 19:
+            offset_y = -1.2
+        elif i == 21:
+            offset_y = -1
+        elif i == 22:
+            offset_y = -1.1
+        elif i == 23:
+            offset_y = -1.2
+        elif i == 25:
+            offset_y = -1
+        elif i == 26:
+            offset_y = -1.1
+        elif i == 27:
+            offset_y = -1.2
+        elif i == 29:
+            offset_y = -1.05
+        elif i == 30:
+            offset_y = -1.15
+        elif i == 31:
+            offset_y = -1.25
+        elif i == 33:
+            offset_y = -1.1
+        elif i == 34:
+            offset_y = -1.15
+        elif i == 35:
+            number_of_tiles = 36
+            offset_y = -1.25
+            skip_tiles = set(range(23, 28))
+        elif i == 36:
+            number_of_tiles = 36
+        elif i == 37:
+            number_of_tiles = 34
+            offset_y = -0.9
+        elif i == 38:
+            number_of_tiles = 35
+            offset_y = -0.95
+        elif i == 39:
+            number_of_tiles = 35
+            offset_y = -1
+        elif i == 40:
+            number_of_tiles = 35
+            offset_y = -0.85
+        elif i == 41:
+            number_of_tiles = 35
+            offset_y = -0.95
+        elif i == 42:
+            number_of_tiles = 35
+            offset_y = -1
+        elif i == 43:
+            number_of_tiles = 36
+            offset_y = -1.05
+        elif i == 44:
+            number_of_tiles = 35
+            offset_y = -0.9
+        elif i == 45:
+            number_of_tiles = 40
+            offset_y = -0.95
+        elif i == 46:
+            number_of_tiles = 40
+            offset_y = -1
+        elif i == 47:
+            number_of_tiles = 41
+            offset_y = -1.05
+        elif i == 48:
+            number_of_tiles = 41
+            offset_y = -0.95
+        elif i == 49:
+            number_of_tiles = 41
+            offset_y = -1
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(width * i, offset_y * i),
+                skip_tiles=skip_tiles,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(4418, 383) rotate(-6.35)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    number_of_tiles = 43
+    offset_y = 0
+
+    for i in range(9):
+        if i == 1:
+            number_of_tiles = 44
+            offset_y = -3
+        elif i == 2:
+            offset_y = 1
+        elif i == 3:
+            offset_y = -0.5
+        elif i == 4:
+            number_of_tiles = 41
+            offset_y = 3
+        elif i == 5:
+            number_of_tiles = 40
+            offset_y = 3.5
+        elif i == 6:
+            number_of_tiles = 39
+            offset_y = 3.8
+        elif i == 7:
+            number_of_tiles = 38
+            offset_y = 4
+        elif i == 8:
+            number_of_tiles = 36
+            offset_y = 5.3
+
+        elements.append(
+            draw_column(
+                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style="fill: white; stroke: white;",
+            transform="translate(6173, 124) rotate(-7.4)",
+            elements=elements,
+        )
+    )
+
+    return "".join(sectors)
+
+
+def main():
+    print(
+        svg.svg(
+            6901,
+            5139,
+            [
+                svg.image("cathedral-color.png"),
+                "<style>path { fill-opacity: 0; } path:hover { fill-opacity: 1; }</style>",
+                main_section(),
+                lower_transept(),
+                upper_transept(),
+                horizontal_sections(),
+            ],
+        )
+    )
 
 
 if __name__ == "__main__":
