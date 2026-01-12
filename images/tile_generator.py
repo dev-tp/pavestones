@@ -103,7 +103,7 @@ def draw_annular_tiles(
 
     return svg.g(
         style=f"fill: {fill}; stroke: {fill}",
-        transform=f"rotate({rotate}, {center[0]}, {center[1]})",
+        transform=svg.Rotate(rotate, *center),
         elements=elements,
     )
 
