@@ -240,10 +240,11 @@ def horizontal_sections() -> str:
     )
 
     elements = []
+    fill = CYAN
     number_of_tiles = 25
     offset_x = -5.60
 
-    for i in range(47):
+    for i in range(18):
         skip_tiles = set()
 
         if i == 0:
@@ -279,27 +280,9 @@ def horizontal_sections() -> str:
         elif i == 15:
             skip_tiles = set(range(5, 25))
         elif i == 16:
-            skip_tiles = set(range(5, 23))
+            skip_tiles = set(range(5, 25))
         elif i == 17:
-            skip_tiles = set(range(5, 17))
-        elif i == 18:
-            skip_tiles = set(range(5, 11))
-        elif i == 29:
-            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
-        elif i == 30:
-            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
-        elif i == 31:
-            skip_tiles = set([3, 11, 15, 16, 23, 24])
-        elif i == 32:
-            number_of_tiles = 26
-        elif i == 34:
-            skip_tiles = set([4, 10, 16, 17, 23])
-        elif i == 35:
-            skip_tiles = set([4, 10, 16, 17, 23])
-        elif i == 36:
-            skip_tiles = set([4, 10, 16, 17, 23])
-        elif i == 41:
-            number_of_tiles = 1
+            skip_tiles = set(range(5, 25))
 
         elements.append(
             draw_column(
@@ -316,6 +299,54 @@ def horizontal_sections() -> str:
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
             transform="translate(4216, 412) rotate(-6.3)",
+            elements=elements,
+        )
+    )
+
+    elements = []
+    fill = GREEN
+
+    for i in range(31):
+        skip_tiles = set()
+
+        if i == 0:
+            skip_tiles = set(range(23))
+        elif i == 1:
+            skip_tiles = set(range(17))
+        elif i == 2:
+            skip_tiles = set(range(5, 11))
+        elif i == 13:
+            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
+        elif i == 14:
+            skip_tiles = set([3, 10, 11, 15, 16, 23, 24])
+        elif i == 15:
+            skip_tiles = set([3, 11, 15, 16, 23, 24])
+        elif i == 16:
+            number_of_tiles = 26
+        elif i == 18:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 19:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 20:
+            skip_tiles = set([4, 10, 16, 17, 23])
+        elif i == 25:
+            number_of_tiles = 1
+
+        elements.append(
+            draw_column(
+                width,
+                height,
+                number_of_tiles,
+                offset=(offset_x * i, height * i),
+                skip_tiles=skip_tiles,
+                is_horizontal=True,
+            )
+        )
+
+    sectors.append(
+        svg.g(
+            style=f"fill: {fill}; stroke: {fill};",
+            transform="translate(4148, 620.5) rotate(-6.3)",
             elements=elements,
         )
     )
