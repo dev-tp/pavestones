@@ -92,8 +92,8 @@ def draw_annular_tiles(
             elements.append(
                 annular_tile(
                     center=center,
-                    start_angle=tile_angle * tile,
-                    end_angle=tile_angle * (tile + 1),
+                    start_angle=(tile_angle * tile) + rotate,
+                    end_angle=(tile_angle * (tile + 1)) + rotate,
                     inner_radius=inner_radius,
                     outer_radius=outer_radius,
                     fill=tile_color,
@@ -103,7 +103,6 @@ def draw_annular_tiles(
 
     return svg.g(
         style=f"fill: {fill}; stroke: {fill}",
-        transform=svg.Rotate(rotate, *center),
         elements=elements,
     )
 
@@ -1084,7 +1083,7 @@ def main_section():
         elif i == 5:
             number_of_tiles += 1
         elif i == 6:
-            rotate = 0.6
+            rotate = 0.2
             skip_tiles = set(range(132, 150))
         elif i == 7:
             rotate = 0.8
