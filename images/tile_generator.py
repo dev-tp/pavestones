@@ -449,7 +449,7 @@ def lower_transept() -> str:
         skip_tiles = set()
 
         if i == 0:
-            skip_tiles = set(range(7, 44))
+            skip_tiles = set([*range(7, 44), *range(50, 75)])
         elif i == 1:
             number_of_tiles = 80
             offset_y = 3.5
@@ -3524,6 +3524,7 @@ def upper_transept() -> str:
         elif i == 12:
             number_of_tiles = 37
             offset_y = 22.55
+            skip_tiles = set(range(17, 23))
         elif i == 13:
             number_of_tiles = 2
             offset_y = 30.55
