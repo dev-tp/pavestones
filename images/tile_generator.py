@@ -443,7 +443,10 @@ def lower_transept() -> str:
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
+    rotate = 1.1
     width = 34.76
+    x = 1179
+    y = 3321
 
     for i in range(6):
         skip_tiles = set()
@@ -466,7 +469,7 @@ def lower_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -474,7 +477,7 @@ def lower_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(1179, 3321) rotate(1.1)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -482,6 +485,9 @@ def lower_transept() -> str:
     elements = []
     number_of_tiles = 3
     offset_y = 0
+    rotate = 22
+    x = 1455
+    y = 3348
 
     for i in range(8):
         skip_tiles = set()
@@ -515,7 +521,7 @@ def lower_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -523,7 +529,7 @@ def lower_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(1455, 3348) rotate(22)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -531,6 +537,9 @@ def lower_transept() -> str:
     elements = []
     number_of_tiles = 2
     offset_y = 0
+    rotate = 4.7
+    x = 1471
+    y = 4062
 
     for i in range(15):
         skip_tiles = set()
@@ -581,7 +590,7 @@ def lower_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y),
+                offset=(x + width * i, y + offset_y),
                 skip_tiles=skip_tiles,
             )
         )
@@ -589,7 +598,7 @@ def lower_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(1471, 4062) rotate(4.7)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -597,6 +606,9 @@ def lower_transept() -> str:
     elements = []
     number_of_tiles = 17
     offset_y = 0
+    rotate = 14.5
+    x = 2042
+    y = 3865
 
     for i in range(12):
         skip_tiles = set()
@@ -641,7 +653,7 @@ def lower_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y),
+                offset=(x + width * i, y + offset_y),
                 skip_tiles=skip_tiles,
             )
         )
@@ -649,7 +661,7 @@ def lower_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(2042, 3865) rotate(14.5)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -657,6 +669,9 @@ def lower_transept() -> str:
     elements = []
     number_of_tiles = 16
     offset_y = 0
+    rotate = 0.4
+    x = 2402
+    y = 4158
 
     for i in range(12):
         skip_tiles = set()
@@ -708,7 +723,7 @@ def lower_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y),
+                offset=(x + width * i, y + offset_y),
                 skip_tiles=skip_tiles,
             )
         )
@@ -716,7 +731,7 @@ def lower_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(2402, 4158) rotate(0.4)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -724,6 +739,9 @@ def lower_transept() -> str:
     elements = []
     number_of_tiles = 3
     offset_y = 0
+    rotate = 10.37
+    x = 2827
+    y = 4003
 
     for i in range(68):
         skip_tiles = set()
@@ -977,7 +995,7 @@ def lower_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y),
+                offset=(x + width * i, y + offset_y),
                 skip_tiles=skip_tiles,
             )
         )
@@ -985,7 +1003,7 @@ def lower_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(2827, 4003) rotate(10.37)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -993,6 +1011,9 @@ def lower_transept() -> str:
     elements = []
     number_of_tiles = 60
     offset_y = 0
+    rotate = 9
+    x = 5227
+    y = 4436
 
     for i in range(17):
         if i == 1:
@@ -1040,13 +1061,15 @@ def lower_transept() -> str:
             offset_y = 14
 
         elements.append(
-            draw_column(width, height, number_of_tiles, offset=(width * i, offset_y))
+            draw_column(
+                width, height, number_of_tiles, offset=(x + width * i, y + offset_y)
+            )
         )
 
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(5227, 4436) rotate(9)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -3352,7 +3375,10 @@ def upper_transept() -> str:
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
+    rotate = 4.42
     width = 34.76
+    x = 1412
+    y = 888
 
     for i in range(19):
         skip_tiles = set()
@@ -3407,7 +3433,7 @@ def upper_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -3415,7 +3441,7 @@ def upper_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(1412, 888) rotate(4.42)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -3423,6 +3449,9 @@ def upper_transept() -> str:
     elements = []
     number_of_tiles = 83
     offset_y = 0
+    rotate = -14.6
+    x = 1997
+    y = 682
 
     for i in range(17):
         skip_tiles = set()
@@ -3482,7 +3511,7 @@ def upper_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -3490,7 +3519,7 @@ def upper_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(1997, 682) rotate(-14.6)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -3498,6 +3527,9 @@ def upper_transept() -> str:
     elements = []
     number_of_tiles = 97
     offset_y = 0
+    rotate = -1.66
+    x = 2600
+    y = 584
 
     for i in range(14):
         skip_tiles = set()
@@ -3534,7 +3566,7 @@ def upper_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -3542,7 +3574,7 @@ def upper_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(2600, 584) rotate(-1.66)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -3550,6 +3582,9 @@ def upper_transept() -> str:
     elements = []
     number_of_tiles = 97
     offset_y = 0
+    rotate = -15.7
+    x = 2980
+    y = 533
 
     for i in range(34):
         skip_tiles = set()
@@ -3658,7 +3693,7 @@ def upper_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -3666,7 +3701,7 @@ def upper_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(2980, 533) rotate(-15.7)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -3674,6 +3709,9 @@ def upper_transept() -> str:
     elements = []
     number_of_tiles = 23
     offset_y = 0
+    rotate = -6.35
+    x = 4418
+    y = 383
 
     for i in range(50):
         skip_tiles = set()
@@ -3787,7 +3825,7 @@ def upper_transept() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(width * i, offset_y * i),
+                offset=(x + width * i, y + offset_y * i),
                 skip_tiles=skip_tiles,
             )
         )
@@ -3795,7 +3833,7 @@ def upper_transept() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(4418, 383) rotate(-6.35)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
@@ -3803,6 +3841,9 @@ def upper_transept() -> str:
     elements = []
     number_of_tiles = 43
     offset_y = 0
+    rotate = -7.4
+    x = 6173
+    y = 124
 
     for i in range(9):
         if i == 1:
@@ -3830,14 +3871,14 @@ def upper_transept() -> str:
 
         elements.append(
             draw_column(
-                width, height, number_of_tiles, offset=(width * i, offset_y * i)
+                width, height, number_of_tiles, offset=(x + width * i, y + offset_y * i)
             )
         )
 
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(6173, 124) rotate(-7.4)",
+            transform=svg.Rotate(rotate, x, y),
             elements=elements,
         )
     )
