@@ -3887,20 +3887,21 @@ def upper_transept() -> str:
 
 
 def main():
-    print(
-        svg.svg(
-            6901,
-            5139,
-            [
-                svg.image("cathedral-color.png"),
-                "<style>path { fill-opacity: 0; } path:hover { fill-opacity: 1; }</style>",
-                main_section(),
-                lower_transept(),
-                upper_transept(),
-                horizontal_sections(),
-            ],
+    with open("cathedral-color.svg", "w") as document:
+        document.write(
+            svg.svg(
+                6901,
+                5139,
+                [
+                    svg.image("cathedral-color.png"),
+                    "<style>path { fill-opacity: 0; } path:hover { fill-opacity: 1; }</style>",
+                    main_section(),
+                    lower_transept(),
+                    upper_transept(),
+                    horizontal_sections(),
+                ],
+            )
         )
-    )
 
 
 if __name__ == "__main__":
