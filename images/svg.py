@@ -54,6 +54,10 @@ def image(href: str):
     return f'<image href="{href}" style="display: inline" />'
 
 
+def l(x: float, y: float):
+    return f"l{x:.2f},{y:.2f}"
+
+
 def m(x: float, y: float):
     return f"m{x:.2f},{y:.2f}"
 
