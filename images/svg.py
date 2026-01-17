@@ -20,12 +20,6 @@ def M(x: float, y: float):
     return f"M{x:.2f},{y:.2f}"
 
 
-def Rotate(angle: float, x: float | None = None, y: float | None = None):
-    if x is None or y is None:
-        return f"rotate({angle})"
-    return f"rotate({angle}, {x}, {y})"
-
-
 def Z():
     return "Z"
 

@@ -146,7 +146,10 @@ def horizontal_sections() -> str:
     height = 12.5
     number_of_tiles = 27
     offset_x = 0
+    rotate = 5.75
     width = 52.1
+    x = 4323
+    y = 3438
 
     for i in range(26):
         skip_tiles = set()
@@ -225,7 +228,8 @@ def horizontal_sections() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(offset_x, height * i),
+                offset=(x + offset_x, y + height * i),
+                rotate=rotate,
                 skip_tiles=skip_tiles,
                 is_horizontal=True,
             )
@@ -234,7 +238,6 @@ def horizontal_sections() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(3956, 3854) rotate(5.75)",
             elements=elements,
         )
     )
@@ -243,6 +246,9 @@ def horizontal_sections() -> str:
     fill = CYAN
     number_of_tiles = 25
     offset_x = -5.60
+    rotate = -6.3
+    x = 4145
+    y = 872
 
     for i in range(18):
         skip_tiles = set()
@@ -289,7 +295,8 @@ def horizontal_sections() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(offset_x * i, height * i),
+                offset=(x + offset_x * i, y + height * i),
+                rotate=rotate,
                 skip_tiles=skip_tiles,
                 is_horizontal=True,
             )
@@ -298,13 +305,15 @@ def horizontal_sections() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(4216, 412) rotate(-6.3)",
             elements=elements,
         )
     )
 
     elements = []
     fill = GREEN
+    rotate = -6.3
+    x = 4055
+    y = 1072
 
     for i in range(31):
         skip_tiles = set()
@@ -337,7 +346,8 @@ def horizontal_sections() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(offset_x * i, height * i),
+                offset=(x + offset_x * i, y + height * i),
+                rotate=rotate,
                 skip_tiles=skip_tiles,
                 is_horizontal=True,
             )
@@ -346,7 +356,6 @@ def horizontal_sections() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(4148, 620.5) rotate(-6.3)",
             elements=elements,
         )
     )
@@ -356,6 +365,9 @@ def horizontal_sections() -> str:
     height = 11.6
     number_of_tiles = 12
     offset_x = 4
+    rotate = 114.8
+    x = 412
+    y = -7062
 
     for i in range(36):
         skip_tiles = set()
@@ -419,7 +431,8 @@ def horizontal_sections() -> str:
                 width,
                 height,
                 number_of_tiles,
-                offset=(offset_x * i, height * i),
+                offset=(x + offset_x * i, y + height * i),
+                rotate=rotate,
                 skip_tiles=skip_tiles,
                 is_horizontal=True,
             )
@@ -428,7 +441,6 @@ def horizontal_sections() -> str:
     sectors.append(
         svg.g(
             style=f"fill: {fill}; stroke: {fill};",
-            transform="translate(6238, 3337) rotate(114.8)",
             elements=elements,
         )
     )
