@@ -450,7 +450,6 @@ def horizontal_sections() -> str:
 
 def lower_transept() -> str:
     elements: list[str] = []
-    sectors: list[str] = []
 
     fill = CYAN
     height = 8.68
@@ -488,14 +487,6 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 3
     offset_y = 0
     rotate = 22
@@ -540,14 +531,6 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 2
     offset_y = 0
     rotate = 4.7
@@ -609,14 +592,6 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 17
     offset_y = 0
     rotate = 14.5
@@ -672,14 +647,6 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 16
     offset_y = 0
     rotate = 0.4
@@ -742,14 +709,6 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 3
     offset_y = 0
     rotate = 10.37
@@ -1014,14 +973,6 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 60
     offset_y = 0
     rotate = 9
@@ -1083,14 +1034,10 @@ def lower_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
+    return svg.g(
+        style=f"fill: {fill}; stroke: {fill};",
+        elements=elements,
     )
-
-    return "".join(sectors)
 
 
 def main_section():
@@ -3415,7 +3362,6 @@ def tile(x: float, y: float, width: float, height: float, angle: float = 0) -> s
 
 def upper_transept() -> str:
     elements: list[str] = []
-    sectors: list[str] = []
 
     fill = CYAN
     height = 8.68
@@ -3485,14 +3431,6 @@ def upper_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 83
     offset_y = 0
     rotate = -14.6
@@ -3563,14 +3501,6 @@ def upper_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 97
     offset_y = 0
     rotate = -1.66
@@ -3618,14 +3548,6 @@ def upper_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 97
     offset_y = 0
     rotate = -15.7
@@ -3745,14 +3667,6 @@ def upper_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 23
     offset_y = 0
     rotate = -6.35
@@ -3877,14 +3791,6 @@ def upper_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
-    )
-
-    elements = []
     number_of_tiles = 43
     offset_y = 0
     rotate = -7.4
@@ -3925,14 +3831,10 @@ def upper_transept() -> str:
             )
         )
 
-    sectors.append(
-        svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
-            elements=elements,
-        )
+    return svg.g(
+        style=f"fill: {fill}; stroke: {fill};",
+        elements=elements,
     )
-
-    return "".join(sectors)
 
 
 def main():
