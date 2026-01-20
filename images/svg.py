@@ -8,7 +8,7 @@ def A(
     y: float,
 ):
     return (
-        f"A {rx:.2f} {ry:.2f} {angle:.2f} {large_arc_flag} {sweep_flag} {x:.2f} {y:.2f}"
+        f"A{rx:.2f},{ry:.2f},{angle:.2f},{large_arc_flag},{sweep_flag},{x:.2f},{y:.2f}"
     )
 
 
