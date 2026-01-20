@@ -45,7 +45,7 @@ def h(x: float):
 
 
 def image(href: str):
-    return f'<image href="{href}" style="display: inline" />'
+    return f'<image href="{href}"/>'
 
 
 def l(x: float, y: float):
