@@ -102,7 +102,7 @@ def draw_annular_tiles(
             )
 
     return svg.g(
-        style=f"fill: {fill}; stroke: {fill}",
+        style=f"fill:{fill};stroke:{fill}",
         elements=elements,
     )
 
@@ -237,7 +237,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
+            style=f"fill:{fill};stroke:{fill};",
             elements=elements,
         )
     )
@@ -304,7 +304,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
+            style=f"fill:{fill};stroke:{fill};",
             elements=elements,
         )
     )
@@ -355,7 +355,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
+            style=f"fill:{fill};stroke:{fill};",
             elements=elements,
         )
     )
@@ -440,7 +440,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill: {fill}; stroke: {fill};",
+            style=f"fill:{fill};stroke:{fill};",
             elements=elements,
         )
     )
@@ -1035,7 +1035,7 @@ def lower_transept() -> str:
         )
 
     return svg.g(
-        style=f"fill: {fill}; stroke: {fill};",
+        style=f"fill:{fill};stroke:{fill};",
         elements=elements,
     )
 
@@ -3832,7 +3832,7 @@ def upper_transept() -> str:
         )
 
     return svg.g(
-        style=f"fill: {fill}; stroke: {fill};",
+        style=f"fill:{fill};stroke:{fill};",
         elements=elements,
     )
 
@@ -3845,7 +3845,7 @@ def main():
                 5139,
                 [
                     svg.image("cathedral-color.png"),
-                    "<style>path { fill-opacity: 0; } path:hover { fill-opacity: 1; }</style>",
+                    "<style>path{fill-opacity:0;}path:hover{fill-opacity:1;}</style>",
                     main_section(),
                     lower_transept(),
                     upper_transept(),
