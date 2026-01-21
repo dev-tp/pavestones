@@ -68,7 +68,7 @@ def draw_annular_tiles(
     inner_radius: float = 50,
     offset: float = 50,
     center: tuple[float, float] | None = None,
-    rotate: int = 0,
+    rotate: float = 0,
     number_of_tiles: int = 4,
     skip_tiles: set[int] = set([]),
     tile_angle: float = 90,
@@ -111,14 +111,11 @@ def draw_column(
     width: float,
     height: float,
     number_of_tiles: int,
-    offset: tuple[float, float] | None = None,
+    offset: tuple[float, float] = (0, 0),
     skip_tiles: set[int] = set(),
     is_horizontal: bool = False,
     rotate: float = 0,
 ) -> str:
-    if offset is None:
-        offset = (0, 0)
-
     paths: list[str] = []
 
     for i in range(number_of_tiles):
