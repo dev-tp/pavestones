@@ -1,8 +1,9 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const user = sqliteTable('user', {
-	id: text('id')
-		.primaryKey()
-		.$defaultFn(() => crypto.randomUUID()),
-	age: integer('age')
+export const pavestone = sqliteTable('pavestone', {
+	id: integer().primaryKey({ autoIncrement: true }),
+	tile: text().notNull(),
+	patron: text().notNull().default(''),
+	dedication: text().notNull().default(''),
+	isDeceased: integer({ mode: 'boolean' }).notNull().default(false)
 });
