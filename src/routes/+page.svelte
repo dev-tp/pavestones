@@ -5,6 +5,7 @@
 <svg width={6901} height={5139}>
 	{#each data.pavestones as pavestone}
 		<path
+			class:sold={pavestone.patron !== ''}
 			d={pavestone.tile}
 			onclick={() => alert(pavestone.id)}
 			onkeydown={() => {}}
@@ -13,13 +14,3 @@
 		/>
 	{/each}
 </svg>
-
-<style>
-	path {
-		fill-opacity: 0;
-		stroke: black;
-	}
-	path:hover {
-		fill-opacity: 1;
-	}
-</style>

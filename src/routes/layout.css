@@ -1,1 +1,20 @@
 @import 'tailwindcss';
+
+path {
+	fill: black;
+	fill-opacity: 0;
+	stroke: black;
+}
+
+path:hover {
+	fill-opacity: 1;
+}
+
+.sold {
+	fill-opacity: 1;
+	stroke-opacity: 0;
+}
+
+.sold:hover {
+	fill-opacity: 0;
+}
