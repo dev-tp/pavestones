@@ -12,7 +12,6 @@ path:hover {
 
 .sold {
 	fill-opacity: 1;
-	stroke-opacity: 0;
 }
 
 .sold:hover {
