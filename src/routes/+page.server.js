@@ -16,9 +16,11 @@ export const actions = {
 		const data = await event.request.formData();
 		const query = data.get('query');
 
-		return await db
-			.select()
-			.from(pavestone)
-			.where(or(like(pavestone.dedication, `%${query}%`), like(pavestone.patron, `%${query}%`)));
+		return {
+			results: await db
+				.select()
+				.from(pavestone)
+				.where(or(like(pavestone.dedication, `%${query}%`), like(pavestone.patron, `%${query}%`)))
+		};
 	}
 };
