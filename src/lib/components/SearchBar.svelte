@@ -37,9 +37,12 @@
 </script>
 
 <search class={['border bg-white', className].join(' ')}>
-	<form action="?/search" bind:this={form} class="p-2" onsubmit={handleSubmit}>
-		<fieldset class="flex items-center gap-2">
-			<button type="submit">
+	<form action="?/search" bind:this={form} class="p-1" onsubmit={handleSubmit}>
+		<fieldset class="flex items-center gap-1">
+			<button
+				class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
+				type="submit"
+			>
 				<Search class="h-5 w-5" />
 			</button>
 			<input
@@ -51,7 +54,11 @@
 				type="search"
 			/>
 			{#if query !== ''}
-				<button onclick={() => (query = '')} type="button">
+				<button
+					class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
+					onclick={() => (query = '')}
+					type="button"
+				>
 					<X class="h-5 w-5" />
 				</button>
 			{/if}
