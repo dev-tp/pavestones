@@ -19,6 +19,7 @@
 		event.preventDefault();
 
 		if (query === '') {
+			results = [];
 			return;
 		}
 
@@ -56,7 +57,10 @@
 			{#if query !== ''}
 				<button
 					class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
-					onclick={() => (query = '')}
+					onclick={() => {
+						query = '';
+						results = [];
+					}}
 					type="button"
 				>
 					<X class="h-5 w-5" />
@@ -64,16 +68,17 @@
 			{/if}
 		</fieldset>
 	</form>
-	{#if query !== ''}
-		<ul class="max-h-96 overflow-auto">
-			{#each results as result}
-				<li class="border-t p-2 hover:bg-gray-400">
-					<button class="w-full text-start" onclick={() => alert(result.id)}>
-						<div>{result.dedication}</div>
-						<div class="text-sm">{result.patron}</div>
-					</button>
-				</li>
-			{/each}
-		</ul>
-	{/if}
+	<ul class="max-h-96 overflow-auto">
+		{#each results as result}
+			<li class="border-t p-2 hover:bg-slate-200">
+				<button class="w-full text-start" onclick={() => alert(result.id)}>
+					<div>{result.dedication}</div>
+					<div class="text-sm">{result.patron}</div>
+				</button>
+			</li>
+		{/each}
+		{#if query !== '' && results.length === 0}
+			<li class="border-t p-2">No results</li>
+		{/if}
+	</ul>
 </search>
