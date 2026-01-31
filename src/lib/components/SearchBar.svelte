@@ -1,8 +1,15 @@
+<script module>
+	/** @typedef {Object} Props
+	 * @property {string} [class]
+	 */
+</script>
+
 <script>
 	import { Search, X } from '@lucide/svelte';
 
 	import { deserialize } from '$app/forms';
 
+	/** @type {Props} */
 	const { class: className } = $props();
 
 	/** @type {HTMLFormElement} */
