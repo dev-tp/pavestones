@@ -1,7 +1,7 @@
 <script module>
 	/** @typedef {Object} Props
 	 * @property {string} [class]
-	 * @property {number} selected
+	 * @property {function(number): void} onselect
 	 */
 </script>
 
@@ -11,7 +11,7 @@
 	import { deserialize } from '$app/forms';
 
 	/** @type {Props} */
-	let { class: className, selected = $bindable(0) } = $props();
+	let { class: className, onselect } = $props();
 
 	/** @type {HTMLFormElement} */
 	let form;
@@ -27,8 +27,8 @@
 		event.preventDefault();
 
 		if (query === '') {
+			onselect(0);
 			results = [];
-			selected = 0;
 			return;
 		}
 
@@ -67,9 +67,9 @@
 				<button
 					class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
 					onclick={() => {
+						onselect(0);
 						query = '';
 						results = [];
-						selected = 0;
 					}}
 					type="button"
 				>
@@ -81,7 +81,7 @@
 	<ul class="max-h-96 overflow-auto">
 		{#each results as result}
 			<li class="border-t p-2 hover:bg-slate-200">
-				<button class="w-full text-start" onclick={() => (selected = result.id)}>
+				<button class="w-full text-start" onclick={() => onselect(result.id)}>
 					<div>{result.dedication}</div>
 					<div class="text-sm">{result.patron}</div>
 				</button>
