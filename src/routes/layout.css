@@ -10,6 +10,11 @@ path:hover {
 	fill-opacity: 1;
 }
 
+.selected {
+	fill: yellow;
+	fill-opacity: 1;
+}
+
 .sold {
 	fill-opacity: 1;
 }
