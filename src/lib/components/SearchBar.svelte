@@ -46,7 +46,7 @@
 	}
 </script>
 
-<search class={['border bg-white', className].join(' ')}>
+<search class={['group border bg-white', className].join(' ')}>
 	<form action="?/search" bind:this={form} class="p-1" onsubmit={handleSubmit}>
 		<fieldset class="flex items-center gap-1">
 			<button
@@ -78,10 +78,16 @@
 			{/if}
 		</fieldset>
 	</form>
-	<ul class="max-h-96 overflow-auto">
+	<ul class="hidden max-h-96 overflow-auto group-focus-within:block">
 		{#each results as result}
 			<li class="border-t p-2 hover:bg-slate-200">
-				<button class="w-full text-start" onclick={() => onselect(result.id)}>
+				<button
+					class="w-full text-start"
+					onclick={() => {
+						query = result.dedication;
+						onselect(result.id);
+					}}
+				>
 					<div>{result.dedication}</div>
 					<div class="text-sm">{result.patron}</div>
 				</button>
