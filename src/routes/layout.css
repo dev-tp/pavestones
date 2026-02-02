@@ -1,24 +1,26 @@
 @import 'tailwindcss';
 
-path {
-	fill: black;
-	fill-opacity: 0;
-	stroke: black;
-}
+#map {
+	path {
+		fill: black;
+		fill-opacity: 0;
+		stroke: black;
+	}
 
-path:hover {
-	fill-opacity: 1;
-}
+	path:hover {
+		fill-opacity: 1;
+	}
 
-.selected {
-	fill: yellow;
-	fill-opacity: 1;
-}
+	.selected {
+		fill: yellow;
+		fill-opacity: 1;
+	}
 
-.sold {
-	fill-opacity: 1;
-}
+	.sold {
+		fill-opacity: 1;
+	}
 
-.sold:hover {
-	fill-opacity: 0;
+	.sold:hover {
+		fill-opacity: 0;
+	}
 }
