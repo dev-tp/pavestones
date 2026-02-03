@@ -84,12 +84,12 @@
 				<button
 					class="w-full text-start"
 					onclick={() => {
-						query = result.dedication;
+						query = result.dedicatedTo;
 						onselect(result);
 					}}
 				>
-					<div>{result.dedication}</div>
-					<div class="text-sm">{result.patron}</div>
+					<div>{result.dedicatedTo}</div>
+					<div class="text-sm">{result.donor}</div>
 				</button>
 			</li>
 		{/each}

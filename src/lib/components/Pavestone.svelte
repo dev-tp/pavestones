@@ -24,7 +24,7 @@
 	bind:this={path}
 	class="cursor-pointer"
 	class:selected
-	class:sold={data.patron !== ''}
+	class:sold={data.donor !== ''}
 	d={data.tile}
 	onkeydown={() => {}}
 	role="button"

@@ -20,7 +20,7 @@ export const actions = {
 			results: await db
 				.select()
 				.from(pavestone)
-				.where(or(like(pavestone.dedication, `%${query}%`), like(pavestone.patron, `%${query}%`)))
+				.where(or(like(pavestone.dedicatedTo, `%${query}%`), like(pavestone.donor, `%${query}%`)))
 		};
 	}
 };

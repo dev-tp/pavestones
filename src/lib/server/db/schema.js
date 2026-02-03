@@ -4,7 +4,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 export const pavestone = sqliteTable('pavestone', {
 	id: integer().primaryKey({ autoIncrement: true }),
 	tile: text().notNull(),
-	patron: text().notNull().default(''),
-	dedication: text().notNull().default(''),
-	isDeceased: integer({ mode: 'boolean' }).notNull().default(false)
+	donor: text().notNull().default(''),
+	dedicatedTo: text().notNull().default(''),
+	inMemoriam: integer({ mode: 'boolean' }).notNull().default(false)
 });
