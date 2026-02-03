@@ -1,7 +1,7 @@
 <script module>
 	/** @typedef {Object} Props
 	 * @property {string} [class]
-	 * @property {function(number): void} onselect
+	 * @property {function(import('$lib/server/db/schema').Pavestone | undefined): void} onselect
 	 */
 </script>
 
@@ -27,7 +27,7 @@
 		event.preventDefault();
 
 		if (query === '') {
-			onselect(0);
+			onselect(undefined);
 			results = [];
 			return;
 		}
@@ -67,7 +67,7 @@
 				<button
 					class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
 					onclick={() => {
-						onselect(0);
+						onselect(undefined);
 						query = '';
 						results = [];
 					}}
@@ -85,7 +85,7 @@
 					class="w-full text-start"
 					onclick={() => {
 						query = result.dedication;
-						onselect(result.id);
+						onselect(result);
 					}}
 				>
 					<div>{result.dedication}</div>
