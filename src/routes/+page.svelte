@@ -1,4 +1,5 @@
 <script>
+	import Form from '$lib/components/Form.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import Pavestone from '$lib/components/Pavestone.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
@@ -30,4 +31,9 @@
 	{/each}
 </svg>
 
-<Modal bind:open />
+<Modal
+	bind:open
+	class="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+>
+	<Form data={selected} onclose={() => (open = false)} />
+</Modal>
