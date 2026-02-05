@@ -7,9 +7,10 @@
 
 <script>
 	/** @type {Props} */
-	const { data, onclose = () => {} } = $props();
+	const { data = $bindable(), onclose = () => {} } = $props();
 
 	let isEditMode = $derived(data.donor === '');
+	let values = $state({ ...data });
 </script>
 
 <form class="w-1/4 rounded-md bg-white px-6 pt-4 pb-4">
@@ -17,26 +18,26 @@
 		<label class="grid gap-2">
 			<span class="text-sm">Donor</span>
 			<input
+				bind:value={values.donor}
 				class="border p-1 read-only:border-slate-300"
 				name="donor"
 				readonly={!isEditMode}
 				type="text"
-				value={data.donor}
 			/>
 		</label>
 		<label class="grid gap-2">
 			<span class="text-sm">Dedicated to</span>
 			<input
+				bind:value={values.dedicatedTo}
 				class="border p-1 read-only:border-slate-300"
 				name="dedicated_to"
 				readonly={!isEditMode}
 				type="text"
-				value={data.dedicatedTo}
 			/>
 		</label>
 		<label class="mb-4 flex gap-2">
 			<input
-				checked={data.inMemoriam}
+				bind:checked={values.inMemoriam}
 				class="cursor-pointer"
 				disabled={!isEditMode}
 				name="in_memoriam"
@@ -80,6 +81,7 @@
 							onclose();
 						} else {
 							isEditMode = false;
+							values = { ...data };
 						}
 					}}
 					type="button"
