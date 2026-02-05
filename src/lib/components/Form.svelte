@@ -9,17 +9,7 @@
 	/** @type {Props} */
 	const { data, onclose = () => {} } = $props();
 
-	let isEditMode = $derived.by(() => {
-		if (!data) {
-			return true;
-		}
-
-		if (data.donor === '') {
-			return true;
-		}
-
-		return false;
-	});
+	let isEditMode = $derived(!data || data.donor === '');
 </script>
 
 <form class="w-1/4 rounded-md bg-white px-6 pt-4 pb-4">
@@ -86,7 +76,7 @@
 				<button
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
 					onclick={() => {
-						if (!data || data?.donor === '') {
+						if (!data || data.donor === '') {
 							onclose();
 						} else {
 							isEditMode = false;
