@@ -89,17 +89,17 @@
 			{:else}
 				<button
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
-					onclick={onclose}
-					type="button"
-				>
-					Close
-				</button>
-				<button
-					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
 					onclick={() => (isEditMode = true)}
 					type="button"
 				>
 					Edit
+				</button>
+				<button
+					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
+					onclick={onclose}
+					type="button"
+				>
+					Close
 				</button>
 			{/if}
 		</div>
