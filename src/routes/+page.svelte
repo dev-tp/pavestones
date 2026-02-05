@@ -31,9 +31,11 @@
 	{/each}
 </svg>
 
-<Modal
-	bind:open
-	class="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm"
->
-	<Form data={selected} onclose={() => (open = false)} />
-</Modal>
+{#if selected}
+	<Modal
+		bind:open
+		class="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+	>
+		<Form data={selected} onclose={() => (open = false)} />
+	</Modal>
+{/if}
