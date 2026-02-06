@@ -15,6 +15,9 @@
 	/** @type {HTMLFormElement} */
 	let form;
 
+	/** @type {HTMLInputElement} */
+	let input;
+
 	/** @type {boolean} */
 	let isEditMode = $derived(data.donor === '');
 
@@ -36,6 +39,12 @@
 			onclose();
 		}
 	}
+
+	$effect(() => {
+		if (isEditMode) {
+			input.focus();
+		}
+	});
 </script>
 
 <form
@@ -50,6 +59,7 @@
 		<label class="grid gap-2">
 			<span class="text-sm">Donor</span>
 			<input
+				bind:this={input}
 				bind:value={values.donor}
 				class="border p-1 read-only:border-slate-300"
 				name="donor"
