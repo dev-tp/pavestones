@@ -6,14 +6,46 @@
 </script>
 
 <script>
+	import { deserialize } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+
 	/** @type {Props} */
 	const { data = $bindable(), onclose = () => {} } = $props();
 
+	/** @type {HTMLFormElement} */
+	let form;
+
+	/** @type {boolean} */
 	let isEditMode = $derived(data.donor === '');
+
+	/** @type {import('$lib/server/db/schema').Pavestone} */
 	let values = $state({ ...data });
+
+	/** @param {'?/add' | '?/remove'} action */
+	async function submit(action) {
+		const response = await fetch(action, {
+			body: new FormData(form),
+			method: 'POST'
+		});
+
+		/** @type {import('@sveltejs/kit').ActionResult} */
+		const result = deserialize(await response.text());
+
+		if (result.type === 'success') {
+			invalidateAll();
+			onclose();
+		}
+	}
 </script>
 
-<form class="w-1/4 rounded-md bg-white px-6 pt-4 pb-4">
+<form
+	bind:this={form}
+	class="w-1/4 rounded-md bg-white px-6 pt-4 pb-4"
+	onsubmit={(event) => {
+		event.preventDefault();
+		submit('?/add');
+	}}
+>
 	<div class="grid gap-4">
 		<label class="grid gap-2">
 			<span class="text-sm">Donor</span>
@@ -45,6 +77,7 @@
 			/>
 			<span>In memoriam</span>
 		</label>
+		<input name="id" type="hidden" value={data.id} />
 	</div>
 	<div class="flex justify-between">
 		<div>
@@ -52,6 +85,7 @@
 				{#if isEditMode}
 					<button
 						class="cursor-pointer rounded-sm px-2 py-1 text-sm text-red-700 uppercase hover:bg-red-100"
+						onclick={() => submit('?/remove')}
 						type="button"
 					>
 						Delete
