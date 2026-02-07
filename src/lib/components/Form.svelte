@@ -95,7 +95,11 @@
 				{#if isEditMode}
 					<button
 						class="cursor-pointer rounded-sm px-2 py-1 text-sm text-red-700 uppercase hover:bg-red-100"
-						onclick={() => submit('?/remove')}
+						onclick={() => {
+							if (confirm('Are you sure you want to delete this entry?')) {
+								submit('?/remove');
+							}
+						}}
 						type="button"
 					>
 						Delete
