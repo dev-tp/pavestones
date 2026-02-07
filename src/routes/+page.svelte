@@ -18,18 +18,20 @@
 	onselect={(pavestone) => (selected = pavestone)}
 />
 
-<svg id="map" width={6901} height={5139}>
-	{#each data.pavestones as pavestone}
-		<Pavestone
-			data={pavestone}
-			onclick={() => {
-				open = true;
-				selected = pavestone;
-			}}
-			selected={pavestone.id === selected?.id}
-		/>
-	{/each}
-</svg>
+<main class="overflow-auto">
+	<svg id="map" width={6901} height={5139}>
+		{#each data.pavestones as pavestone}
+			<Pavestone
+				data={pavestone}
+				onclick={() => {
+					open = true;
+					selected = pavestone;
+				}}
+				selected={pavestone.id === selected?.id}
+			/>
+		{/each}
+	</svg>
+</main>
 
 {#if selected}
 	<Modal
