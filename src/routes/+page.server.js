@@ -22,7 +22,7 @@ function unwrap(entry) {
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
 	return {
-		pavestones: await db.select().from(pavestone)
+		pavestones: db.select().from(pavestone)
 	};
 }
 

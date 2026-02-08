@@ -20,16 +20,20 @@
 
 <main class="overflow-auto">
 	<svg id="map" width={6901} height={5139}>
-		{#each data.pavestones as pavestone}
-			<Pavestone
-				data={pavestone}
-				onclick={() => {
-					open = true;
-					selected = pavestone;
-				}}
-				selected={pavestone.id === selected?.id}
-			/>
-		{/each}
+		{#await data.pavestones}
+			<text x={100} y={100}>Loading...</text>
+		{:then pavestones}
+			{#each pavestones as pavestone}
+				<Pavestone
+					data={pavestone}
+					onclick={() => {
+						open = true;
+						selected = pavestone;
+					}}
+					selected={pavestone.id === selected?.id}
+				/>
+			{/each}
+		{/await}
 	</svg>
 </main>
 
