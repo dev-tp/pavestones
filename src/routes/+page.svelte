@@ -36,7 +36,7 @@
 {#if selected}
 	<Modal
 		bind:open
-		class="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+		class="fixed inset-0 items-center justify-center bg-black/60 backdrop-blur-sm md:flex"
 	>
 		<Form data={selected} onclose={() => (open = false)} />
 	</Modal>

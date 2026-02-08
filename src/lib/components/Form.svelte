@@ -49,7 +49,7 @@
 
 <form
 	bind:this={form}
-	class="w-1/4 rounded-md bg-white px-6 pt-4 pb-4"
+	class="w-full rounded-none bg-white px-6 pt-4 pb-4 md:w-1/4 md:rounded-md"
 	onsubmit={(event) => {
 		event.preventDefault();
 		submit('?/add');

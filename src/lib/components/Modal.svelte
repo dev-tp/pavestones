@@ -27,7 +27,10 @@
 
 {#if open}
 	<div class={className}>
-		<button class="fixed top-4 right-4 cursor-pointer text-white" onclick={() => (open = false)}>
+		<button
+			class="fixed top-4 right-4 hidden cursor-pointer text-white md:block"
+			onclick={() => (open = false)}
+		>
 			<X class="h-5 w-5" />
 		</button>
 		{@render children?.()}
