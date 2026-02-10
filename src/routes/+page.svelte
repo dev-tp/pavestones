@@ -1,13 +1,12 @@
 <script>
+	import Certificate from '$lib/components/Certificate.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import Pavestone from '$lib/components/Pavestone.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
+	import storage from '$lib/storage.svelte.js';
 
 	const { data } = $props();
-
-	/** @type {boolean} */
-	let open = $state(false);
 
 	/** @type {import('$lib/server/db/schema').Pavestone | undefined} */
 	let selected = $state();
@@ -27,8 +26,8 @@
 				<Pavestone
 					data={pavestone}
 					onclick={() => {
-						open = true;
 						selected = pavestone;
+						storage.form.open = true;
 					}}
 					selected={pavestone.id === selected?.id}
 				/>
@@ -38,10 +37,14 @@
 </main>
 
 {#if selected}
-	<Modal
-		bind:open
-		class="fixed inset-0 items-center justify-center bg-black/60 backdrop-blur-sm md:flex"
-	>
-		<Form data={selected} onclose={() => (open = false)} />
-	</Modal>
+	{#if storage.certificate.open}
+		<Certificate data={selected} />
+	{:else}
+		<Modal
+			bind:open={storage.form.open}
+			class="fixed inset-0 items-center justify-center bg-black/60 backdrop-blur-sm md:flex"
+		>
+			<Form data={selected} />
+		</Modal>
+	{/if}
 {/if}

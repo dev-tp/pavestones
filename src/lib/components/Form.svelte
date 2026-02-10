@@ -1,16 +1,16 @@
 <script module>
 	/** @typedef {Object} Props
 	 * @property {import('$lib/server/db/schema').Pavestone} data
-	 * @property {function(): void} [onclose]
 	 */
 </script>
 
 <script>
+	import storage from '$lib/storage.svelte.js';
 	import { deserialize } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 
 	/** @type {Props} */
-	const { data = $bindable(), onclose = () => {} } = $props();
+	const { data = $bindable() } = $props();
 
 	/** @type {HTMLFormElement} */
 	let form;
@@ -36,7 +36,7 @@
 
 		if (result.type === 'success') {
 			invalidateAll();
-			onclose();
+			storage.form.open = false;
 		}
 	}
 
@@ -107,6 +107,7 @@
 				{:else}
 					<button
 						class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
+						onclick={() => (storage.certificate.open = true)}
 						type="button"
 					>
 						Print
@@ -126,7 +127,7 @@
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
 					onclick={() => {
 						if (data.donor === '') {
-							onclose();
+							storage.form.open = false;
 						} else {
 							isEditMode = false;
 							values = { ...data };
@@ -146,7 +147,7 @@
 				</button>
 				<button
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
-					onclick={onclose}
+					onclick={() => (storage.form.open = false)}
 					type="button"
 				>
 					Close
