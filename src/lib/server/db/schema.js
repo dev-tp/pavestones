@@ -8,3 +8,11 @@ export const pavestone = sqliteTable('pavestone', {
 	dedicatedTo: text().notNull().default(''),
 	inMemoriam: integer({ mode: 'boolean' }).notNull().default(false)
 });
+
+/** @typedef {typeof user.$inferSelect} User */
+export const user = sqliteTable('user', {
+	id: integer().primaryKey({ autoIncrement: true }),
+	email: text().notNull().unique(),
+	hash: text().notNull(),
+	username: text().notNull().unique()
+});
