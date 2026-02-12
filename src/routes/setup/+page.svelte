@@ -1,19 +1,21 @@
-<script module>
-	/** @typedef {Object} Props
-	 * @property {import('./$types').ActionData} form
-	 */
-</script>
-
 <script>
-	/** @type {Props} */
-	const { form } = $props();
+	import { validateEmail, validatePassword, validateUsername } from '$lib';
 
+	/** @type {import('./$types').PageProps} */
+	let { form } = $props();
+
+	/** @type {string} */
 	let password = $state('');
+
+	/** @type {string} */
 	let confirmPassword = $state('');
 
-	let email = $derived(form && form.email ? form.email : '');
+	/** @type {string} */
+	let email = $derived(form ? form.email : '');
+
+	/** @type {string} */
 	let username = $derived.by(() => {
-		if (form?.username) {
+		if (form) {
 			return form.username;
 		}
 
@@ -33,7 +35,19 @@
 	onsubmit={(event) => {
 		event.preventDefault();
 
-		if (password === '' || password !== confirmPassword) {
+		if (!validateEmail(email)) {
+			return;
+		}
+
+		if (!validateUsername(username)) {
+			return;
+		}
+
+		if (validatePassword(password).length > 0) {
+			return;
+		}
+
+		if (password !== confirmPassword) {
 			return;
 		}
 
@@ -44,20 +58,34 @@
 	<label class="grid gap-2">
 		<span>Email <span class="text-red-500">*</span></span>
 		<input bind:value={email} class="border p-1" name="email" type="email" required />
+		{#if email !== '' && !validateEmail(email)}
+			<span class="text-red-500">Invalid email</span>
+		{/if}
 	</label>
 	<label class="grid gap-2">
 		<span>Username <span class="text-red-500">*</span></span>
 		<input bind:value={username} class="border p-1" name="username" type="text" required />
+		{#if username !== '' && !validateUsername(username)}
+			<span class="text-red-500">Invalid username</span>
+		{/if}
 	</label>
 	<label class="grid gap-2">
 		<span>Password <span class="text-red-500">*</span></span>
 		<input bind:value={password} class="border p-1" name="password" type="password" required />
+		{#if password !== ''}
+			{@const errors = validatePassword(password)}
+			<ul class="list-inside list-disc" class:hidden={errors.length === 0}>
+				{#each errors as error}
+					<li>{error}</li>
+				{/each}
+			</ul>
+		{/if}
 	</label>
 	<label class="grid gap-2">
 		<span>Confirm Password <span class="text-red-500">*</span></span>
 		<input bind:value={confirmPassword} class="border p-1" type="password" required />
 		{#if confirmPassword !== '' && confirmPassword !== password}
-			<span class="text-red-700">Passwords do not match</span>
+			<span class="text-red-500">Passwords do not match</span>
 		{/if}
 	</label>
 	<button class="mt-4 bg-black p-2 text-white" type="submit">Register</button>
