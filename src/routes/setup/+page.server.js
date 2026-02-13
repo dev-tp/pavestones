@@ -1,4 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
+import bcrypt from 'bcrypt';
 
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema';
@@ -39,11 +40,10 @@ export const actions = {
 			return fail(400, { email, errors, username });
 		}
 
-		return {
-			email: '',
-			errors: null,
-			username: ''
-		};
+		const hash = await bcrypt.hash(password, 10);
+		await db.insert(user).values({ email, hash, username });
+
+		redirect(303, '/');
 	}
 };
 
