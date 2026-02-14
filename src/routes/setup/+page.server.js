@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 
-import { validateEmail, validatePassword, validateUsername } from '$lib/validate';
+import validate from '$lib/validate';
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema';
 import sessions from '$lib/server/sessions';
@@ -20,20 +20,20 @@ export const actions = {
 		// TODO Check if email exists in database
 		const email = data.get('email')?.toString() || '';
 
-		if (!validateEmail(email)) {
+		if (!validate.email(email)) {
 			errors.email = 'Invalid email';
 		}
 
 		// TODO Check if username exists in database
 		const username = data.get('username')?.toString() || '';
 
-		if (!validateUsername(username)) {
+		if (!validate.username(username)) {
 			errors.username = 'Invalid username';
 		}
 
 		const password = data.get('password')?.toString() || '';
 
-		if (validatePassword(password).length > 0) {
+		if (validate.password(password).length > 0) {
 			errors.password = 'Invalid password';
 		}
 

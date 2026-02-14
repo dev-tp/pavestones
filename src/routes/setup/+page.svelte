@@ -1,5 +1,5 @@
 <script>
-	import { validateEmail, validatePassword, validateUsername } from '$lib/validate';
+	import validate from '$lib/validate';
 
 	/** @type {import('./$types').PageProps} */
 	let { form } = $props();
@@ -35,15 +35,15 @@
 	onsubmit={(event) => {
 		event.preventDefault();
 
-		if (!validateEmail(email)) {
+		if (!validate.email(email)) {
 			return;
 		}
 
-		if (!validateUsername(username)) {
+		if (!validate.username(username)) {
 			return;
 		}
 
-		if (validatePassword(password).length > 0) {
+		if (validate.password(password).length > 0) {
 			return;
 		}
 
@@ -58,14 +58,14 @@
 	<label class="grid gap-2">
 		<span>Email <span class="text-red-500">*</span></span>
 		<input bind:value={email} class="border p-1" name="email" type="email" required />
-		{#if email !== '' && !validateEmail(email)}
+		{#if email !== '' && !validate.email(email)}
 			<span class="text-red-500">Invalid email</span>
 		{/if}
 	</label>
 	<label class="grid gap-2">
 		<span>Username <span class="text-red-500">*</span></span>
 		<input bind:value={username} class="border p-1" name="username" type="text" required />
-		{#if username !== '' && !validateUsername(username)}
+		{#if username !== '' && !validate.username(username)}
 			<span class="text-red-500">Invalid username</span>
 		{/if}
 	</label>
@@ -73,7 +73,7 @@
 		<span>Password <span class="text-red-500">*</span></span>
 		<input bind:value={password} class="border p-1" name="password" type="password" required />
 		{#if password !== ''}
-			{@const errors = validatePassword(password)}
+			{@const errors = validate.password(password)}
 			<ul class="list-inside list-disc" class:hidden={errors.length === 0}>
 				{#each errors as error}
 					<li>{error}</li>
