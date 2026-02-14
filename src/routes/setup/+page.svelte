@@ -1,5 +1,5 @@
 <script>
-	import { validateEmail, validatePassword, validateUsername } from '$lib';
+	import { validateEmail, validatePassword, validateUsername } from '$lib/validate';
 
 	/** @type {import('./$types').PageProps} */
 	let { form } = $props();

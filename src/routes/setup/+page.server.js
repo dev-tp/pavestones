@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 
-import { validateEmail, validatePassword, validateUsername } from '$lib';
+import { validateEmail, validatePassword, validateUsername } from '$lib/validate';
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema';
 import sessions from '$lib/server/sessions';
