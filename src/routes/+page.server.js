@@ -15,9 +15,10 @@ function parse(formData) {
 }
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load() {
+export async function load(event) {
 	return {
-		pavestones: db.select().from(pavestone)
+		pavestones: db.select().from(pavestone),
+		user: event.locals.user
 	};
 }
 

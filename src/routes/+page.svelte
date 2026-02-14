@@ -6,6 +6,7 @@
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import storage from '$lib/storage.svelte.js';
 
+	/** @type {import('./$types').PageProps} */
 	const { data } = $props();
 
 	/** @type {import('$lib/server/db/schema').Pavestone | undefined} */
@@ -13,14 +14,14 @@
 </script>
 
 <SearchBar
-	class="fixed top-2 right-0 left-0 m-auto w-9/10 md:w-1/4"
+	class="fixed top-4 right-0 left-0 m-auto w-9/10 md:w-1/4"
 	onselect={(pavestone) => (selected = pavestone)}
 />
 
 <main class="overflow-auto">
 	<svg id="map" width={6901} height={5139}>
 		{#await data.pavestones}
-			<text x={100} y={100}>Loading...</text>
+			<text x={20} y={100}>Loading...</text>
 		{:then pavestones}
 			{#each pavestones as pavestone}
 				<Pavestone
@@ -35,6 +36,14 @@
 		{/await}
 	</svg>
 </main>
+
+<div class="fixed bottom-4 left-4">
+	{#if !data.user}
+		<a href="/login">Login</a>
+	{:else}
+		<p>Logout</p>
+	{/if}
+</div>
 
 {#if selected}
 	{#if storage.certificate.open}
