@@ -49,7 +49,7 @@ export const actions = {
 
 		event.cookies.set('session', token, { expires, path: '/' });
 
-		redirect(303, '/');
+		redirect(302, '/');
 	}
 };
 
@@ -58,6 +58,6 @@ export async function load() {
 	const users = await db.select().from(user);
 
 	if (users.length > 0) {
-		redirect(308, '/');
+		redirect(302, '/');
 	}
 }

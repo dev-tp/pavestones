@@ -30,13 +30,13 @@ export const actions = {
 
 		event.cookies.set('session', token, { expires, path: '/' });
 
-		redirect(303, '/');
+		redirect(302, '/');
 	}
 };
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
 	if (event.locals.user) {
-		redirect(307, '/');
+		redirect(302, '/');
 	}
 }
