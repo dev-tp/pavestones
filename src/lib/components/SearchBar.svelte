@@ -87,6 +87,7 @@
 						query = result.dedicatedTo;
 						onselect(result);
 					}}
+					tabindex="0"
 				>
 					<div>{result.dedicatedTo}</div>
 					<div class="text-sm">{result.donor}</div>
