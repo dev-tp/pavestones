@@ -41,7 +41,9 @@
 	{#if !data.user}
 		<a href="/login">Login</a>
 	{:else}
-		<p>Logout</p>
+		<form action="/logout" method="POST">
+			<button class="cursor-pointer" type="submit">Logout</button>
+		</form>
 	{/if}
 </div>
 
