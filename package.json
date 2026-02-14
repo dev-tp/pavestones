@@ -39,6 +39,8 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.563.1",
+		"@oslojs/crypto": "^1.0.1",
+		"@oslojs/encoding": "^1.1.0",
 		"bcrypt": "^6.0.0",
 		"better-sqlite3": "^12.5.0"
 	}
