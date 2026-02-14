@@ -3,20 +3,15 @@ import { eq, like, or } from 'drizzle-orm';
 import { db } from '$lib/server/db';
 import { pavestone } from '$lib/server/db/schema';
 
-/** @type function(FormData): import('$lib/server/db/schema').Pavestone */
+/** @type {(formData: FormData) => import('$lib/server/db/schema').Pavestone} */
 function parse(formData) {
 	return {
-		id: parseInt(unwrap(formData.get('id'))),
+		id: parseInt(formData.get('id')?.toString() || '0'),
 		tile: '',
-		dedicatedTo: unwrap(formData.get('dedicated_to')),
-		donor: unwrap(formData.get('donor')),
+		dedicatedTo: formData.get('dedicated_to')?.toString() || '',
+		donor: formData.get('donor')?.toString() || '',
 		inMemoriam: !!formData.get('in_memoriam')
 	};
-}
-
-/** @type function(FormDataEntryValue | null): string */
-function unwrap(entry) {
-	return entry !== null ? entry.toString() : '';
 }
 
 /** @type {import('./$types').PageServerLoad} */
