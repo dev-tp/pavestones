@@ -1,9 +1,10 @@
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 
+import { validateEmail, validatePassword, validateUsername } from '$lib';
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema';
-import { validateEmail, validatePassword, validateUsername } from '$lib';
+import sessions from '$lib/server/sessions';
 
 /** @satisfies {import('./$types').Actions} */
 export const actions = {
@@ -41,7 +42,12 @@ export const actions = {
 		}
 
 		const hash = await bcrypt.hash(password, 10);
-		await db.insert(user).values({ email, hash, username });
+		const token = sessions.generateToken();
+
+		const { lastInsertRowid } = await db.insert(user).values({ email, hash, username });
+		const { expires } = await sessions.create(token, /** @type {number} */ (lastInsertRowid));
+
+		event.cookies.set('session', token, { expires, path: '/' });
 
 		redirect(303, '/');
 	}

@@ -9,6 +9,15 @@ export const pavestone = sqliteTable('pavestone', {
 	inMemoriam: integer({ mode: 'boolean' }).notNull().default(false)
 });
 
+/** @typedef {typeof session.$inferSelect} Session */
+export const session = sqliteTable('session', {
+	id: text().primaryKey(),
+	userId: integer()
+		.notNull()
+		.references(() => user.id, { onDelete: 'cascade' }),
+	expires: integer({ mode: 'timestamp' }).notNull()
+});
+
 /** @typedef {typeof user.$inferSelect} User */
 export const user = sqliteTable('user', {
 	id: integer().primaryKey({ autoIncrement: true }),
