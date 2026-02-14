@@ -46,13 +46,13 @@ export const actions = {
 	},
 	search: async (event) => {
 		const data = await event.request.formData();
-		const query = data.get('query');
+		const query = `%${data.get('query')?.toString() || ''}%`;
 
 		return {
 			results: await db
 				.select()
 				.from(pavestone)
-				.where(or(like(pavestone.dedicatedTo, `%${query}%`), like(pavestone.donor, `%${query}%`)))
+				.where(or(like(pavestone.dedicatedTo, query), like(pavestone.donor, query)))
 		};
 	}
 };
