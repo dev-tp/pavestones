@@ -16,8 +16,12 @@ function parse(formData) {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
+	event.setHeaders({
+		'cache-control': 'max-age=3600'
+	});
+
 	return {
-		pavestones: db.select().from(pavestone),
+		pavestones: await db.select().from(pavestone),
 		user: event.locals.user
 	};
 }
