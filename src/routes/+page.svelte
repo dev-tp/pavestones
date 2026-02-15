@@ -18,7 +18,7 @@
 	onselect={(pavestone) => (selected = pavestone)}
 />
 
-<main class="overflow-auto">
+<main class="overflow-auto print:hidden">
 	<svg id="map" width={6901} height={5139}>
 		{#each data.pavestones as pavestone}
 			<Pavestone
