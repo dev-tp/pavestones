@@ -77,7 +77,7 @@
 				type="text"
 			/>
 		</label>
-		<label class="mb-4 flex gap-2">
+		<label class="mb-4 flex items-center gap-2">
 			<input
 				bind:checked={values.inMemoriam}
 				class="cursor-pointer"
