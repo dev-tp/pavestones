@@ -11,7 +11,7 @@
 	import { deserialize } from '$app/forms';
 
 	/** @type {Props} */
-	let { class: className, onselect } = $props();
+	const { class: className, onselect } = $props();
 
 	/** @type {HTMLFormElement} */
 	let form;
@@ -46,41 +46,47 @@
 	}
 </script>
 
-<search class={['group border bg-white', className].join(' ')}>
-	<form action="?/search" bind:this={form} class="p-1" onsubmit={handleSubmit}>
-		<fieldset class="flex items-center gap-1">
+<search class={['group bg-white', className].join(' ')}>
+	<form
+		action="?/search"
+		bind:this={form}
+		class="flex items-center gap-1 border bg-inherit p-1"
+		onsubmit={handleSubmit}
+	>
+		<button
+			class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
+			type="submit"
+		>
+			<Search class="h-5 w-5" />
+		</button>
+		<input
+			bind:value={query}
+			class="grow outline-none"
+			name="query"
+			onkeyup={() => form.requestSubmit()}
+			placeholder="Search"
+			type="search"
+		/>
+		{#if query !== ''}
 			<button
 				class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
-				type="submit"
+				onclick={() => {
+					onselect(undefined);
+					query = '';
+					results = [];
+				}}
+				type="button"
 			>
-				<Search class="h-5 w-5" />
+				<X class="h-5 w-5" />
 			</button>
-			<input
-				bind:value={query}
-				class="grow outline-none"
-				name="query"
-				onkeyup={() => form.requestSubmit()}
-				placeholder="Search"
-				type="search"
-			/>
-			{#if query !== ''}
-				<button
-					class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
-					onclick={() => {
-						onselect(undefined);
-						query = '';
-						results = [];
-					}}
-					type="button"
-				>
-					<X class="h-5 w-5" />
-				</button>
-			{/if}
-		</fieldset>
+		{/if}
 	</form>
-	<ul class="hidden max-h-96 overflow-auto group-focus-within:block">
+	<ul
+		class="hidden max-h-96 overflow-auto border border-t-0 bg-inherit"
+		class:group-focus-within:block={query !== ''}
+	>
 		{#each results as result}
-			<li class="border-t p-2 hover:bg-slate-200">
+			<li class="border-t p-2 first:border-0 hover:bg-slate-200">
 				<button
 					class="w-full text-start"
 					onclick={() => {
@@ -95,7 +101,7 @@
 			</li>
 		{/each}
 		{#if query !== '' && results.length === 0}
-			<li class="border-t p-2">No results</li>
+			<li class="p-2">No results</li>
 		{/if}
 	</ul>
 </search>

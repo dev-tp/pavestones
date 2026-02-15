@@ -14,7 +14,7 @@
 </script>
 
 <SearchBar
-	class="fixed top-4 right-0 left-0 m-auto w-9/10 md:w-1/4"
+	class="fixed top-4 right-0 left-0 m-auto w-[calc(100%-2rem)] md:w-1/4"
 	onselect={(pavestone) => (selected = pavestone)}
 />
 
