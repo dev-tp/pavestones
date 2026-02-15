@@ -5,9 +5,10 @@
 </script>
 
 <script>
-	import storage from '$lib/storage.svelte.js';
 	import { deserialize } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
+	import storage from '$lib/storage.svelte.js';
 
 	/** @type {Props} */
 	const { data = $bindable() } = $props();
@@ -19,7 +20,7 @@
 	let input;
 
 	/** @type {boolean} */
-	let isEditMode = $derived(data.donor === '');
+	let isEditMode = $derived(page.data.user && data.donor === '');
 
 	/** @type {import('$lib/server/db/schema').Pavestone} */
 	let values = $state({ ...data });
@@ -52,6 +53,11 @@
 	class="w-full rounded-none bg-white px-6 pt-4 pb-4 md:w-1/4 md:rounded-md"
 	onsubmit={(event) => {
 		event.preventDefault();
+
+		if (!page.data.user) {
+			return;
+		}
+
 		submit('?/add');
 	}}
 >
@@ -138,13 +144,15 @@
 					Cancel
 				</button>
 			{:else}
-				<button
-					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
-					onclick={() => (isEditMode = true)}
-					type="button"
-				>
-					Edit
-				</button>
+				{#if page.data.user}
+					<button
+						class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
+						onclick={() => (isEditMode = true)}
+						type="button"
+					>
+						Edit
+					</button>
+				{/if}
 				<button
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
 					onclick={() => (storage.form.open = false)}
