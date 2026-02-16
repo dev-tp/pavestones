@@ -9,6 +9,9 @@
 	/** @type {import('./$types').PageProps} */
 	const { data } = $props();
 
+	/** @type {{x: number, y: number}} */
+	let position = $state({ x: 0, y: 0 });
+
 	/** @type {import('$lib/server/db/schema').Pavestone | undefined} */
 	let selected = $state();
 </script>
@@ -23,7 +26,14 @@
 		{#each data.pavestones as pavestone}
 			<Pavestone
 				data={pavestone}
-				onclick={() => {
+				onclick={(event) => {
+					if (event.currentTarget instanceof SVGPathElement) {
+						const { x, y } = event.currentTarget.getBBox();
+
+						position.x = x;
+						position.y = y;
+					}
+
 					selected = pavestone;
 					storage.form.open = true;
 				}}
@@ -45,7 +55,7 @@
 
 {#if selected}
 	{#if storage.certificate.open}
-		<Certificate data={selected} />
+		<Certificate data={selected} {position} />
 	{:else}
 		<Modal
 			bind:open={storage.form.open}

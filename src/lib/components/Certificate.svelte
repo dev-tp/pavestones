@@ -1,16 +1,34 @@
 <script module>
 	/** @typedef {Object} Props
 	 * @property {import('$lib/server/db/schema').Pavestone} data
+	 * @property {{x: number, y: number}} position
 	 */
 </script>
 
 <script>
 	import { X } from '@lucide/svelte';
+	import { onMount } from 'svelte';
 
 	import { certificate } from '$lib/storage.svelte.js';
 
 	/** @type {Props} */
-	const { data } = $props();
+	const { data, position } = $props();
+
+	/** @type {SVGElement} */
+	let container;
+
+	/** @type {number} */
+	let x = $state(0);
+
+	/** @type {number} */
+	let y = $state(0);
+
+	onMount(() => {
+		const rectangle = container.getBoundingClientRect();
+
+		x = rectangle.width / 2 - position.x;
+		y = rectangle.height / 2 - position.y;
+	});
 </script>
 
 <svelte:window
@@ -36,7 +54,9 @@
 				<p>{data.dedicatedTo}</p>
 			</div>
 		</div>
-		<div class="mb-8 h-1/2 w-full border"></div>
+		<svg bind:this={container} class="mb-8 h-1/2 w-full border">
+			<use href="#map" {x} {y} />
+		</svg>
 		<div class="grid grid-cols-2 gap-8">
 			<div>
 				<p class="mb-4">
