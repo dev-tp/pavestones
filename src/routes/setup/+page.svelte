@@ -30,7 +30,7 @@
 </script>
 
 <form
-	class="grid w-full gap-2 p-8 md:m-auto md:w-1/4 md:p-0 md:pt-8"
+	class="grid w-full gap-2 p-8 md:m-auto md:w-1/3 md:px-0"
 	method="POST"
 	onsubmit={(event) => {
 		event.preventDefault();
