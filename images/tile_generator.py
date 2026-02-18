@@ -45,10 +45,7 @@ def annular_tile(
         ),
     )
 
-    large_arc = 0
-
-    if (end_angle - start_angle) % (math.pi * 2) > math.pi:
-        large_arc = 1
+    large_arc = 1 if (end_angle - start_angle) % (math.pi * 2) > math.pi else 0
 
     return svg.path(
         d=[
@@ -102,7 +99,8 @@ def draw_annular_tiles(
             )
 
     return svg.g(
-        style=f"fill:{fill};stroke:{fill}",
+        fill=fill,
+        stroke=fill,
         elements=elements,
     )
 
@@ -234,7 +232,8 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill:{fill};stroke:{fill};",
+            fill=fill,
+            stroke=fill,
             elements=elements,
         )
     )
@@ -301,7 +300,8 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill:{fill};stroke:{fill};",
+            fill=fill,
+            stroke=fill,
             elements=elements,
         )
     )
@@ -352,7 +352,8 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill:{fill};stroke:{fill};",
+            fill=fill,
+            stroke=fill,
             elements=elements,
         )
     )
@@ -437,7 +438,8 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            style=f"fill:{fill};stroke:{fill};",
+            fill=fill,
+            stroke=fill,
             elements=elements,
         )
     )
@@ -1032,7 +1034,8 @@ def lower_transept() -> str:
         )
 
     return svg.g(
-        style=f"fill:{fill};stroke:{fill};",
+        fill=fill,
+        stroke=fill,
         elements=elements,
     )
 
@@ -3829,7 +3832,8 @@ def upper_transept() -> str:
         )
 
     return svg.g(
-        style=f"fill:{fill};stroke:{fill};",
+        fill=fill,
+        stroke=fill,
         elements=elements,
     )
 

@@ -28,11 +28,14 @@ def circle(cx: int, cy: int, r: int):
     return f'<circle cx="{cx}" cy="{cy}" r="{r}" />'
 
 
-def g(elements: list[str], style: str = "", transform: str = ""):
+def g(elements: list[str], fill: str = "", stroke: str = "", transform: str = ""):
     attributes = []
 
-    if style != "":
-        attributes.append(f'style="{style}"')
+    if fill != "":
+        attributes.append(f'fill="{fill}"')
+
+    if stroke != "":
+        attributes.append(f'stroke="{stroke}"')
 
     if transform != "":
         attributes.append(f'transform="{transform}"')
