@@ -65,9 +65,9 @@
 					and invite you to use this map of the Cathedral floor plan to locate your stone.
 				</p>
 				<p>
-					Your stone is indicated by the red dot in the &quot;Enlarged Area.&quot; The image labeled
-					&quot;Overall Plan&quot; shows the entire floor plan and the red rectangle indicated the
-					area being enlarged.
+					Your pavestone is indicated in yellow inside the &quot;Enlarged Area.&quot; The image
+					labeled &quot;Overall Plan&quot; shows the entire floor plan and the red rectangle
+					indicated the area being enlarged.
 				</p>
 			</div>
 			<ul class="list-[upper-latin] columns-2">
