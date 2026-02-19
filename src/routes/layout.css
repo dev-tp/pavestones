@@ -6,27 +6,27 @@
 }
 
 .cyan {
-	fill: #527ca5;
+	fill: #527ca5aa;
 	stroke: #527ca5;
 }
 
 .green {
-	fill: #5f7f3f;
+	fill: #5f7f3faa;
 	stroke: #5f7f3f;
 }
 
 .magenta {
-	fill: #a5527c;
+	fill: #a5527caa;
 	stroke: #a5527c;
 }
 
 .purple {
-	fill: #5f007f;
+	fill: #5f007faa;
 	stroke: #5f007f;
 }
 
 .rose {
-	fill: #ff9f7f;
+	fill: #ff9f7faa;
 	stroke: #ff9f7f;
 }
 
@@ -48,9 +48,5 @@
 
 	.sold {
 		fill-opacity: 1;
-	}
-
-	.sold:hover {
-		fill-opacity: 0;
 	}
 }
