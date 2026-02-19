@@ -23,6 +23,11 @@
 <path
 	bind:this={path}
 	class="cursor-pointer"
+	class:cyan={data.sectionId === 1}
+	class:green={data.sectionId === 2}
+	class:magenta={data.sectionId === 3}
+	class:purple={data.sectionId === 4}
+	class:rose={data.sectionId === 5}
 	class:selected
 	class:sold={data.donor !== ''}
 	d={data.tile}

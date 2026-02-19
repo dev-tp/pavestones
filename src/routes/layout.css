@@ -5,11 +5,36 @@
 	size: letter;
 }
 
+.cyan {
+	fill: #527ca5;
+	stroke: #527ca5;
+}
+
+.green {
+	fill: #5f7f3f;
+	stroke: #5f7f3f;
+}
+
+.magenta {
+	fill: #a5527c;
+	stroke: #a5527c;
+}
+
+.purple {
+	fill: #5f007f;
+	stroke: #5f007f;
+}
+
+.rose {
+	fill: #ff9f7f;
+	stroke: #ff9f7f;
+}
+
 #map {
+	background: black;
+
 	path {
-		fill: black;
 		fill-opacity: 0;
-		stroke: black;
 	}
 
 	path:hover {

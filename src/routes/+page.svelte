@@ -43,7 +43,7 @@
 	</svg>
 </main>
 
-<div class="fixed bottom-4 left-4">
+<div class="fixed bottom-4 left-4 text-white">
 	{#if !data.user}
 		<a href="/login">Login</a>
 	{:else}
