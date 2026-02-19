@@ -6,7 +6,17 @@ export const pavestone = sqliteTable('pavestone', {
 	tile: text().notNull(),
 	donor: text().notNull().default(''),
 	dedicatedTo: text().notNull().default(''),
-	inMemoriam: integer({ mode: 'boolean' }).notNull().default(false)
+	inMemoriam: integer({ mode: 'boolean' }).notNull().default(false),
+	sectionId: integer()
+		.notNull()
+		.default(0)
+		.references(() => section.id, { onDelete: 'set default' })
+});
+
+/** @typedef {typeof section.$inferSelect} Section */
+export const section = sqliteTable('section', {
+	id: integer().primaryKey({ autoIncrement: true }),
+	color: text().notNull()
 });
 
 /** @typedef {typeof session.$inferSelect} Session */
@@ -14,7 +24,7 @@ export const session = sqliteTable('session', {
 	id: text().primaryKey(),
 	userId: integer()
 		.notNull()
-		.references(() => user.id, { onDelete: 'cascade' }),
+		.references(() => user.id, { onDelete: 'set default', onUpdate: 'no action' }),
 	expires: integer({ mode: 'timestamp' }).notNull()
 });
 

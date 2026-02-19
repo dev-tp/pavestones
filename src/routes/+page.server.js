@@ -10,7 +10,8 @@ function parse(formData) {
 		tile: '',
 		dedicatedTo: formData.get('dedicated_to')?.toString() || '',
 		donor: formData.get('donor')?.toString() || '',
-		inMemoriam: !!formData.get('in_memoriam')
+		inMemoriam: !!formData.get('in_memoriam'),
+		sectionId: 0
 	};
 }
 
