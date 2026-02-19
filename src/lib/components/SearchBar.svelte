@@ -1,7 +1,10 @@
 <script module>
-	/** @typedef {Object} Props
+	/**
+	 * @import { Pavestone } from '$lib/server/db/schema'
+	 *
+	 * @typedef {Object} Props
 	 * @property {string} [class]
-	 * @property {function(import('$lib/server/db/schema').Pavestone | undefined): void} onselect
+	 * @property {(pavestone: Pavestone | undefined) => void} onselect
 	 */
 </script>
 
@@ -19,7 +22,7 @@
 	/** @type {string} */
 	let query = $state('');
 
-	/** @type {import('$lib/server/db/schema').Pavestone[]} */
+	/** @type {Pavestone[]} */
 	let results = $state([]);
 
 	/** @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event */

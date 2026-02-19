@@ -1,6 +1,9 @@
 <script module>
-	/** @typedef {Object} Props
-	 * @property {import('$lib/server/db/schema').Pavestone} data
+	/**
+	 * @import { Pavestone } from '$lib/server/db/schema'
+	 *
+	 * @typedef {Object} Props
+	 * @property {Pavestone} data
 	 */
 </script>
 
@@ -22,7 +25,7 @@
 	/** @type {boolean} */
 	let isEditMode = $derived(page.data.user && data.donor === '');
 
-	/** @type {import('$lib/server/db/schema').Pavestone} */
+	/** @type {Pavestone} */
 	let values = $state({ ...data });
 
 	/** @param {'?/add' | '?/remove'} action */
