@@ -55,6 +55,9 @@
 	}}
 >
 	<h1 class="text-3xl">Pavestones</h1>
+	{#if form?.error}
+		<p class="text-red-500">{form.error}</p>
+	{/if}
 	<label class="grid gap-2">
 		<span>Email <span class="text-red-500">*</span></span>
 		<input bind:value={email} class="border p-1" name="email" type="email" required />

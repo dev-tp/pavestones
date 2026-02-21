@@ -10,35 +10,30 @@ import sessions from '$lib/server/sessions';
 export const actions = {
 	default: async (event) => {
 		const data = await event.request.formData();
-
-		const errors = {
-			email: '',
-			password: '',
-			username: ''
-		};
+		const errors = [];
 
 		// TODO Check if email exists in database
 		const email = data.get('email')?.toString() || '';
 
 		if (!validate.email(email)) {
-			errors.email = 'Invalid email';
+			errors.push('email');
 		}
 
 		// TODO Check if username exists in database
 		const username = data.get('username')?.toString() || '';
 
 		if (!validate.username(username)) {
-			errors.username = 'Invalid username';
+			errors.push('username');
 		}
 
 		const password = data.get('password')?.toString() || '';
 
 		if (validate.password(password).length > 0) {
-			errors.password = 'Invalid password';
+			errors.push('password');
 		}
 
-		if (errors.email !== '' || errors.password !== '' || errors.username !== '') {
-			return fail(400, { email, errors, username });
+		if (errors.length > 0) {
+			return fail(400, { email, error: `Invalid: ${errors.join(', ')}`, username });
 		}
 
 		const hash = await bcrypt.hash(password, 10);
