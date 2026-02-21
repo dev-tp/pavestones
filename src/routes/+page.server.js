@@ -58,6 +58,7 @@ export const actions = {
 				.select()
 				.from(pavestone)
 				.where(or(like(pavestone.dedicatedTo, query), like(pavestone.donor, query)))
+				.orderBy(pavestone.dedicatedTo)
 		};
 	}
 };
