@@ -1,10 +1,10 @@
 <script module>
 	/**
-	 * @import { Pavestone } from '$lib/server/db/schema'
+	 * @import { Data } from '$lib/server/db/schema'
 	 *
 	 * @typedef {Object} Props
 	 * @property {string} [class]
-	 * @property {(pavestone: Pavestone | undefined) => void} onselect
+	 * @property {(pavestone: Data | undefined) => void} onselect
 	 */
 </script>
 
@@ -22,7 +22,7 @@
 	/** @type {string} */
 	let query = $state('');
 
-	/** @type {Pavestone[]} */
+	/** @type {Data[]} */
 	let results = $state([]);
 
 	/** @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event */
@@ -93,13 +93,13 @@
 				<button
 					class="w-full text-start"
 					onclick={() => {
-						query = result.dedicatedTo;
+						query = result.entry?.dedicatedTo ?? '';
 						onselect(result);
 					}}
 					tabindex="0"
 				>
-					<div>{result.dedicatedTo}</div>
-					<div class="text-sm">{result.donor}</div>
+					<div>{result.entry?.dedicatedTo}</div>
+					<div class="text-sm">{result.donor?.fullName}</div>
 				</button>
 			</li>
 		{/each}

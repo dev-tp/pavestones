@@ -1,19 +1,95 @@
-import { eq, like, or } from 'drizzle-orm';
+import { fail } from '@sveltejs/kit';
+import { eq, getTableColumns, like, or } from 'drizzle-orm';
 
 import { db } from '$lib/server/db';
-import { pavestone } from '$lib/server/db/schema';
+import { donor, entry, pavestone } from '$lib/server/db/schema';
 
-/** @type {(formData: FormData) => import('$lib/server/db/schema').Pavestone} */
-function parse(formData) {
-	return {
-		id: parseInt(formData.get('id')?.toString() || '0'),
-		tile: '',
-		dedicatedTo: formData.get('dedicated_to')?.toString() || '',
-		donor: formData.get('donor')?.toString() || '',
-		inMemoriam: !!formData.get('in_memoriam'),
-		sectionId: 0
-	};
-}
+const columns = { ...getTableColumns(pavestone), entry, donor };
+
+/** @satisfies {import('./$types').Actions} */
+export const actions = {
+	add: async (event) => {
+		const data = await event.request.formData();
+
+		const id = parseInt(data.get('id')?.toString() ?? '0');
+		const fullName = data.get('fullName')?.toString().trim() ?? '';
+		const dedicatedTo = data.get('dedicatedTo')?.toString().trim() ?? '';
+		const inMemoriam = !!data.get('inMemoriam');
+
+		const results = await db
+			.select(columns)
+			.from(pavestone)
+			.leftJoin(entry, eq(pavestone.entryId, entry.id))
+			.leftJoin(donor, eq(entry.donorId, donor.id))
+			.where(eq(pavestone.id, id));
+
+		if (results.length === 0) {
+			return fail(400, { error: 'Invalid id' });
+		}
+
+		const result = results[0];
+
+		if (result.entry && result.donor) {
+			if (fullName !== result.donor.fullName) {
+				await db.update(donor).set({ fullName }).where(eq(donor.id, result.donor.id));
+			}
+
+			await db
+				.update(entry)
+				.set({ dedicatedTo, inMemoriam, donorId: result.donor.id })
+				.where(eq(entry.id, result.entry.id));
+		} else {
+			const results = await db.select().from(donor).where(eq(donor.fullName, fullName));
+
+			let donorId = 0;
+
+			if (results.length !== 0) {
+				donorId = results[0].id;
+			} else {
+				const donors = await db.insert(donor).values({ fullName }).returning();
+				donorId = donors[0].id;
+			}
+
+			if (donorId !== 0) {
+				const results = await db
+					.insert(entry)
+					.values({ donorId, dedicatedTo, inMemoriam })
+					.returning();
+
+				await db.update(pavestone).set({ entryId: results[0].id }).where(eq(pavestone.id, id));
+			}
+		}
+	},
+	remove: async (event) => {
+		const data = await event.request.formData();
+		const results = await db
+			.select(columns)
+			.from(pavestone)
+			.innerJoin(entry, eq(pavestone.entryId, entry.id))
+			.innerJoin(donor, eq(entry.donorId, donor.id))
+			.where(eq(pavestone.id, parseInt(data.get('id')?.toString() ?? '0')));
+
+		if (results.length === 0) {
+			return fail(400, { error: 'Invalid id' });
+		}
+
+		await db.delete(entry).where(eq(entry.id, results[0].entry.id));
+	},
+	search: async (event) => {
+		const data = await event.request.formData();
+		const query = `%${data.get('query')?.toString() ?? ''}%`;
+
+		return {
+			results: await db
+				.select(columns)
+				.from(pavestone)
+				.innerJoin(entry, eq(pavestone.entryId, entry.id))
+				.innerJoin(donor, eq(entry.donorId, donor.id))
+				.where(or(like(donor.fullName, query), like(entry.dedicatedTo, query)))
+				.orderBy(entry.dedicatedTo)
+		};
+	}
+};
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
@@ -22,43 +98,11 @@ export async function load(event) {
 	});
 
 	return {
-		pavestones: await db.select().from(pavestone),
+		pavestones: await db
+			.select(columns)
+			.from(pavestone)
+			.leftJoin(entry, eq(pavestone.entryId, entry.id))
+			.leftJoin(donor, eq(entry.donorId, donor.id)),
 		user: event.locals.user
 	};
 }
-
-/** @satisfies {import('./$types').Actions} */
-export const actions = {
-	add: async (event) => {
-		const { id, dedicatedTo, donor, inMemoriam } = parse(await event.request.formData());
-
-		return {
-			result: await db
-				.update(pavestone)
-				.set({ dedicatedTo, donor, inMemoriam })
-				.where(eq(pavestone.id, id))
-		};
-	},
-	remove: async (event) => {
-		const { id } = parse(await event.request.formData());
-
-		return {
-			result: await db
-				.update(pavestone)
-				.set({ dedicatedTo: '', donor: '', inMemoriam: false })
-				.where(eq(pavestone.id, id))
-		};
-	},
-	search: async (event) => {
-		const data = await event.request.formData();
-		const query = `%${data.get('query')?.toString() || ''}%`;
-
-		return {
-			results: await db
-				.select()
-				.from(pavestone)
-				.where(or(like(pavestone.dedicatedTo, query), like(pavestone.donor, query)))
-				.orderBy(pavestone.dedicatedTo)
-		};
-	}
-};

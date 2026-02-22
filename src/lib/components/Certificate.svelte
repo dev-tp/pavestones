@@ -1,6 +1,6 @@
 <script module>
 	/** @typedef {Object} Props
-	 * @property {import('$lib/server/db/schema').Pavestone} data
+	 * @property {import('$lib/server/db/schema').Data} data
 	 * @property {{x: number, y: number}} position
 	 */
 </script>
@@ -51,7 +51,7 @@
 		<div class="flex h-24 items-center justify-center">
 			<div class="text-center">
 				<p>Cathedral Pavestone designated for:</p>
-				<p>{data.dedicatedTo}</p>
+				<p>{data.entry?.dedicatedTo}</p>
 			</div>
 		</div>
 		<svg bind:this={container} class="mb-8 h-1/2 w-full border">

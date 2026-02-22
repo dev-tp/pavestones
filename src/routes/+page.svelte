@@ -12,7 +12,7 @@
 	/** @type {{x: number, y: number}} */
 	let position = $state({ x: 0, y: 0 });
 
-	/** @type {import('$lib/server/db/schema').Pavestone | undefined} */
+	/** @type {import('$lib/server/db/schema').Data | undefined} */
 	let selected = $state();
 </script>
 

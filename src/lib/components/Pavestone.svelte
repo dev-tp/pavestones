@@ -1,7 +1,7 @@
 <script module>
 	/** @typedef {Object} Props
-	 * @property {import('$lib/server/db/schema').Pavestone} data
-	 * @property {function(MouseEvent): void} [onclick]
+	 * @property {import('$lib/server/db/schema').Data} data
+	 * @property {(event: MouseEvent) => void} [onclick]
 	 * @property {boolean} [selected]
 	 */
 </script>
@@ -29,7 +29,7 @@
 	class:purple={data.sectionId === 4}
 	class:rose={data.sectionId === 5}
 	class:selected
-	class:sold={data.donor !== ''}
+	class:sold={data.donor}
 	d={data.tile}
 	onkeydown={() => {}}
 	role="button"

@@ -1,9 +1,9 @@
 <script module>
 	/**
-	 * @import { Pavestone } from '$lib/server/db/schema'
+	 * @import { Data, Donor, Entry } from '$lib/server/db/schema'
 	 *
 	 * @typedef {Object} Props
-	 * @property {Pavestone} data
+	 * @property {Data} data
 	 */
 </script>
 
@@ -23,10 +23,14 @@
 	let input;
 
 	/** @type {boolean} */
-	let isEditMode = $derived(page.data.user && data.donor === '');
+	let isEditMode = $derived(page.data.user && data.donor === null);
 
-	/** @type {Pavestone} */
-	let values = $state({ ...data });
+	/** @type {Pick<Donor, 'fullName'> & Pick<Entry, 'dedicatedTo' | 'inMemoriam'>} */
+	let values = $state({
+		fullName: data.donor?.fullName ?? '',
+		dedicatedTo: data.entry?.dedicatedTo ?? '',
+		inMemoriam: !!data.entry?.inMemoriam
+	});
 
 	/** @param {'?/add' | '?/remove'} action */
 	async function submit(action) {
@@ -69,9 +73,9 @@
 			<span class="text-sm">Donor</span>
 			<input
 				bind:this={input}
-				bind:value={values.donor}
+				bind:value={values.fullName}
 				class="border p-1 read-only:border-slate-300"
-				name="donor"
+				name="fullName"
 				readonly={!isEditMode}
 				type="text"
 			/>
@@ -81,7 +85,7 @@
 			<input
 				bind:value={values.dedicatedTo}
 				class="border p-1 read-only:border-slate-300"
-				name="dedicated_to"
+				name="dedicatedTo"
 				readonly={!isEditMode}
 				type="text"
 			/>
@@ -91,7 +95,7 @@
 				bind:checked={values.inMemoriam}
 				class="cursor-pointer"
 				disabled={!isEditMode}
-				name="in_memoriam"
+				name="inMemoriam"
 				type="checkbox"
 			/>
 			<span>In memoriam</span>
@@ -100,7 +104,7 @@
 	</div>
 	<div class="flex justify-between">
 		<div>
-			{#if data.donor !== ''}
+			{#if data.donor}
 				{#if isEditMode}
 					<button
 						class="cursor-pointer rounded-sm px-2 py-1 text-sm text-red-700 uppercase hover:bg-red-100"
@@ -135,11 +139,13 @@
 				<button
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
 					onclick={() => {
-						if (data.donor === '') {
+						if (!data.donor) {
 							storage.form.open = false;
 						} else {
 							isEditMode = false;
-							values = { ...data };
+							values.fullName = data.donor?.fullName ?? '';
+							values.dedicatedTo = data.entry?.dedicatedTo ?? '';
+							values.inMemoriam = !!data.entry?.inMemoriam;
 						}
 					}}
 					type="button"
