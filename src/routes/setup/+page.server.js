@@ -50,7 +50,7 @@ export const actions = {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	const users = await db.select().from(user);
+	const users = await db.select().from(user).limit(1);
 
 	if (users.length > 0) {
 		redirect(302, '/');
