@@ -27,8 +27,8 @@ export const pavestone = sqliteTable('pavestone', {
 	tile: text().notNull(),
 	entryId: integer()
 		.unique()
-		.references(() => entry.id, { onDelete: 'set default' }),
-	sectionId: integer().references(() => section.id, { onDelete: 'set default' })
+		.references(() => entry.id, { onDelete: 'set null' }),
+	sectionId: integer().references(() => section.id, { onDelete: 'set null' })
 });
 
 /** @typedef {typeof section.$inferSelect} Section */
