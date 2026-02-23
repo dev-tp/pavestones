@@ -5,6 +5,10 @@
 	size: letter;
 }
 
+input[type='search']::-webkit-search-cancel-button {
+	display: none;
+}
+
 .cyan {
 	fill: #527ca5aa;
 	stroke: #527ca5;
