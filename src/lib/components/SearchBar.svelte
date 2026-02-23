@@ -16,6 +16,9 @@
 	/** @type {Props} */
 	const { class: className, onselect } = $props();
 
+	/** @type {HTMLElement} */
+	let container;
+
 	/** @type {HTMLFormElement} */
 	let form;
 
@@ -49,7 +52,33 @@
 	}
 </script>
 
-<search class={['group bg-white', className].join(' ')}>
+<search
+	bind:this={container}
+	class={['group bg-white', className].join(' ')}
+	onkeydown={(event) => {
+		if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+			event.preventDefault();
+
+			const nodes = /** @type {HTMLElement[]} */ (
+				Array.from(container.querySelectorAll('input, button'))
+			);
+
+			let index = 0;
+
+			if (document.activeElement instanceof HTMLElement) {
+				index = nodes.indexOf(document.activeElement);
+			}
+
+			if (event.key === 'ArrowDown') {
+				nodes[Math.min(index + 1, nodes.length - 1)].focus();
+			} else {
+				nodes[Math.max(index - 1, 0)].focus();
+			}
+		}
+	}}
+	role="searchbox"
+	tabindex="-1"
+>
 	<form
 		action="?/search"
 		bind:this={form}
