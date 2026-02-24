@@ -77,16 +77,22 @@ export const actions = {
 	},
 	search: async (event) => {
 		const data = await event.request.formData();
-		const query = `%${data.get('query')?.toString() ?? ''}%`;
+		const search = `%${data.get('query')?.toString() ?? ''}%`;
+
+		const query = db
+			.select(columns)
+			.from(pavestone)
+			.innerJoin(entry, eq(pavestone.entryId, entry.id))
+			.innerJoin(donor, eq(entry.donorId, donor.id))
+			.where(or(like(donor.fullName, search), like(entry.dedicatedTo, search)))
+			.orderBy(entry.dedicatedTo);
+
+		if (search.length < 4) {
+			query.limit(10);
+		}
 
 		return {
-			results: await db
-				.select(columns)
-				.from(pavestone)
-				.innerJoin(entry, eq(pavestone.entryId, entry.id))
-				.innerJoin(donor, eq(entry.donorId, donor.id))
-				.where(or(like(donor.fullName, query), like(entry.dedicatedTo, query)))
-				.orderBy(entry.dedicatedTo)
+			results: await query
 		};
 	}
 };
