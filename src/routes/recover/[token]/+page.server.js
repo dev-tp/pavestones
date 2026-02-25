@@ -1,4 +1,4 @@
-/** @typedef {Pick<import('$lib/server/db/schema').User, 'id' | 'hash'>} User */
+/** @import { User } from '$lib/server/db/schema' */
 
 import { error, fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
