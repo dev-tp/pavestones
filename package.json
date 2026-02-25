@@ -25,6 +25,7 @@
 		"@tailwindcss/vite": "^4.1.17",
 		"@types/bcrypt": "^6.0.0",
 		"@types/better-sqlite3": "^7.6.13",
+		"@types/jsonwebtoken": "^9.0.10",
 		"@types/node": "^24",
 		"dom-parser": "^1.1.5",
 		"drizzle-kit": "^0.31.8",
@@ -43,6 +44,7 @@
 		"@oslojs/crypto": "^1.0.1",
 		"@oslojs/encoding": "^1.1.0",
 		"bcrypt": "^6.0.0",
-		"better-sqlite3": "^12.5.0"
+		"better-sqlite3": "^12.5.0",
+		"jsonwebtoken": "^9.0.3"
 	}
 }
