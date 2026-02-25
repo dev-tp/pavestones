@@ -16,5 +16,8 @@
 		<span>Password <span class="text-red-500">*</span></span>
 		<input class="border p-1" name="password" type="password" required />
 	</label>
+	<div>
+		<a class="hover:underline" href="/recover">Forgot password?</a>
+	</div>
 	<button class="mt-4 bg-black p-2 text-white" type="submit">Login</button>
 </form>
