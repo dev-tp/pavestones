@@ -18,8 +18,8 @@
 		</p>
 		<form method="POST">
 			<label class="mb-4 grid gap-1">
-				<span>Email</span>
-				<input class="border p-1" name="email" type="email" />
+				<span>Email <span class="text-red-500">*</span></span>
+				<input class="border p-1" name="email" type="email" required />
 			</label>
 			<div class="flex items-center gap-1">
 				<button class="cursor-pointer bg-black px-2 py-1 text-white" type="submit">Submit</button>

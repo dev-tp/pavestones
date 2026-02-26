@@ -31,8 +31,8 @@
 			<span class="text-red-500">{form.error}</span>
 		{/if}
 		<label class="group grid gap-1">
-			<span>New password</span>
-			<input bind:value={password} class="border p-1" name="password" type="password" />
+			<span>New password <span class="text-red-500">*</span></span>
+			<input bind:value={password} class="border p-1" name="password" type="password" required />
 			<ul class="list-inside list-disc group-focus-within:block" class:hidden={password === ''}>
 				{#each validate.password(password) as error}
 					<li>{error}</li>
@@ -40,8 +40,8 @@
 			</ul>
 		</label>
 		<label class="grid gap-1">
-			<span>Confirm new password</span>
-			<input bind:value={confirmPassword} class="border p-1" type="password" />
+			<span>Confirm new password <span class="text-red-500">*</span></span>
+			<input bind:value={confirmPassword} class="border p-1" type="password" required />
 			{#if confirmPassword !== '' && password !== confirmPassword}
 				<span class="text-red-500">Passwords do not match</span>
 			{/if}
