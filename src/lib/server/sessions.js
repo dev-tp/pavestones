@@ -10,13 +10,18 @@ import * as schema from './db/schema';
 const FIFTEEN_DAYS_IN_SECONDS = 1000 * 60 * 60 * 24 * 15;
 const THIRTY_DAYS_IN_SECONDS = 1000 * 60 * 60 * 24 * 30;
 
+/** @type {(token: string) => string} */
+function encode(token) {
+	return encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+}
+
 /** @type {(token: string, userId: number) => Promise<Session>} */
 export async function create(token, userId) {
 	return (
 		await db
 			.insert(schema.session)
 			.values({
-				id: encodeHexLowerCase(sha256(new TextEncoder().encode(token))),
+				id: encode(token),
 				userId,
 				expires: new Date(Date.now() + THIRTY_DAYS_IN_SECONDS)
 			})
@@ -29,9 +34,10 @@ export function generateToken() {
 	return encodeBase32LowerCaseNoPadding(crypto.getRandomValues(new Uint8Array(20)));
 }
 
-/** @type {(sessionId: string) => Promise<void>} */
-export async function invalidate(sessionId) {
-	await db.delete(schema.session).where(eq(schema.session.id, sessionId));
+/** @type {(token: string) => Promise<void>} */
+export async function invalidate(token) {
+	const id = encode(token);
+	await db.delete(schema.session).where(eq(schema.session.id, id));
 }
 
 /** @type {(token: string | undefined) => Promise<Omit<User, 'hash'> | null>} */
