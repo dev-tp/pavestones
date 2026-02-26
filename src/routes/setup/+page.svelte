@@ -72,17 +72,14 @@
 			<span class="text-red-500">Invalid username</span>
 		{/if}
 	</label>
-	<label class="grid gap-2">
+	<label class="group grid gap-2">
 		<span>Password <span class="text-red-500">*</span></span>
 		<input bind:value={password} class="border p-1" name="password" type="password" required />
-		{#if password !== ''}
-			{@const errors = validate.password(password)}
-			<ul class="list-inside list-disc" class:hidden={errors.length === 0}>
-				{#each errors as error}
-					<li>{error}</li>
-				{/each}
-			</ul>
-		{/if}
+		<ul class="list-inside list-disc group-focus-within:block" class:hidden={password === ''}>
+			{#each validate.password(password) as error}
+				<li>{error}</li>
+			{/each}
+		</ul>
 	</label>
 	<label class="grid gap-2">
 		<span>Confirm Password <span class="text-red-500">*</span></span>

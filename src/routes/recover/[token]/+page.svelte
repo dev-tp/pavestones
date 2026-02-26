@@ -33,7 +33,7 @@
 		<label class="group grid gap-1">
 			<span>New password</span>
 			<input bind:value={password} class="border p-1" name="password" type="password" />
-			<ul class="hidden list-inside list-disc group-focus-within:block">
+			<ul class="list-inside list-disc group-focus-within:block" class:hidden={password === ''}>
 				{#each validate.password(password) as error}
 					<li>{error}</li>
 				{/each}
