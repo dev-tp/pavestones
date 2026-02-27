@@ -11,6 +11,10 @@
 	let confirmPassword = $state('');
 </script>
 
+<svelte:head>
+	<title>Pavestones - Reset Password</title>
+</svelte:head>
+
 <div
 	class="m-auto my-8 grid w-full gap-2 px-4 md:w-1/3 md:px-0"
 	onsubmit={(event) => {

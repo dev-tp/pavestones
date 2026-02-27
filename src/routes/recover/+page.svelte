@@ -3,6 +3,10 @@
 	const { form } = $props();
 </script>
 
+<svelte:head>
+	<title>Pavestones - Recover Account</title>
+</svelte:head>
+
 <div class="m-auto my-8 grid w-full gap-2 px-4 md:w-1/3 md:px-0">
 	<h1 class="text-3xl">Recover</h1>
 	{#if form?.sent !== undefined}

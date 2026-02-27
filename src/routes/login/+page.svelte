@@ -3,6 +3,10 @@
 	const { form } = $props();
 </script>
 
+<svelte:head>
+	<title>Pavestones - Login</title>
+</svelte:head>
+
 <form class="grid w-full gap-2 p-8 md:m-auto md:w-1/3 md:px-0" method="POST">
 	<h1 class="text-3xl"><a href="/">Pavestones</a></h1>
 	{#if form && form.error !== ''}
