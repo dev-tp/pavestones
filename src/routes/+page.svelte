@@ -23,7 +23,7 @@
 
 <main class="overflow-auto print:hidden">
 	<svg id="map" width={6901} height={5139}>
-		{#each data.pavestones as pavestone}
+		{#each data.pavestones as pavestone (pavestone.id)}
 			<Pavestone
 				data={pavestone}
 				onclick={(event) => {
