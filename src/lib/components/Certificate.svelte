@@ -6,7 +6,7 @@
 </script>
 
 <script>
-	import { X } from '@lucide/svelte';
+	import { Printer, X } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	import { certificate } from '$lib/storage.svelte.js';
@@ -40,12 +40,14 @@
 />
 
 <div class="fixed inset-0 overflow-auto bg-white">
-	<button
-		class="fixed top-4 right-4 cursor-pointer print:hidden"
-		onclick={() => (certificate.open = false)}
-	>
-		<X class="h-5 w-5" />
-	</button>
+	<div class="fixed top-4 right-4 flex cursor-pointer gap-4 print:hidden">
+		<button class="cursor-pointer" onclick={() => window.print()}>
+			<Printer class="h-5 w-5" />
+		</button>
+		<button class="cursor-pointer" onclick={() => (certificate.open = false)}>
+			<X class="h-5 w-5" />
+		</button>
+	</div>
 	<div class="m-auto mb-4 h-[11in] w-[8.5in] p-[0.5in] shadow-xl">
 		<img alt="logo" class="absolute h-24" />
 		<div class="flex h-24 items-center justify-center">
