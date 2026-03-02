@@ -1,0 +1,16 @@
+services:
+  proxy:
+    build: ./nginx
+    ports:
+      - 8080:443
+  web:
+    build: .
+    env_file:
+      - .env
+    environment:
+      ORIGIN: "https://localhost:8080"
+    # A secure HTTPS connection is required to make cookies work when
+    # `NODE_ENV` is set to `production`. Uncomment `ports` and remove the
+    # `proxy` section if a proxy is already configured in your network.
+    #ports:
+    #  - 8080:3000
