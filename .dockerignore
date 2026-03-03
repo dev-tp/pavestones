@@ -28,4 +28,6 @@ vite.config.ts.timestamp-*
 *.key
 *.pem
 
+# Docker
 Dockerfile
+docker-compose.yml
