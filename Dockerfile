@@ -26,7 +26,7 @@ WORKDIR /tmp/certificates
 RUN apk add --no-cache openssl
 
 RUN openssl ecparam -genkey -name secp384r1 -out server.key
-RUN openssl req -new -key server.key -subj '/C=US/ST=California/L=Los Angeles/CN=pavestones.example.com' -out server.csr
+RUN openssl req -new -key server.key -subj '/C=US/ST=California/L=Los Angeles/CN=pavestones.olacathedral.org' -out server.csr
 RUN openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
 
 FROM node
