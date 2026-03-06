@@ -9,6 +9,7 @@
 	import { Printer, X } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
+	import logo from '$lib/assets/logo.svg';
 	import { certificate } from '$lib/storage.svelte.js';
 
 	/** @type {Props} */
@@ -49,8 +50,8 @@
 		</button>
 	</div>
 	<div class="m-auto mb-4 h-[11in] w-[8.5in] p-[0.5in] shadow-xl">
-		<img alt="logo" class="absolute h-24" />
-		<div class="flex h-24 items-center justify-center">
+		<img alt="Cathedral Logo" class="absolute h-24" src={logo} />
+		<div class="mb-8 flex h-24 items-center justify-center">
 			<div class="text-center">
 				<p>Cathedral Pavestone designated for:</p>
 				<p>{data.entry?.dedicatedTo}</p>
