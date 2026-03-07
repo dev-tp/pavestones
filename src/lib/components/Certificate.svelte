@@ -57,9 +57,12 @@
 				<p>{data.entry?.dedicatedTo}</p>
 			</div>
 		</div>
-		<svg bind:this={container} class="mb-8 h-1/2 w-full border">
-			<use href="#map" {x} {y} />
-		</svg>
+		<div class="relative mb-8 h-1/2 w-full border">
+			<svg bind:this={container} class="h-full w-full">
+				<use href="#map" {x} {y} />
+			</svg>
+			<div class="absolute right-0 bottom-0 h-1/3 w-1/3 border-t border-l bg-white"></div>
+		</div>
 		<div class="grid grid-cols-2 gap-8">
 			<div>
 				<p class="mb-4">
