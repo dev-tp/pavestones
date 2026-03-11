@@ -3845,7 +3845,7 @@ def main():
                 6901,
                 5139,
                 [
-                    svg.image("cathedral-color.png"),
+                    svg.image("cathedral.png"),
                     "<style>path{fill-opacity:0;}path:hover{fill-opacity:1;}</style>",
                     main_section(),
                     lower_transept(),
