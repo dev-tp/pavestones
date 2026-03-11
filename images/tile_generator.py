@@ -3839,7 +3839,7 @@ def upper_transept() -> str:
 
 
 def main():
-    with open("cathedral.svg", "w") as document:
+    with open("../src/lib/assets/cathedral.svg", "w") as document:
         document.write(
             svg.svg(
                 6901,

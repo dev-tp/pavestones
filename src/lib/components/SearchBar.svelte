@@ -4,7 +4,7 @@
 	 *
 	 * @typedef {Object} Props
 	 * @property {string} [class]
-	 * @property {(pavestone: Data | undefined) => void} onselect
+	 * @property {(id: number | undefined) => void} onselect
 	 */
 </script>
 
@@ -123,7 +123,7 @@
 					class="w-full text-start"
 					onclick={() => {
 						query = result.entry?.dedicatedTo ?? '';
-						onselect(result);
+						onselect(result.id);
 					}}
 					tabindex="0"
 				>

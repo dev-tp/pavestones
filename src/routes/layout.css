@@ -9,35 +9,9 @@ input[type='search']::-webkit-search-cancel-button {
 	display: none;
 }
 
-.cyan {
-	fill: #527ca5aa;
-	stroke: #527ca5;
-}
-
-.green {
-	fill: #5f7f3faa;
-	stroke: #5f7f3f;
-}
-
-.magenta {
-	fill: #a5527caa;
-	stroke: #a5527c;
-}
-
-.purple {
-	fill: #5f007faa;
-	stroke: #5f007f;
-}
-
-.rose {
-	fill: #ff9f7faa;
-	stroke: #ff9f7f;
-}
-
 #map {
-	background: black;
-
 	path {
+		cursor: pointer;
 		fill-opacity: 0;
 	}
 

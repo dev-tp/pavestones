@@ -59,6 +59,15 @@ export const actions = {
 				await db.update(pavestone).set({ entryId: results[0].id }).where(eq(pavestone.id, id));
 			}
 		}
+
+		return {
+			records: await db
+				.select(columns)
+				.from(pavestone)
+				.leftJoin(entry, eq(pavestone.entryId, entry.id))
+				.leftJoin(donor, eq(entry.donorId, donor.id))
+				.where(eq(pavestone.id, id))
+		};
 	},
 	remove: async (event) => {
 		const data = await event.request.formData();
@@ -99,16 +108,7 @@ export const actions = {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-	event.setHeaders({
-		'cache-control': 'max-age=3600'
-	});
-
 	return {
-		pavestones: await db
-			.select(columns)
-			.from(pavestone)
-			.leftJoin(entry, eq(pavestone.entryId, entry.id))
-			.leftJoin(donor, eq(entry.donorId, donor.id)),
 		user: event.locals.user
 	};
 }

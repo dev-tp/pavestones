@@ -4,17 +4,17 @@
 	 *
 	 * @typedef {Object} Props
 	 * @property {Data} data
+	 * @property {(data: Data) => void} [onupdate]
 	 */
 </script>
 
 <script>
 	import { deserialize } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import storage from '$lib/storage.svelte.js';
 
 	/** @type {Props} */
-	const { data = $bindable() } = $props();
+	const { data = $bindable(), onupdate = () => {} } = $props();
 
 	/** @type {HTMLFormElement} */
 	let form;
@@ -39,11 +39,21 @@
 			method: 'POST'
 		});
 
-		/** @type {import('@sveltejs/kit').ActionResult} */
+		/** @type {import('@sveltejs/kit').ActionResult<{ records: Data[] }>} */
 		const result = deserialize(await response.text());
 
 		if (result.type === 'success') {
-			invalidateAll();
+			if (action === '?/add' && result.data) {
+				onupdate(result.data.records[0]);
+			} else {
+				onupdate({
+					id: data.id,
+					entryId: null,
+					entry: null,
+					donor: null
+				});
+			}
+
 			storage.form.open = false;
 		}
 	}

@@ -24,17 +24,9 @@ export const entry = sqliteTable('entry', {
 /** @typedef {typeof pavestone.$inferSelect} Pavestone */
 export const pavestone = sqliteTable('pavestone', {
 	id: integer().primaryKey({ autoIncrement: true }),
-	tile: text().notNull(),
 	entryId: integer()
 		.unique()
-		.references(() => entry.id, { onDelete: 'set null' }),
-	sectionId: integer().references(() => section.id, { onDelete: 'set null' })
-});
-
-/** @typedef {typeof section.$inferSelect} Section */
-export const section = sqliteTable('section', {
-	id: integer().primaryKey({ autoIncrement: true }),
-	color: text().notNull()
+		.references(() => entry.id, { onDelete: 'set null' })
 });
 
 /** @typedef {typeof session.$inferSelect} Session */

@@ -1,46 +1,90 @@
+<script module>
+	/** @import { Data } from '$lib/server/db/schema' */
+</script>
+
 <script>
 	import Certificate from '$lib/components/Certificate.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import Pavestone from '$lib/components/Pavestone.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
-	import storage from '$lib/storage.svelte.js';
+	import storage from '$lib/storage.svelte';
 
 	/** @type {import('./$types').PageProps} */
 	const { data } = $props();
 
+	/** @type {HTMLElement} */
+	let map;
+
+	/** @type {Record<number, {data: Data, path: SVGPathElement}>} */
+	let records = $state({});
+
 	/** @type {{x: number, y: number}} */
 	let position = $state({ x: 0, y: 0 });
 
-	/** @type {import('$lib/server/db/schema').Data | undefined} */
+	/** @type {number | undefined} */
 	let selected = $state();
+
+	async function populate() {
+		const response = await fetch('/api/records', { cache: 'default' });
+
+		/** @type {Data[]} */
+		const entries = await response.json();
+		const paths = map.querySelectorAll('path');
+
+		for (let i = 0; i < paths.length; i++) {
+			paths[i].onclick = (event) => {
+				if (event.currentTarget instanceof SVGPathElement) {
+					const { x, y } = event.currentTarget.getBBox();
+
+					position.x = x;
+					position.y = y;
+				}
+
+				updateSelectedId(entries[i].id);
+				storage.form.open = true;
+			};
+
+			paths[i].tabIndex = 0;
+
+			if (entries[i].donor) {
+				paths[i].classList.add('sold');
+			}
+
+			records[entries[i].id] = { data: entries[i], path: paths[i] };
+		}
+	}
+
+	/** @type {(id: number | undefined) => void} */
+	function updateSelectedId(id) {
+		if (selected) {
+			records[selected].path.classList.remove('selected');
+		}
+
+		if (!id) {
+			return (selected = undefined);
+		}
+
+		const { path } = records[id];
+
+		path.classList.add('selected');
+		path.focus();
+
+		selected = id;
+	}
 </script>
 
 <SearchBar
 	class="fixed top-4 right-0 left-0 m-auto w-[calc(100%-2rem)] md:w-1/4"
-	onselect={(pavestone) => (selected = pavestone)}
+	onselect={updateSelectedId}
 />
 
-<main class="overflow-auto print:hidden">
-	<svg id="map" width={6901} height={5139}>
-		{#each data.pavestones as pavestone (pavestone.id)}
-			<Pavestone
-				data={pavestone}
-				onclick={(event) => {
-					if (event.currentTarget instanceof SVGPathElement) {
-						const { x, y } = event.currentTarget.getBBox();
-
-						position.x = x;
-						position.y = y;
-					}
-
-					selected = pavestone;
-					storage.form.open = true;
-				}}
-				selected={pavestone.id === selected?.id}
-			/>
-		{/each}
-	</svg>
+<main bind:this={map} class="overflow-auto print:hidden">
+	{#await import('$lib/assets/cathedral.svg?raw')}
+		<p>Loading map...</p>
+	{:then content}
+		{@html content.default}
+		{populate()}
+	{/await}
 </main>
 
 <div class="fixed bottom-4 left-4 text-white">
@@ -55,13 +99,24 @@
 
 {#if selected}
 	{#if storage.certificate.open}
-		<Certificate data={selected} {position} />
+		<Certificate data={records[selected].data} {position} />
 	{:else}
 		<Modal
 			bind:open={storage.form.open}
 			class="fixed inset-0 items-center justify-center bg-black/60 backdrop-blur-sm md:flex"
 		>
-			<Form data={selected} />
+			<Form
+				data={records[selected].data}
+				onupdate={(data) => {
+					if (data.donor) {
+						records[data.id].path.classList.add('sold');
+					} else {
+						records[data.id].path.classList.remove('sold');
+					}
+
+					records[data.id].data = data;
+				}}
+			/>
 		</Modal>
 	{/if}
 {/if}
