@@ -80,17 +80,21 @@ def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
 def svg(
     width: int,
     height: int,
+    id: str = '',
     elements: list[str] = [],
     viewbox: tuple[int, int, int, int] | None = None,
 ):
     attributes = []
+
+    if id != '':
+        attributes.append(f'id="{id}"')
 
     if viewbox is None:
         attributes.append(f'viewbox="0 0 {width} {height}"')
     else:
         attributes.append(f'viewbox="{' '.join(str(value) for value in viewbox)}"')
 
-    return f'<svg width="{width}" height="{height}" version="1.1" xmlns="http://www.w3.org/2000/svg" {''.join(attributes)}>{''.join(elements)}</svg>'
+    return f'<svg width="{width}" height="{height}" version="1.1" xmlns="http://www.w3.org/2000/svg" {' '.join(attributes)}>{''.join(elements)}</svg>'
 
 
 def use(href: str, transform: str = ""):

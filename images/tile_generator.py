@@ -3842,11 +3842,12 @@ def main():
     with open("../src/lib/assets/cathedral.svg", "w") as document:
         document.write(
             svg.svg(
-                6901,
-                5139,
-                [
+                id='map',
+                width=6901,
+                height=5139,
+                elements=[
                     svg.image("cathedral.png"),
-                    "<style>path{fill-opacity:0;}path:hover{fill-opacity:1;}</style>",
+                    # "<style>path{fill-opacity:0;}path:hover{fill-opacity:1;}</style>",
                     main_section(),
                     lower_transept(),
                     upper_transept(),
