@@ -80,7 +80,12 @@
 
 <main bind:this={map} class="overflow-auto print:hidden">
 	{#await import('$lib/assets/cathedral.svg?raw')}
-		<p>Loading map...</p>
+		<div class="fixed inset-0 flex items-center justify-center">
+			<span class="relative text-xl">
+				<span class="absolute after:animate-[ellipsis_1s_linear_infinite]"></span>
+				<span class="opacity-0">...</span>
+			</span>
+		</div>
 	{:then content}
 		{@html content.default}
 		{populate()}
