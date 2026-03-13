@@ -5,12 +5,11 @@ import svg
 
 from typing import Callable
 
-
-CYAN = "#527ca5"
-GREEN = "#5f7f3f"
-MAGENTA = "#a5527c"
-PURPLE = "#5f007f"
-ROSE = "#ff9f7f"
+CYAN = "cyan"
+GREEN = "green"
+MAGENTA = "magenta"
+PURPLE = "purple"
+ROSE = "rose"
 
 
 # https://stackoverflow.com/questions/11479185/svg-donut-slice-as-path-element-annular-sector
@@ -21,7 +20,6 @@ def annular_tile(
     inner_radius: float,
     outer_radius: float,
     fill: str = "",
-    stroke: str = "",
 ):
     start_angle = math.radians(start_angle + 270)
     end_angle = math.radians(end_angle + 270)
@@ -56,8 +54,7 @@ def annular_tile(
             svg.A(inner_radius, inner_radius, 0, large_arc, 0, *points[0]),
             svg.Z(),
         ],
-        fill=fill,
-        stroke=stroke,
+        class_name=fill,
     )
 
 
@@ -94,13 +91,11 @@ def draw_annular_tiles(
                     inner_radius=inner_radius,
                     outer_radius=outer_radius,
                     fill=tile_color,
-                    stroke=tile_color,
                 )
             )
 
     return svg.g(
-        fill=fill,
-        stroke=fill,
+        class_name=fill,
         elements=elements,
     )
 
@@ -232,8 +227,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            fill=fill,
-            stroke=fill,
+            class_name=fill,
             elements=elements,
         )
     )
@@ -300,8 +294,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            fill=fill,
-            stroke=fill,
+            class_name=fill,
             elements=elements,
         )
     )
@@ -352,8 +345,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            fill=fill,
-            stroke=fill,
+            class_name=fill,
             elements=elements,
         )
     )
@@ -438,8 +430,7 @@ def horizontal_sections() -> str:
 
     sectors.append(
         svg.g(
-            fill=fill,
-            stroke=fill,
+            class_name=fill,
             elements=elements,
         )
     )
@@ -1034,8 +1025,7 @@ def lower_transept() -> str:
         )
 
     return svg.g(
-        fill=fill,
-        stroke=fill,
+        class_name=fill,
         elements=elements,
     )
 
@@ -3832,8 +3822,7 @@ def upper_transept() -> str:
         )
 
     return svg.g(
-        fill=fill,
-        stroke=fill,
+        class_name=fill,
         elements=elements,
     )
 
@@ -3842,12 +3831,12 @@ def main():
     with open("../src/lib/assets/cathedral.svg", "w") as document:
         document.write(
             svg.svg(
-                id='map',
+                id="map",
                 width=6901,
                 height=5139,
                 elements=[
                     svg.image("cathedral.png"),
-                    # "<style>path{fill-opacity:0;}path:hover{fill-opacity:1;}</style>",
+                    # "<style>path{fill:currentColor;fill-opacity:0;stroke:currentColor;}path:hover{fill-opacity:1;}.cyan{color:#527ca5;}.green{color:#5f7f3f;}.magenta{color:#a5527c;}.purple{color:#5f007f;}.rose{color:#ff9f7f;}</style>",
                     main_section(),
                     lower_transept(),
                     upper_transept(),

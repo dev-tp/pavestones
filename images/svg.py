@@ -28,14 +28,11 @@ def circle(cx: int, cy: int, r: int):
     return f'<circle cx="{cx}" cy="{cy}" r="{r}" />'
 
 
-def g(elements: list[str], fill: str = "", stroke: str = "", transform: str = ""):
+def g(elements: list[str], class_name: str = "", transform: str = ""):
     attributes = []
 
-    if fill != "":
-        attributes.append(f'fill="{fill}"')
-
-    if stroke != "":
-        attributes.append(f'stroke="{stroke}"')
+    if class_name != "":
+        attributes.append(f'class="{class_name}"')
 
     if transform != "":
         attributes.append(f'transform="{transform}"')
@@ -59,17 +56,14 @@ def m(x: float, y: float):
     return f"m{x:.2f},{y:.2f}"
 
 
-def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
+def path(d: list[str], id: str = "", class_name=""):
     attributes: list[str] = []
 
     if id != "":
         attributes.append(f'id="{id}"')
 
-    if fill != "":
-        attributes.append(f'fill="{fill}"')
-
-    if stroke != "":
-        attributes.append(f'stroke="{stroke}"')
+    if class_name != "":
+        attributes.append(f'class="{class_name}"')
 
     if len(d) != 0:
         attributes.append(f'd="{''.join(d)}"')
@@ -80,13 +74,13 @@ def path(d: list[str], id: str = "", fill: str = "", stroke: str = ""):
 def svg(
     width: int,
     height: int,
-    id: str = '',
+    id: str = "",
     elements: list[str] = [],
     viewbox: tuple[int, int, int, int] | None = None,
 ):
     attributes = []
 
-    if id != '':
+    if id != "":
         attributes.append(f'id="{id}"')
 
     if viewbox is None:
