@@ -44,7 +44,7 @@ input[type='search']::-webkit-search-cancel-button {
 #map {
 	path {
 		cursor: pointer;
-		fill: oklch(from currentColor calc(l - 0.1) c h);
+		fill: oklch(from currentColor calc(l - 0.15) c h);
 		fill-opacity: 0;
 		stroke: currentColor;
 	}
@@ -54,8 +54,14 @@ input[type='search']::-webkit-search-cancel-button {
 	}
 
 	.selected {
-		fill: yellow;
+		color: yellow;
+		fill: currentColor;
 		fill-opacity: 1;
+		stroke: inherit;
+	}
+
+	.selected:hover {
+		fill: oklch(from currentColor calc(l - 0.25) c h);
 	}
 
 	.sold {
@@ -63,6 +69,6 @@ input[type='search']::-webkit-search-cancel-button {
 	}
 
 	.sold:hover {
-		fill: oklch(from currentColor calc(l - 0.2) c h);
+		fill: oklch(from currentColor calc(l - 0.25) c h);
 	}
 }
