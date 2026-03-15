@@ -9,9 +9,8 @@
 </script>
 
 <script>
-	import { Search, X } from '@lucide/svelte';
-
 	import { deserialize } from '$app/forms';
+	import Icon from './Icon.svelte';
 
 	/** @type {Props} */
 	const { class: className, onselect } = $props();
@@ -89,7 +88,7 @@
 			class="flex h-7 w-7 items-center justify-center rounded-full hover:cursor-pointer hover:bg-slate-100"
 			type="submit"
 		>
-			<Search class="h-5 w-5" />
+			<Icon name="search" class="h-5 w-5" />
 		</button>
 		<input
 			bind:value={query}
@@ -109,7 +108,7 @@
 				}}
 				type="button"
 			>
-				<X class="h-5 w-5" />
+				<Icon name="x" class="h-5 w-5" />
 			</button>
 		{/if}
 	</form>

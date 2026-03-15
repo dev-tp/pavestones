@@ -6,12 +6,12 @@
 </script>
 
 <script>
-	import { Printer, X } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	import logo from '$lib/assets/logo.svg';
 	import referenceMap from '$lib/assets/reference-map.png';
 	import { certificate } from '$lib/storage.svelte.js';
+	import Icon from './Icon.svelte';
 
 	/** @type {Props} */
 	const { data, position } = $props();
@@ -44,10 +44,10 @@
 <div class="fixed inset-0 overflow-auto bg-white">
 	<div class="fixed top-4 right-4 flex cursor-pointer gap-4 print:hidden">
 		<button class="cursor-pointer" onclick={() => window.print()}>
-			<Printer class="h-5 w-5" />
+			<Icon name="printer" class="h-5 w-5" />
 		</button>
 		<button class="cursor-pointer" onclick={() => (certificate.open = false)}>
-			<X class="h-5 w-5" />
+			<Icon name="x" class="h-5 w-5" />
 		</button>
 	</div>
 	<div class="m-auto mb-4 h-[11in] w-[8.5in] p-[0.5in] shadow-xl">

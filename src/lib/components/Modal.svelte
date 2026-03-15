@@ -7,7 +7,7 @@
 </script>
 
 <script>
-	import { X } from '@lucide/svelte';
+	import Icon from './Icon.svelte';
 
 	/** @type {Props} */
 	let {
@@ -31,7 +31,7 @@
 			class="fixed top-4 right-4 hidden cursor-pointer text-white md:block"
 			onclick={() => (open = false)}
 		>
-			<X class="h-5 w-5" />
+			<Icon name="x" class="h-5 w-5" />
 		</button>
 		{@render children?.()}
 	</div>
