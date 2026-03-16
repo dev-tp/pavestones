@@ -1,4 +1,5 @@
 <script>
+	import ConfirmPassword from '$lib/components/ConfirmPassword.svelte';
 	import validate from '$lib/validate';
 
 	/** @type {import('./$types').PageProps} */
@@ -6,9 +7,6 @@
 
 	/** @type {string} */
 	let password = $state('');
-
-	/** @type {string} */
-	let confirmPassword = $state('');
 
 	/** @type {string} */
 	let email = $derived(form ? form.email : '');
@@ -47,10 +45,6 @@
 			return;
 		}
 
-		if (password !== confirmPassword) {
-			return;
-		}
-
 		event.currentTarget.submit();
 	}}
 >
@@ -72,21 +66,6 @@
 			<span class="text-red-500">Invalid username</span>
 		{/if}
 	</label>
-	<label class="group grid gap-2">
-		<span>Password <span class="text-red-500">*</span></span>
-		<input bind:value={password} class="border p-1" name="password" type="password" required />
-		<ul class="list-inside list-disc group-focus-within:block" class:hidden={password === ''}>
-			{#each validate.password(password) as error}
-				<li>{error}</li>
-			{/each}
-		</ul>
-	</label>
-	<label class="grid gap-2">
-		<span>Confirm Password <span class="text-red-500">*</span></span>
-		<input bind:value={confirmPassword} class="border p-1" type="password" required />
-		{#if confirmPassword !== '' && confirmPassword !== password}
-			<span class="text-red-500">Passwords do not match</span>
-		{/if}
-	</label>
+	<ConfirmPassword bind:password />
 	<button class="mt-4 bg-black p-2 text-white" type="submit">Register</button>
 </form>
