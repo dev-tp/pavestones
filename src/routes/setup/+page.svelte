@@ -6,8 +6,8 @@
 	/** @type {import('./$types').PageProps} */
 	let { form } = $props();
 
-	/** @type {string} */
-	let password = $state('');
+	/** @type {boolean} */
+	let isValidPassword = $state(false);
 
 	/** @type {string} */
 	let email = $derived(form ? form.email : '');
@@ -42,7 +42,7 @@
 			return;
 		}
 
-		if (validate.password(password).length > 0) {
+		if (!isValidPassword) {
 			return;
 		}
 
@@ -67,6 +67,6 @@
 		name="username"
 		required
 	/>
-	<ConfirmPassword bind:password />
+	<ConfirmPassword bind:valid={isValidPassword} />
 	<button class="mt-4 bg-black p-2 text-white" type="submit">Register</button>
 </form>

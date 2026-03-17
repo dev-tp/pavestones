@@ -1,12 +1,11 @@
 <script>
 	import ConfirmPassword from '$lib/components/ConfirmPassword.svelte';
-	import validate from '$lib/validate';
 
 	/** @type {import('./$types').PageProps} */
 	const { form } = $props();
 
-	/** @type {string} */
-	let password = $state('');
+	/** @type {boolean} */
+	let valid = $state(false);
 </script>
 
 <svelte:head>
@@ -18,7 +17,7 @@
 	onsubmit={(event) => {
 		event.preventDefault();
 
-		if (validate.password(password).length > 0) {
+		if (!valid) {
 			return;
 		}
 
@@ -32,11 +31,7 @@
 		{#if form?.error}
 			<span class="text-red-500">{form.error}</span>
 		{/if}
-		<ConfirmPassword
-			bind:password
-			label="New password"
-			confirmLabel="Confirm new password"
-		/>
+		<ConfirmPassword bind:valid confirmLabel="Confirm new password" label="New password" />
 		<div class="flex items-center gap-1">
 			<button class="bg-black px-2 py-1 text-white" type="submit">Reset</button>
 			<a class="px-2 py-1 hover:underline" href="/login">Cancel</a>
