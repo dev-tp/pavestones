@@ -1,5 +1,6 @@
 <script>
 	import ConfirmPassword from '$lib/components/ConfirmPassword.svelte';
+	import TextInput from '$lib/components/TextInput.svelte';
 	import validate from '$lib/validate';
 
 	/** @type {import('./$types').PageProps} */
@@ -52,20 +53,20 @@
 	{#if form?.error}
 		<p class="text-red-500">{form.error}</p>
 	{/if}
-	<label class="grid gap-2">
-		<span>Email <span class="text-red-500">*</span></span>
-		<input bind:value={email} class="border p-1" name="email" type="email" required />
-		{#if email !== '' && !validate.email(email)}
-			<span class="text-red-500">Invalid email</span>
-		{/if}
-	</label>
-	<label class="grid gap-2">
-		<span>Username <span class="text-red-500">*</span></span>
-		<input bind:value={username} class="border p-1" name="username" type="text" required />
-		{#if username !== '' && !validate.username(username)}
-			<span class="text-red-500">Invalid username</span>
-		{/if}
-	</label>
+	<TextInput
+		bind:value={email}
+		error={email !== '' && !validate.email(email) ? 'Invalid email' : ''}
+		label="Email"
+		name="email"
+		required
+	/>
+	<TextInput
+		bind:value={username}
+		error={username !== '' && !validate.username(username) ? 'Invalid username' : ''}
+		label="Username"
+		name="username"
+		required
+	/>
 	<ConfirmPassword bind:password />
 	<button class="mt-4 bg-black p-2 text-white" type="submit">Register</button>
 </form>

@@ -10,6 +10,7 @@
 
 <script>
 	import validate from '$lib/validate';
+	import TextInput from './TextInput.svelte';
 
 	/** @type {Props} */
 	let {
@@ -23,29 +24,17 @@
 	let confirmPassword = $state('');
 </script>
 
-<label class="group grid gap-2">
-	<span>
-		{label}
-		{#if required}
-			<span class="text-red-500">*</span>
-		{/if}
-	</span>
-	<input bind:value={password} class="border p-1" {name} type="password" {required} />
+<TextInput class="group" bind:value={password} type="password" {label} {name} {required}>
 	<ul class="list-inside list-disc group-focus-within:block" class:hidden={password === ''}>
 		{#each validate.password(password) as error}
 			<li>{error}</li>
 		{/each}
 	</ul>
-</label>
-<label class="grid gap-2">
-	<span>
-		{confirmLabel}
-		{#if required}
-			<span class="text-red-500">*</span>
-		{/if}
-	</span>
-	<input bind:value={confirmPassword} class="border p-1" type="password" {required} />
-	{#if confirmPassword !== '' && confirmPassword !== password}
-		<span class="text-red-500">Passwords do not match</span>
-	{/if}
-</label>
+</TextInput>
+<TextInput
+	bind:value={confirmPassword}
+	error={confirmPassword !== '' && confirmPassword !== password ? 'Passwords do not match' : ''}
+	label={confirmLabel}
+	type="password"
+	{required}
+/>

@@ -12,6 +12,7 @@
 	import { deserialize } from '$app/forms';
 	import { page } from '$app/state';
 	import storage from '$lib/storage.svelte.js';
+	import TextInput from './TextInput.svelte';
 
 	/** @type {Props} */
 	const { data = $bindable(), onupdate = () => {} } = $props();
@@ -19,8 +20,8 @@
 	/** @type {HTMLFormElement} */
 	let form;
 
-	/** @type {HTMLInputElement} */
-	let input;
+	/** @type {HTMLInputElement | undefined} */
+	let input = $state();
 
 	/** @type {boolean} */
 	let isEditMode = $derived(page.data.user && data.donor === null);
@@ -60,7 +61,7 @@
 
 	$effect(() => {
 		if (isEditMode) {
-			input.focus();
+			input?.focus();
 		}
 	});
 </script>
@@ -79,27 +80,19 @@
 	}}
 >
 	<div class="grid gap-4">
-		<label class="grid gap-2">
-			<span class="text-sm">Donor</span>
-			<input
-				bind:this={input}
-				bind:value={values.fullName}
-				class="border p-1 read-only:border-slate-300"
-				name="fullName"
-				readonly={!isEditMode}
-				type="text"
-			/>
-		</label>
-		<label class="grid gap-2">
-			<span class="text-sm">Dedicated to</span>
-			<input
-				bind:value={values.dedicatedTo}
-				class="border p-1 read-only:border-slate-300"
-				name="dedicatedTo"
-				readonly={!isEditMode}
-				type="text"
-			/>
-		</label>
+		<TextInput
+			bind:ref={input}
+			bind:value={values.fullName}
+			label="Donor"
+			name="fullName"
+			readonly={!isEditMode}
+		/>
+		<TextInput
+			bind:value={values.dedicatedTo}
+			label="Dedicated to"
+			name="dedicatedTo"
+			readonly={!isEditMode}
+		/>
 		<label class="mb-4 flex items-center gap-2">
 			<input
 				bind:checked={values.inMemoriam}

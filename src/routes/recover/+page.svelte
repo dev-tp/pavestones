@@ -1,4 +1,6 @@
 <script>
+	import TextInput from '$lib/components/TextInput.svelte';
+
 	/** @type {import('./$types').PageProps} */
 	const { form } = $props();
 </script>
@@ -21,10 +23,7 @@
 			minutes will be sent to the email you submit.
 		</p>
 		<form method="POST">
-			<label class="mb-4 grid gap-1">
-				<span>Email <span class="text-red-500">*</span></span>
-				<input class="border p-1" name="email" type="email" required />
-			</label>
+			<TextInput class="mb-4" label="Email" name="email" type="email" required />
 			<div class="flex items-center gap-1">
 				<button class="cursor-pointer bg-black px-2 py-1 text-white" type="submit">Submit</button>
 				<a class="cursor-pointer px-2 py-1 hover:underline" href="/login">Cancel</a>

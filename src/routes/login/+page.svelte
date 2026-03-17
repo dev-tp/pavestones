@@ -1,4 +1,6 @@
 <script>
+	import TextInput from '$lib/components/TextInput.svelte';
+
 	/** @type {import('./$types').PageProps} */
 	const { form } = $props();
 </script>
@@ -12,14 +14,8 @@
 	{#if form && form.error !== ''}
 		<p class="text-red-500">{form.error}</p>
 	{/if}
-	<label class="grid gap-2">
-		<span>Email <span class="text-red-500">*</span></span>
-		<input class="border p-1" name="email" type="email" value={form ? form.email : ''} required />
-	</label>
-	<label class="grid gap-2">
-		<span>Password <span class="text-red-500">*</span></span>
-		<input class="border p-1" name="password" type="password" required />
-	</label>
+	<TextInput label="Email" name="email" type="email" value={form ? form.email : ''} required />
+	<TextInput label="Password" name="password" type="password" required />
 	<div>
 		<a class="hover:underline" href="/recover">Forgot password?</a>
 	</div>
