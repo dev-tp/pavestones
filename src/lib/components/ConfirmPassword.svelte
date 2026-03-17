@@ -22,11 +22,13 @@
 	} = $props();
 
 	let confirmPassword = $state('');
+
+	const errors = $derived(validate.password(password));
 </script>
 
-<TextInput class="group" bind:value={password} type="password" {label} {name} {required}>
-	<ul class="list-inside list-disc group-focus-within:block" class:hidden={password === ''}>
-		{#each validate.password(password) as error}
+<TextInput bind:value={password} type="password" {label} {name} {required}>
+	<ul class="list-inside list-disc" class:hidden={password === '' || errors.length === 0}>
+		{#each errors as error}
 			<li>{error}</li>
 		{/each}
 	</ul>
