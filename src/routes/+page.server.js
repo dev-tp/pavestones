@@ -105,10 +105,3 @@ export const actions = {
 		};
 	}
 };
-
-/** @type {import('./$types').PageServerLoad} */
-export async function load(event) {
-	return {
-		user: event.locals.user
-	};
-}

@@ -92,11 +92,12 @@
 	{/await}
 </main>
 
-<div class="fixed bottom-4 left-4 text-white">
+<div class="fixed right-4 bottom-4 flex flex-col items-end gap-4 text-white">
 	{#if !data.user}
 		<a href="/login">Login</a>
 	{:else}
-		<form action="/logout" method="POST">
+		<a href="/settings">Settings</a>
+		<form action="/logout" method="POST" class="flex">
 			<button class="cursor-pointer" type="submit">Logout</button>
 		</form>
 	{/if}

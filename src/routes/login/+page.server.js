@@ -30,7 +30,10 @@ export const actions = {
 
 		event.cookies.set('session', token, { expires, path: '/' });
 
-		redirect(302, '/');
+		// TODO Check if `redirectTo` path is valid
+		const redirectTo = event.url.searchParams.get('redirectTo');
+
+		redirect(302, redirectTo ? redirectTo : '/');
 	}
 };
 
