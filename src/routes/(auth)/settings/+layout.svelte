@@ -20,11 +20,6 @@
 			icon: 'key-round',
 			href: '/settings/password',
 			label: 'Change Password'
-		},
-		{
-			icon: 'trash',
-			href: '/settings/delete',
-			label: 'Delete Account'
 		}
 	];
 </script>

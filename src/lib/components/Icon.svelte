@@ -1,6 +1,6 @@
 <script module>
 	/**
-	 * @typedef {'at-sign' | 'key-round' | 'printer' | 'search' | 'trash' | 'user' | 'x'} Icon
+	 * @typedef {'at-sign' | 'key-round' | 'printer' | 'search' | 'user' | 'x'} Icon
 	 *
 	 * @typedef {Object} Props
 	 * @property {string} [class]
@@ -9,7 +9,7 @@
 </script>
 
 <script>
-	import { AtSign, KeyRound, Printer, Search, Trash, User, X } from '@lucide/svelte';
+	import { AtSign, KeyRound, Printer, Search, User, X } from '@lucide/svelte';
 
 	/** @type {Props} */
 	const { class: className, name } = $props();
@@ -24,8 +24,6 @@
 				return Printer;
 			case 'search':
 				return Search;
-			case 'trash':
-				return Trash;
 			case 'user':
 				return User;
 			case 'x':
