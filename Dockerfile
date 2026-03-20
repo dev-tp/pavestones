@@ -31,14 +31,16 @@ RUN openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out 
 
 FROM node
 
-COPY --from=build /srv/*.db .
 COPY --from=build /srv/.env .
 COPY --from=build /srv/build ./build
+COPY --from=build /srv/data ./data
 COPY --from=build /srv/node_modules ./node_modules
 COPY --from=build /srv/server.js .
 
 COPY --from=certificates /tmp/certificates/server.crt .
 COPY --from=certificates /tmp/certificates/server.key .
+
+VOLUME /srv/data
 
 EXPOSE 443
 
