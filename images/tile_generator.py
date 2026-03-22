@@ -6,7 +6,9 @@ import svg
 from typing import Callable
 
 CYAN = "cyan"
+GOLD = "gold"
 GREEN = "green"
+LIME = "lime"
 MAGENTA = "magenta"
 PURPLE = "purple"
 ROSE = "rose"
@@ -351,7 +353,7 @@ def horizontal_sections() -> str:
     )
 
     elements = []
-    fill = ROSE
+    fill = GOLD
     height = 11.6
     number_of_tiles = 12
     offset_x = 4
@@ -3054,6 +3056,7 @@ def main_section():
                     return ""
 
             fill_different_when = callback
+            fill = LIME
             rotate = 242.71
             skip_tiles = set(
                 [
@@ -3836,7 +3839,7 @@ def main():
                 height=5500,
                 elements=[
                     svg.image("cathedral.png"),
-                    # "<style>path{fill:currentColor;fill-opacity:0;stroke:currentColor;}path:hover{fill-opacity:1;}.cyan{color:#527ca5;}.green{color:#5f7f3f;}.magenta{color:#a5527c;}.purple{color:#5f007f;}.rose{color:#ff9f7f;}</style>",
+                    # "<style>path{fill:currentColor;fill-opacity:0;stroke:currentColor;}path:hover{fill-opacity:1;}.cyan{color:#527ca5;}.gold{color:#a57c52;}.green{color:#5f7f3f;}.lime{color:#a5a552;}.magenta{color:#a5527c;}.purple{color:#5f007f;}.rose{color:#ff9f7f;}</style>",
                     main_section(),
                     lower_transept(),
                     upper_transept(),

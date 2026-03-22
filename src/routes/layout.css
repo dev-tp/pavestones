@@ -22,11 +22,19 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .cyan {
-	color: #527ca5;
+	color: #5291a5;
+}
+
+.lime {
+	color: #a5a552;
+}
+
+.gold {
+	color: #a57c52;
 }
 
 .green {
-	color: #5f7f3f;
+	color: #91a552;
 }
 
 .magenta {
@@ -34,7 +42,7 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .purple {
-	color: #5f007f;
+	color: #7f007f;
 }
 
 .rose {
