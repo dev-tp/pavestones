@@ -88,7 +88,7 @@
 		</div>
 	{:then content}
 		{@html content.default}
-		{populate()}
+		<div class="hidden">{populate()}</div>
 	{/await}
 </main>
 
