@@ -136,10 +136,10 @@ def horizontal_sections() -> str:
     height = 12.5
     number_of_tiles = 27
     offset_x = 0
-    rotate = 5.75
+    rotate = -7.2
     width = 52.1
-    x = 4323
-    y = 3438
+    x = 3635
+    y = 4945
 
     for i in range(26):
         skip_tiles = set()
@@ -236,9 +236,9 @@ def horizontal_sections() -> str:
     fill = CYAN
     number_of_tiles = 25
     offset_x = -5.60
-    rotate = -6.3
-    x = 4145
-    y = 872
+    rotate = -19.25
+    x = 3155
+    y = 2202
 
     for i in range(18):
         skip_tiles = set()
@@ -301,9 +301,9 @@ def horizontal_sections() -> str:
 
     elements = []
     fill = GREEN
-    rotate = -6.3
-    x = 4055
-    y = 1072
+    rotate = -19.25
+    x = 3065
+    y = 2402
 
     for i in range(31):
         skip_tiles = set()
@@ -355,9 +355,9 @@ def horizontal_sections() -> str:
     height = 11.6
     number_of_tiles = 12
     offset_x = 4
-    rotate = 114.8
-    x = 412
-    y = -7062
+    rotate = 101.8
+    x = 2068
+    y = -6900
 
     for i in range(36):
         skip_tiles = set()
@@ -445,10 +445,10 @@ def lower_transept() -> str:
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
-    rotate = 1.1
+    rotate = -12
     width = 34.76
-    x = 1243
-    y = 3298
+    x = 421
+    y = 4749
 
     for i in range(6):
         skip_tiles = set()
@@ -479,9 +479,9 @@ def lower_transept() -> str:
 
     number_of_tiles = 3
     offset_y = 0
-    rotate = 22
-    x = 2604
-    y = 2559
+    rotate = 9
+    x = 2361
+    y = 4203
 
     for i in range(8):
         skip_tiles = set()
@@ -523,9 +523,9 @@ def lower_transept() -> str:
 
     number_of_tiles = 2
     offset_y = 0
-    rotate = 4.7
-    x = 1800
-    y = 3928
+    rotate = -8.26
+    x = 1083
+    y = 5425
 
     for i in range(15):
         skip_tiles = set()
@@ -584,9 +584,9 @@ def lower_transept() -> str:
 
     number_of_tiles = 17
     offset_y = 0
-    rotate = 14.5
-    x = 2945
-    y = 3231
+    rotate = 1.6
+    x = 2498
+    y = 4826
 
     for i in range(12):
         skip_tiles = set()
@@ -639,9 +639,9 @@ def lower_transept() -> str:
 
     number_of_tiles = 16
     offset_y = 0
-    rotate = 0.4
-    x = 2431
-    y = 4141
+    rotate = -12.6
+    x = 1600
+    y = 5581
 
     for i in range(12):
         skip_tiles = set()
@@ -701,9 +701,9 @@ def lower_transept() -> str:
 
     number_of_tiles = 3
     offset_y = 0
-    rotate = 10.37
-    x = 3501
-    y = 3429
+    rotate = -2.65
+    x = 2931
+    y = 4990
 
     for i in range(68):
         skip_tiles = set()
@@ -965,9 +965,9 @@ def lower_transept() -> str:
 
     number_of_tiles = 60
     offset_y = 0
-    rotate = 9
-    x = 5857
-    y = 3564
+    rotate = -3.75
+    x = 5274
+    y = 5088
 
     for i in range(17):
         if i == 1:
@@ -3297,13 +3297,13 @@ def main_section():
 
         elements.append(
             draw_annular_tiles(
-                center=(4512, 2287),
+                center=(4414, 2799),
                 inner_radius=radius,
                 offset=offset,
                 number_of_tiles=number_of_tiles,
                 skip_tiles=skip_tiles,
                 tile_angle=360 / number_of_tiles,
-                rotate=rotate,
+                rotate=rotate - 13,
                 fill=fill,
                 fill_different_when=fill_different_when,
             )
@@ -3357,10 +3357,10 @@ def upper_transept() -> str:
     height = 8.68
     number_of_tiles = 75
     offset_y = 0
-    rotate = 4.43
+    rotate = -8.45
     width = 34.76
-    x = 1477
-    y = 777
+    x = 756
+    y = 2269
 
     for i in range(19):
         skip_tiles = set()
@@ -3423,9 +3423,9 @@ def upper_transept() -> str:
 
     number_of_tiles = 83
     offset_y = 0
-    rotate = -14.6
-    x = 1760
-    y = 1163
+    rotate = -27.6
+    x = 586
+    y = 2339
 
     for i in range(17):
         skip_tiles = set()
@@ -3493,9 +3493,9 @@ def upper_transept() -> str:
 
     number_of_tiles = 97
     offset_y = 0
-    rotate = -1.66
-    x = 2581
-    y = 660
+    rotate = -14.7
+    x = 1699
+    y = 2070
 
     for i in range(14):
         skip_tiles = set()
@@ -3540,9 +3540,9 @@ def upper_transept() -> str:
 
     number_of_tiles = 97
     offset_y = 0
-    rotate = -15.7
-    x = 2724
-    y = 1320
+    rotate = -28.7
+    x = 1527
+    y = 2472
 
     for i in range(34):
         skip_tiles = set()
@@ -3659,9 +3659,9 @@ def upper_transept() -> str:
 
     number_of_tiles = 23
     offset_y = 0
-    rotate = -6.35
-    x = 4348
-    y = 870
+    rotate = -19.3
+    x = 3357
+    y = 2198
 
     for i in range(50):
         skip_tiles = set()
@@ -3783,9 +3783,9 @@ def upper_transept() -> str:
 
     number_of_tiles = 43
     offset_y = 0
-    rotate = -7.4
-    x = 6105
-    y = 918
+    rotate = -20.5
+    x = 5084
+    y = 2241
 
     for i in range(9):
         if i == 1:
@@ -3832,8 +3832,8 @@ def main():
         document.write(
             svg.svg(
                 id="map",
-                width=6901,
-                height=5139,
+                width=7000,
+                height=5500,
                 elements=[
                     svg.image("cathedral.png"),
                     # "<style>path{fill:currentColor;fill-opacity:0;stroke:currentColor;}path:hover{fill-opacity:1;}.cyan{color:#527ca5;}.green{color:#5f7f3f;}.magenta{color:#a5527c;}.purple{color:#5f007f;}.rose{color:#ff9f7f;}</style>",
