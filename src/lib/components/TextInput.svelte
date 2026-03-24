@@ -5,6 +5,7 @@
 	 * @property {string} [error]
 	 * @property {string} label
 	 * @property {string} [name]
+	 * @property {import('svelte/elements').FormEventHandler<HTMLInputElement> | null} [oninput]
 	 * @property {boolean} [readonly]
 	 * @property {HTMLInputElement} [ref]
 	 * @property {boolean} [required]
@@ -21,6 +22,7 @@
 		error,
 		label,
 		name,
+		oninput,
 		readonly = false,
 		ref = $bindable(),
 		required = false,
@@ -41,6 +43,7 @@
 		bind:value
 		class="border p-1 read-only:border-slate-300"
 		{name}
+		{oninput}
 		{readonly}
 		{required}
 		{type}

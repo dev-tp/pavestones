@@ -12,6 +12,7 @@
 	import { deserialize } from '$app/forms';
 	import { page } from '$app/state';
 	import storage from '$lib/storage.svelte.js';
+	import SelectDonor from './SelectDonor.svelte';
 	import TextInput from './TextInput.svelte';
 
 	/** @type {Props} */
@@ -26,8 +27,9 @@
 	/** @type {boolean} */
 	let isEditMode = $derived(page.data.user && data.donor === null);
 
-	/** @type {Pick<Donor, 'fullName'> & Pick<Entry, 'dedicatedTo' | 'inMemoriam'>} */
+	/** @type {Pick<Donor, 'fullName'> & Pick<Entry, 'dedicatedTo' | 'inMemoriam'> & { donorId: number }} */
 	let values = $state({
+		donorId: data.donor?.id ?? 0,
 		fullName: data.donor?.fullName ?? '',
 		dedicatedTo: data.entry?.dedicatedTo ?? '',
 		inMemoriam: !!data.entry?.inMemoriam
@@ -79,12 +81,11 @@
 		submit('?/add');
 	}}
 >
-	<div class="grid gap-4">
-		<TextInput
+	<div class="grid gap-4 bg-inherit">
+		<SelectDonor
+			bind:id={values.donorId}
 			bind:ref={input}
 			bind:value={values.fullName}
-			label="Donor"
-			name="fullName"
 			readonly={!isEditMode}
 		/>
 		<TextInput
@@ -146,6 +147,7 @@
 							storage.form.open = false;
 						} else {
 							isEditMode = false;
+							values.donorId = data.entry?.donorId ?? 0;
 							values.fullName = data.donor?.fullName ?? '';
 							values.dedicatedTo = data.entry?.dedicatedTo ?? '';
 							values.inMemoriam = !!data.entry?.inMemoriam;

@@ -120,6 +120,10 @@
 						records[data.id].path.classList.remove('sold');
 					}
 
+					if (records[data.id].data.donor?.fullName !== data.donor?.fullName) {
+						return populate();
+					}
+
 					records[data.id].data = data;
 				}}
 			/>
