@@ -6,6 +6,7 @@
 	 * @property {string} [name]
 	 * @property {boolean} [readonly]
 	 * @property {HTMLInputElement} [ref]
+	 * @property {boolean} [required]
 	 * @property {string} [value]
 	 */
 </script>
@@ -21,6 +22,7 @@
 		name = 'fullName',
 		readonly = false,
 		ref = $bindable(),
+		required = false,
 		value = $bindable('')
 	} = $props();
 
@@ -48,6 +50,7 @@
 	{label}
 	{name}
 	{readonly}
+	{required}
 >
 	<input name={idName} type="hidden" value={id} />
 	<ul

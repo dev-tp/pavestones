@@ -87,6 +87,7 @@
 			bind:ref={input}
 			bind:value={values.fullName}
 			readonly={!isEditMode}
+			required={isEditMode}
 		/>
 		<TextInput
 			bind:value={values.dedicatedTo}
