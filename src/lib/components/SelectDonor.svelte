@@ -26,6 +26,9 @@
 		value = $bindable('')
 	} = $props();
 
+	/** @type {HTMLDivElement} */
+	let container;
+
 	/** @type {import('$lib/server/db/schema').Donor[]} */
 	let results = $state([]);
 
@@ -40,25 +43,53 @@
 
 		results = await response.json();
 	}
+
+	/** @type {(event: KeyboardEvent, elements: HTMLElement[]) => void} */
+	function scrollElementsWithKeyboard(event, elements) {
+		event.stopPropagation();
+
+		if (event.key === 'Backspace') {
+			return elements[0].focus();
+		}
+
+		if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+			event.preventDefault();
+
+			let index = 0;
+
+			if (document.activeElement instanceof HTMLElement) {
+				index = elements.indexOf(document.activeElement);
+			}
+
+			if (event.key === 'ArrowDown') {
+				elements[Math.min(index + 1, elements.length - 1)].focus();
+			} else {
+				elements[Math.max(index - 1, 0)].focus();
+			}
+		}
+	}
 </script>
 
-<TextInput
-	bind:ref
-	bind:value
+<div
+	bind:this={container}
 	class="group relative bg-inherit"
-	oninput={query}
-	{label}
-	{name}
-	{readonly}
-	{required}
+	onkeydown={(event) => {
+		scrollElementsWithKeyboard(
+			event,
+			Array.from(container.querySelectorAll('input[type="text"], button'))
+		);
+	}}
+	role="listbox"
+	tabindex="-1"
 >
+	<TextInput bind:ref bind:value oninput={query} {label} {name} {readonly} {required} />
 	<input name={idName} type="hidden" value={id} />
 	<ul
 		class="absolute top-full right-0 left-0 z-10 hidden border border-t-0 bg-inherit"
 		class:group-focus-within:block={results.length !== 0}
 	>
 		{#each results as result (result.id)}
-			<li class="border-b last:border-none">
+			<li class="border-b last:border-none" role="listitem">
 				<button
 					class="w-full cursor-pointer p-1 text-start hover:bg-slate-200"
 					onclick={(event) => {
@@ -73,4 +104,4 @@
 			</li>
 		{/each}
 	</ul>
-</TextInput>
+</div>
