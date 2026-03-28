@@ -20,16 +20,16 @@
 	let container;
 
 	/** @type {number} */
-	let x = $state(0);
+	let x = $derived(position.x);
 
 	/** @type {number} */
-	let y = $state(0);
+	let y = $derived(position.y);
 
 	onMount(() => {
 		const rectangle = container.getBoundingClientRect();
 
-		x = rectangle.width / 2 - position.x;
-		y = rectangle.height / 2 - position.y;
+		x = rectangle.width / 2 - x;
+		y = rectangle.height / 2 - y;
 	});
 </script>
 
