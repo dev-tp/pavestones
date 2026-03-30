@@ -18,15 +18,19 @@
 	let image;
 
 	/** @type {number} */
-	let scaledX = $derived(Math.abs(x / 7000));
+	let scaledX = $derived(Math.abs(x));
 
 	/** @type {number} */
-	let scaledY = $derived(Math.abs(y / 5500));
+	let scaledY = $derived(Math.abs(y));
 
 	onMount(() => {
 		image.onload = () => {
-			scaledX *= image.offsetWidth;
-			scaledY *= image.offsetHeight;
+			const map = document.getElementById('map');
+
+			if (map) {
+				scaledX = (scaledX / map.clientWidth) * image.offsetWidth;
+				scaledY = (scaledY / map.clientHeight) * image.offsetHeight;
+			}
 		};
 	});
 </script>
