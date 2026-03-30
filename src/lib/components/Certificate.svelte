@@ -9,9 +9,9 @@
 	import { onMount } from 'svelte';
 
 	import logo from '$lib/assets/logo.svg';
-	import referenceMap from '$lib/assets/reference-map.png';
 	import { certificate } from '$lib/storage.svelte.js';
 	import Icon from './Icon.svelte';
+	import ReferenceMap from './ReferenceMap.svelte';
 
 	/** @type {Props} */
 	const { data, position } = $props();
@@ -62,9 +62,7 @@
 			<svg bind:this={container} class="h-full w-full">
 				<use href="#map" {x} {y} />
 			</svg>
-			<div class="absolute right-0 bottom-0 h-1/3 w-1/3 border-t border-l bg-white">
-				<img class="m-auto h-full" alt="Mini Floor Plan" src={referenceMap} />
-			</div>
+			<ReferenceMap class="absolute right-0 bottom-0 w-1/3 border-t border-l bg-white" {x} {y} />
 		</div>
 		<div class="grid grid-cols-2 gap-8">
 			<div>
