@@ -46,4 +46,4 @@ export const user = sqliteTable('user', {
 	username: text().notNull().unique()
 });
 
-/** @typedef {Pavestone & { entry: Entry | null, donor: Donor | null }} Data */
+/** @typedef {Pavestone & {entry: Entry & {donor: Donor} | null}} Data */

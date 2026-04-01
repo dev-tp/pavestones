@@ -46,7 +46,7 @@
 
 			paths[i].tabIndex = 0;
 
-			if (entries[i].donor) {
+			if (entries[i].entry) {
 				paths[i].classList.add('sold');
 			}
 
@@ -114,13 +114,13 @@
 			<Form
 				data={records[selected].data}
 				onupdate={(data) => {
-					if (data.donor) {
+					if (data.entry) {
 						records[data.id].path.classList.add('sold');
 					} else {
 						records[data.id].path.classList.remove('sold');
 					}
 
-					if (records[data.id].data.donor?.fullName !== data.donor?.fullName) {
+					if (records[data.id].data.entry?.donor?.fullName !== data.entry?.donor?.fullName) {
 						return populate();
 					}
 

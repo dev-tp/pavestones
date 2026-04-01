@@ -42,11 +42,11 @@
 			method: 'POST'
 		});
 
-		/** @type {import('@sveltejs/kit').ActionResult} */
+		/** @type {import('@sveltejs/kit').ActionResult<{ results: Data[] }>} */
 		const result = deserialize(await response.text());
 
-		if (result.type === 'success') {
-			results = result.data?.results;
+		if (result.type === 'success' && result.data) {
+			results = result.data.results;
 		}
 	}
 </script>
@@ -127,7 +127,7 @@
 					tabindex="0"
 				>
 					<div>{result.entry?.dedicatedTo}</div>
-					<div class="text-sm">{result.donor?.fullName}</div>
+					<div class="text-sm">{result.entry?.donor?.fullName}</div>
 				</button>
 			</li>
 		{/each}

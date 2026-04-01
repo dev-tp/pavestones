@@ -25,12 +25,12 @@
 	let input = $state();
 
 	/** @type {boolean} */
-	let isEditMode = $derived(page.data.user && data.donor === null);
+	let isEditMode = $derived(page.data.user && data.entry === null);
 
 	/** @type {Pick<Donor, 'fullName'> & Pick<Entry, 'dedicatedTo' | 'inMemoriam'> & { donorId: number }} */
 	let values = $state({
-		donorId: data.donor?.id ?? 0,
-		fullName: data.donor?.fullName ?? '',
+		donorId: data.entry?.donor?.id ?? 0,
+		fullName: data.entry?.donor?.fullName ?? '',
 		dedicatedTo: data.entry?.dedicatedTo ?? '',
 		inMemoriam: !!data.entry?.inMemoriam
 	});
@@ -42,18 +42,17 @@
 			method: 'POST'
 		});
 
-		/** @type {import('@sveltejs/kit').ActionResult<{ records: Data[] }>} */
+		/** @type {import('@sveltejs/kit').ActionResult<{ record: Data }>} */
 		const result = deserialize(await response.text());
 
 		if (result.type === 'success') {
 			if (action === '?/add' && result.data) {
-				onupdate(result.data.records[0]);
+				onupdate(result.data.record);
 			} else {
 				onupdate({
 					id: data.id,
 					entryId: null,
-					entry: null,
-					donor: null
+					entry: null
 				});
 			}
 
@@ -109,7 +108,7 @@
 	</div>
 	<div class="flex justify-between">
 		<div>
-			{#if data.donor}
+			{#if data.entry}
 				{#if isEditMode}
 					<button
 						class="cursor-pointer rounded-sm px-2 py-1 text-sm text-red-700 uppercase hover:bg-red-100"
@@ -144,12 +143,12 @@
 				<button
 					class="cursor-pointer rounded-sm px-2 py-1 text-sm uppercase hover:bg-slate-100"
 					onclick={() => {
-						if (!data.donor) {
+						if (!data.entry) {
 							storage.form.open = false;
 						} else {
 							isEditMode = false;
 							values.donorId = data.entry?.donorId ?? 0;
-							values.fullName = data.donor?.fullName ?? '';
+							values.fullName = data.entry?.donor?.fullName ?? '';
 							values.dedicatedTo = data.entry?.dedicatedTo ?? '';
 							values.inMemoriam = !!data.entry?.inMemoriam;
 						}

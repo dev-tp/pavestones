@@ -1,10 +1,8 @@
-import { eq } from 'drizzle-orm';
 import jsonwebtoken from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 
 import { env } from '$env/dynamic/private';
 import { db } from '$lib/server/db';
-import { user } from '$lib/server/db/schema';
 
 /** @satisfies {import('./$types').Actions} */
 export const actions = {
@@ -12,7 +10,7 @@ export const actions = {
 		const data = await event.request.formData();
 
 		const result = await db.query.user.findFirst({
-			where: eq(user.email, data.get('email')?.toString() ?? '')
+			where: { email: data.get('email')?.toString() ?? '' }
 		});
 
 		if (!result) {
