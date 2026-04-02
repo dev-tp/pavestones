@@ -47,17 +47,11 @@ export async function validate(token) {
 	}
 
 	const id = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
-	const results = await db
-		.select()
-		.from(schema.session)
-		.innerJoin(schema.user, eq(schema.session.userId, schema.user.id))
-		.where(eq(schema.session.id, id));
+	const session = await db.query.session.findFirst({ where: { id }, with: { user: true } });
 
-	if (results.length === 0) {
+	if (!session) {
 		return null;
 	}
-
-	const { session, user } = results[0];
 
 	if (Date.now() >= session.expires.getTime()) {
 		await invalidate(session.id);
@@ -71,7 +65,7 @@ export async function validate(token) {
 			.where(eq(schema.session.id, session.id));
 	}
 
-	return user;
+	return session.user;
 }
 
 export default {

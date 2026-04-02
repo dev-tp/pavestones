@@ -23,6 +23,12 @@ const relations = defineRelations(schema, (relation) => ({
 			from: relation.pavestone.entryId,
 			to: relation.entry.id
 		})
+	},
+	session: {
+		user: relation.one.user({
+			from: relation.session.userId,
+			to: relation.user.id
+		})
 	}
 }));
 
