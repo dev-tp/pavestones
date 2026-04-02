@@ -1,15 +1,14 @@
 import { redirect } from '@sveltejs/kit';
 
 import { db } from '$lib/server/db';
-import { user } from '$lib/server/db/schema';
 import sessions from '$lib/server/sessions';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
 	if (event.url.pathname !== '/setup') {
-		const users = await db.select().from(user).limit(1);
+		const user = await db.query.user.findFirst();
 
-		if (users.length === 0) {
+		if (!user) {
 			redirect(302, '/setup');
 		}
 	}
