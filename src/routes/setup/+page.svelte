@@ -28,6 +28,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Pavestones</title>
+</svelte:head>
+
 <form
 	class="grid w-full gap-2 p-8 md:m-auto md:w-1/3 md:px-0"
 	method="POST"

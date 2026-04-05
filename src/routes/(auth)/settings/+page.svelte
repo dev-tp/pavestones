@@ -3,6 +3,10 @@
 	import TextInput from '$lib/components/TextInput.svelte';
 </script>
 
+<svelte:head>
+	<title>Pavestones - Settings</title>
+</svelte:head>
+
 <form class="grid gap-4">
 	<h1 class="text-xl">Update Profile</h1>
 	<TextInput label="Username" name="username" value={page.data.user.username} required />
