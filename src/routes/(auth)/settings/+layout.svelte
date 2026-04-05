@@ -24,34 +24,38 @@
 	];
 </script>
 
-<div class="grid h-screen grid-cols-[300px_1fr] grid-rows-[auto_1fr]">
+<div class="flex h-screen flex-col">
 	<header class="col-span-2 flex items-center p-4">
-		<h1 class="text-2xl"><a href="/">Pavestones</a></h1>
+		<h1 class="text-2xl">
+			<a href="/">Pavestones</a>
+		</h1>
 		<nav class="ml-auto">
 			<form action="/logout" method="POST">
 				<button class="cursor-pointer" type="submit">Logout</button>
 			</form>
 		</nav>
 	</header>
-	<aside class="overflow-auto">
-		<h2 class="p-4 text-xl">Settings</h2>
-		<ul>
-			{#each links as { icon, href, label }}
-				<li>
-					<a {href}>
-						<div
-							class="flex gap-4 p-4 text-slate-700 hover:bg-slate-200 hover:text-black"
-							class:!text-black={href === page.url.pathname}
-						>
-							<Icon name={icon} />
-							<span>{label}</span>
-						</div>
-					</a>
-				</li>
-			{/each}
-		</ul>
-	</aside>
-	<main class="overflow-auto p-4">
-		{@render children()}
-	</main>
+	<div class="flex min-h-0 grow flex-col md:flex-row">
+		<aside class="shrink-0 overflow-auto md:max-w-75 md:basis-75">
+			<h2 class="p-4 text-xl">Settings</h2>
+			<ul>
+				{#each links as { icon, href, label }}
+					<li>
+						<a {href}>
+							<div
+								class="flex items-center gap-4 p-4 text-slate-700 hover:bg-slate-200 hover:text-black"
+								class:!text-black={href === page.url.pathname}
+							>
+								<Icon name={icon} />
+								<span>{label}</span>
+							</div>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</aside>
+		<main class="grow overflow-auto p-4">
+			{@render children()}
+		</main>
+	</div>
 </div>
