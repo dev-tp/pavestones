@@ -5,6 +5,7 @@
 <script>
 	import Certificate from '$lib/components/Certificate.svelte';
 	import Form from '$lib/components/Form.svelte';
+	import Loading from '$lib/components/Loading.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import storage from '$lib/storage.svelte';
@@ -85,10 +86,7 @@
 <main bind:this={map} class="overflow-auto print:hidden">
 	{#await import('$lib/assets/cathedral.svg?raw')}
 		<div class="fixed inset-0 flex items-center justify-center">
-			<span class="relative text-xl">
-				<span class="absolute after:animate-[ellipsis_1s_linear_infinite]"></span>
-				<span class="opacity-0">...</span>
-			</span>
+			<Loading />
 		</div>
 	{:then content}
 		{@html content.default}
