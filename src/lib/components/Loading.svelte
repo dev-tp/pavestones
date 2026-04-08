@@ -1,23 +1,52 @@
-<span class="relative text-xl">
-	<span class="animation absolute"></span>
-	<span class="opacity-0">...</span>
-</span>
+<svg fill="black" viewBox="0 -10 40 28" width="32" xmlns="http://www.w3.org/2000/svg">
+	<circle cx="8" cy="12" r="3" class="first" />
+	<circle cx="16" cy="12" r="3" />
+	<circle cx="24" cy="12" r="3" />
+	<circle cx="32" cy="12" r="3" class="last" />
+</svg>
 
 <style>
-	@keyframes ellipsis {
-		33% {
-			content: '.';
+	@keyframes swing {
+		0% {
+			transform: rotate(0deg);
+			animation-timing-function: ease-out;
 		}
-		66% {
-			content: '..';
+
+		25% {
+			transform: rotate(50deg);
+			animation-timing-function: ease-in;
 		}
-		99% {
-			content: '...';
+
+		50% {
+			transform: rotate(0deg);
+			animation-timing-function: linear;
 		}
 	}
 
-	.animation:after {
-		animation: ellipsis 1s linear infinite;
-		content: '';
+	@keyframes swing-back {
+		0% {
+			transform: rotate(0deg);
+			animation-timing-function: linear;
+		}
+
+		50% {
+			transform: rotate(0deg);
+			animation-timing-function: ease-out;
+		}
+
+		75% {
+			transform: rotate(-50deg);
+			animation-timing-function: ease-in;
+		}
+	}
+
+	.first {
+		animation: swing 1.2s linear infinite;
+		transform-origin: center top;
+	}
+
+	.last {
+		animation: swing-back 1.2s linear infinite;
+		transform-origin: center top;
 	}
 </style>
