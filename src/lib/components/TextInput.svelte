@@ -32,7 +32,7 @@
 </script>
 
 <label class={['grid gap-2', className].filter((item) => !!item).join(' ')}>
-	<span>
+	<span class:text-red-500={error}>
 		{label}
 		{#if required}
 			<span class="text-red-500">*</span>
@@ -42,6 +42,8 @@
 		bind:this={ref}
 		bind:value
 		class="border p-1 read-only:border-slate-300"
+		class:outline-red-500={error}
+		class:outline-solid={error}
 		{name}
 		{oninput}
 		{readonly}
