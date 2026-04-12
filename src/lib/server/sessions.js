@@ -40,7 +40,7 @@ export async function invalidate(token) {
 	await db.delete(schema.session).where(eq(schema.session.id, id));
 }
 
-/** @type {(token: string | undefined) => Promise<Omit<User, 'hash'> | null>} */
+/** @type {(token?: string) => Promise<User | null>} */
 export async function validate(token) {
 	if (!token) {
 		return null;

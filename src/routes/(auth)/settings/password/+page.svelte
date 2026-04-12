@@ -10,16 +10,11 @@
 <form
 	class="grid gap-4"
 	onsubmit={(event) => {
-		event.preventDefault();
-
 		if (currentPassword === '' || currentPassword === newPassword || !valid) {
-			return;
-		}
-
-		if (event.submitter instanceof HTMLFormElement) {
-			event.submitter.submit();
+			event.preventDefault();
 		}
 	}}
+	method="POST"
 >
 	<h1 class="text-xl">Change Password</h1>
 	<p>Change your password by entering your old password and creating a new one.</p>
