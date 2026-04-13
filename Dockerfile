@@ -6,7 +6,7 @@ RUN apk add --no-cache nodejs
 
 FROM node AS build
 
-RUN apk add npm
+RUN apk add git npm
 
 COPY package.json .
 

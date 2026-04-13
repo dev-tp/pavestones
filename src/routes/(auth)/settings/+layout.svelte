@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import Icon from '$lib/components/Icon.svelte';
 
-	const { children } = $props();
+	const { children, data } = $props();
 
 	/** @type {{ icon: import('$lib/components/Icon.svelte').Icon, href: string, label: string }[]} */
 	const links = [
@@ -58,4 +58,18 @@
 			{@render children()}
 		</main>
 	</div>
+	<footer class="p-4 text-center text-xs text-slate-500">
+		<p>
+			Copyleft <span class="inline-block rotate-180">&copy;</span>
+			{new Date().getFullYear()}. All Rights Reversed Engineered.
+		</p>
+		<p>
+			commit: <a
+				href="https://www.github.com/dev-tp/pavestones/commit/{data.commit}"
+				target="_blank"
+			>
+				{data.commit}
+			</a>
+		</p>
+	</footer>
 </div>
