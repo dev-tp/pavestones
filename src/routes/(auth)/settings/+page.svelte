@@ -12,7 +12,15 @@
 	<title>Pavestones - Settings</title>
 </svelte:head>
 
-<form class="grid gap-4" method="POST">
+<form
+	class="grid gap-4"
+	method="POST"
+	onsubmit={(event) => {
+		if (!validate.username(username)) {
+			event.preventDefault();
+		}
+	}}
+>
 	<h1 class="text-xl">Update Profile</h1>
 	<TextInput
 		bind:value={username}
