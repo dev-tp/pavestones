@@ -44,4 +44,4 @@ VOLUME /srv/data
 
 EXPOSE 443
 
-CMD ["node", "--env-file=.env", "server.js"]
+CMD ["node", "server.js"]

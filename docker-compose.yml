@@ -1,9 +1,0 @@
-services:
-  web:
-    build: .
-    env_file:
-      - .env
-    environment:
-      ORIGIN: 'https://localhost:8080'
-    ports:
-      - 8080:443
