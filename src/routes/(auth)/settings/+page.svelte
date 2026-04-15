@@ -1,11 +1,10 @@
 <script>
+	import { enhance } from '$app/forms';
 	import { page } from '$app/state';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import validate from '$lib/validate';
 
-	const { form } = $props();
-
-	let username = $derived(form ? form.username : page.data.user.username);
+	let username = $derived(page.data.user.username);
 </script>
 
 <svelte:head>
@@ -15,10 +14,14 @@
 <form
 	class="grid gap-4"
 	method="POST"
-	onsubmit={(event) => {
+	use:enhance={({ cancel }) => {
 		if (!validate.username(username)) {
-			event.preventDefault();
+			cancel();
 		}
+
+		return async ({ update }) => {
+			await update({ invalidateAll: true, reset: false });
+		};
 	}}
 >
 	<h1 class="text-xl">Update Profile</h1>
@@ -33,7 +36,7 @@
 		<button class="cursor-pointer bg-black px-3 py-1 text-white" type="submit">Update</button>
 		<button
 			class="cursor-pointer px-3 py-1 hover:underline"
-			onclick={() => (username = form ? form.username : page.data.user.username)}
+			onclick={() => (username = page.data.user.username)}
 			type="button">Reset</button
 		>
 	</div>
