@@ -2,14 +2,21 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/state';
 	import TextInput from '$lib/components/TextInput.svelte';
+	import Toasts from '$lib/components/Toasts.svelte';
 	import validate from '$lib/validate';
 
+	/** @type {string[]} */
+	let messages = $state([]);
+
+	/** @type {string} */
 	let username = $derived(page.data.user.username);
 </script>
 
 <svelte:head>
 	<title>Pavestones - Settings</title>
 </svelte:head>
+
+<Toasts bind:messages />
 
 <form
 	class="grid gap-4"
@@ -19,8 +26,12 @@
 			cancel();
 		}
 
-		return async ({ update }) => {
+		return async ({ result, update }) => {
 			await update({ invalidateAll: true, reset: false });
+
+			if (result.status === 200) {
+				messages.push('Username was updated!');
+			}
 		};
 	}}
 >
