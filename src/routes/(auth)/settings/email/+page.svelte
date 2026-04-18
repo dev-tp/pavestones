@@ -8,6 +8,10 @@
 	let email = $derived(form ? form.email : page.data.user.email);
 </script>
 
+<svelte:head>
+	<title>Pavestones - Settings</title>
+</svelte:head>
+
 <form
 	class="grid gap-4"
 	method="POST"
