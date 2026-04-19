@@ -44,7 +44,13 @@
 		required
 	/>
 	<div>
-		<button class="cursor-pointer bg-black px-3 py-1 text-white" type="submit">Update</button>
+		<button
+			class="cursor-pointer bg-black px-3 py-1 text-white disabled:cursor-default disabled:opacity-50"
+			disabled={username === page.data.user.username}
+			type="submit"
+		>
+			Update
+		</button>
 		{#if username !== page.data.user.username}
 			<button
 				class="cursor-pointer px-3 py-1 hover:underline"
