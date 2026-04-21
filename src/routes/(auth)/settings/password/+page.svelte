@@ -1,9 +1,19 @@
 <script>
+	import { enhance } from '$app/forms';
 	import ConfirmPassword from '$lib/components/ConfirmPassword.svelte';
 	import TextInput from '$lib/components/TextInput.svelte';
+	import Toasts from '$lib/components/Toasts.svelte';
 
+	/** @type {string} */
 	let currentPassword = $state('');
+
+	/** @type {string[]} */
+	let messages = $state([]);
+
+	/** @type {string} */
 	let newPassword = $state('');
+
+	/** @type {boolean} */
 	let valid = $state(false);
 </script>
 
@@ -11,14 +21,24 @@
 	<title>Pavestones - Settings</title>
 </svelte:head>
 
+<Toasts bind:messages />
+
 <form
 	class="grid gap-4"
-	onsubmit={(event) => {
-		if (currentPassword === '' || currentPassword === newPassword || !valid) {
-			event.preventDefault();
-		}
-	}}
 	method="POST"
+	use:enhance={({ cancel }) => {
+		if (currentPassword === '' || currentPassword === newPassword || !valid) {
+			cancel();
+		}
+
+		return async ({ result, update }) => {
+			await update({ invalidateAll: true, reset: true });
+
+			if (result.status === 200) {
+				messages.push('Password was updated!');
+			}
+		};
+	}}
 >
 	<h1 class="text-xl">Change Password</h1>
 	<p>Change your password by entering your old password and creating a new one.</p>
