@@ -55,5 +55,19 @@
 		confirmLabel="Confirm new password"
 		label="New password"
 	/>
-	<button class="justify-self-start bg-black px-3 py-1 text-white" type="submit">Update</button>
+	<div>
+		<button class="cursor-pointer bg-black px-3 py-1 text-white" type="submit">Update</button>
+		{#if currentPassword !== '' || newPassword !== ''}
+			<button
+				class="cursor-pointer px-3 py-1 hover:underline"
+				type="submit"
+				onclick={() => {
+					currentPassword = '';
+					newPassword = '';
+				}}
+			>
+				Clear
+			</button>
+		{/if}
+	</div>
 </form>
