@@ -71,10 +71,8 @@
 	bind:this={form}
 	class="w-full rounded-none bg-white px-6 pt-4 pb-4 md:w-1/4 md:rounded-md"
 	onsubmit={(event) => {
-		event.preventDefault();
-
 		if (!page.data.user) {
-			return;
+			event.preventDefault();
 		}
 
 		submit('?/add');

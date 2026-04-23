@@ -15,14 +15,8 @@
 <div
 	class="m-auto my-8 grid w-full gap-2 px-8 md:w-1/3 md:px-0"
 	onsubmit={(event) => {
-		event.preventDefault();
-
 		if (!valid) {
-			return;
-		}
-
-		if (event.target instanceof HTMLFormElement) {
-			event.target.submit();
+			event.preventDefault();
 		}
 	}}
 >

@@ -36,21 +36,17 @@
 	class="grid w-full gap-2 p-8 md:m-auto md:w-1/3 md:px-0"
 	method="POST"
 	onsubmit={(event) => {
-		event.preventDefault();
-
 		if (!validate.email(email)) {
-			return;
+			event.preventDefault();
 		}
 
 		if (!validate.username(username)) {
-			return;
+			event.preventDefault();
 		}
 
 		if (!isValidPassword) {
-			return;
+			event.preventDefault();
 		}
-
-		event.currentTarget.submit();
 	}}
 >
 	<h1 class="text-3xl">Pavestones</h1>
