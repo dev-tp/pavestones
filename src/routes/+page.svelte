@@ -3,6 +3,8 @@
 </script>
 
 <script>
+	import { tick } from 'svelte';
+
 	import Certificate from '$lib/components/Certificate.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Loading from '$lib/components/Loading.svelte';
@@ -26,6 +28,8 @@
 	let selected = $state();
 
 	async function populate() {
+		await tick();
+
 		const response = await fetch('/api/records', { cache: 'default' });
 
 		/** @type {Data[]} */
