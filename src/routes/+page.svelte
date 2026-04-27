@@ -3,6 +3,7 @@
 </script>
 
 <script>
+	import panzoom from 'panzoom';
 	import { tick } from 'svelte';
 
 	import Certificate from '$lib/components/Certificate.svelte';
@@ -16,7 +17,7 @@
 	const { data } = $props();
 
 	/** @type {HTMLElement} */
-	let map;
+	let container;
 
 	/** @type {Record<number, {data: Data, path: SVGPathElement}>} */
 	let records = $state({});
@@ -27,6 +28,23 @@
 	/** @type {number | undefined} */
 	let selected = $state();
 
+	/** @type {boolean} */
+	let wasPanning = $state(false);
+
+	async function enablePanZoom() {
+		await tick();
+
+		const svg = container.querySelector('svg');
+
+		if (!svg) {
+			return;
+		}
+
+		panzoom(svg).on('panend', () => {
+			wasPanning = true;
+		});
+	}
+
 	async function populate() {
 		await tick();
 
@@ -34,10 +52,15 @@
 
 		/** @type {Data[]} */
 		const entries = await response.json();
-		const paths = map.querySelectorAll('path');
+		const paths = container.querySelectorAll('path');
 
 		for (let i = 0; i < paths.length; i++) {
 			paths[i].onclick = (event) => {
+				if (wasPanning) {
+					wasPanning = false;
+					return;
+				}
+
 				if (event.currentTarget instanceof SVGPathElement) {
 					const { x, y } = event.currentTarget.getBBox();
 
@@ -82,21 +105,24 @@
 	<title>Pavestones</title>
 </svelte:head>
 
-<SearchBar
-	class="fixed top-4 right-0 left-0 m-auto w-[calc(100%-2rem)] md:w-1/4"
-	onselect={updateSelectedId}
-/>
-
-<main bind:this={map} class="overflow-auto print:hidden">
+<main bind:this={container} class="print:hidden">
 	{#await import('$lib/assets/cathedral.svg?raw')}
 		<div class="fixed inset-0 flex items-center justify-center">
 			<Loading />
 		</div>
 	{:then content}
 		{@html content.default}
-		<div class="hidden">{populate()}</div>
+		<div class="hidden">
+			{enablePanZoom()}
+			{populate()}
+		</div>
 	{/await}
 </main>
+
+<SearchBar
+	class="fixed top-4 right-0 left-0 m-auto w-[calc(100%-2rem)] md:w-1/4"
+	onselect={updateSelectedId}
+/>
 
 <div class="fixed right-4 bottom-4 flex flex-col items-end gap-4 text-white">
 	{#if !data.user}
