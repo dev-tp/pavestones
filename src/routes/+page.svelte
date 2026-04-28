@@ -40,7 +40,14 @@
 			return;
 		}
 
-		panzoom(svg).on('panend', () => {
+		const controller = panzoom(svg);
+
+		const ALTAR_X = 4412;
+		const ALTAR_Y = 2800;
+
+		controller.moveBy(window.innerWidth / 2 - ALTAR_X, window.innerHeight / 2 - ALTAR_Y, false);
+
+		controller.on('panend', () => {
 			wasPanning = true;
 		});
 	}
