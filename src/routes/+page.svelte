@@ -1,5 +1,9 @@
 <script module>
-	/** @import { Data } from '$lib/server/db/schema' */
+	/**
+	 * @import { PanZoom } from 'panzoom'
+	 *
+	 * @import { Data } from '$lib/server/db/schema'
+	 */
 </script>
 
 <script>
@@ -18,6 +22,9 @@
 
 	/** @type {HTMLElement} */
 	let container;
+
+	/** @type {PanZoom | undefined} */
+	let controller = $state();
 
 	/** @type {Record<number, {data: Data, path: SVGPathElement}>} */
 	let records = $state({});
@@ -40,7 +47,7 @@
 			return;
 		}
 
-		const controller = panzoom(svg);
+		controller = panzoom(svg);
 
 		const ALTAR_X = 4412;
 		const ALTAR_Y = 2800;
@@ -100,6 +107,9 @@
 		}
 
 		const { path } = records[id];
+		const { x, y } = path.getBBox();
+
+		controller?.smoothMoveTo(window.innerWidth / 2 - x, window.innerHeight / 2 - y);
 
 		path.classList.add('selected');
 		path.focus();
