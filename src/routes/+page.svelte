@@ -107,12 +107,10 @@
 		}
 
 		const { path } = records[id];
-		const { x, y } = path.getBBox();
-
-		controller?.smoothMoveTo(window.innerWidth / 2 - x, window.innerHeight / 2 - y);
-
 		path.classList.add('selected');
-		path.focus();
+
+		const { x, y } = path.getBBox();
+		controller?.smoothMoveTo(window.innerWidth / 2 - x, window.innerHeight / 2 - y);
 
 		selected = id;
 	}
