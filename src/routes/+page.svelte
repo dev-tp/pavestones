@@ -107,10 +107,14 @@
 		}
 
 		const { path } = records[id];
+
 		path.classList.add('selected');
 
+		const transform = controller?.getTransform();
+		const scale = transform ? transform.scale : 1;
 		const { x, y } = path.getBBox();
-		controller?.smoothMoveTo(window.innerWidth / 2 - x, window.innerHeight / 2 - y);
+
+		controller?.smoothMoveTo(window.innerWidth / 2 - x * scale, window.innerHeight / 2 - y * scale);
 
 		selected = id;
 	}
