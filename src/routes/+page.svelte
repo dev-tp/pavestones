@@ -118,6 +118,14 @@
 
 		selected = id;
 	}
+
+	$effect(() => {
+		if (storage.certificate.open === true) {
+			container.querySelector('svg')?.classList.add('disable-transform');
+		} else if (storage.certificate.open === false) {
+			container.querySelector('svg')?.classList.remove('disable-transform');
+		}
+	});
 </script>
 
 <svelte:head>
