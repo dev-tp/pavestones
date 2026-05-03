@@ -132,7 +132,7 @@
 	<title>Pavestones</title>
 </svelte:head>
 
-<main bind:this={container} class="print:hidden">
+<main bind:this={container} class="overflow-hidden print:hidden">
 	{#await import('$lib/assets/cathedral.svg?raw')}
 		<div class="fixed inset-0 flex items-center justify-center">
 			<Loading />
