@@ -47,11 +47,7 @@
 			return;
 		}
 
-		controller = panzoom(svg, {
-			onTouch: () => {
-				return false;
-			}
-		});
+		controller = panzoom(svg);
 
 		const ALTAR_X = 4412;
 		const ALTAR_Y = 2800;
