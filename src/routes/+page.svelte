@@ -35,9 +35,6 @@
 	/** @type {number | undefined} */
 	let selected = $state();
 
-	/** @type {boolean} */
-	let wasPanning = $state(false);
-
 	async function enablePanZoom() {
 		await tick();
 
@@ -47,16 +44,27 @@
 			return;
 		}
 
-		controller = panzoom(svg);
+		controller = panzoom(svg, {
+			// TODO Disable double click to expedite `onClick` trigger
+			onClick: (event) => {
+				if (!(event.target instanceof SVGPathElement)) {
+					return;
+				}
+
+				const { x, y } = event.target.getBBox();
+
+				position.x = x;
+				position.y = y;
+
+				updateSelectedId(parseInt(event.target.id));
+				storage.form.open = true;
+			}
+		});
 
 		const ALTAR_X = 4412;
 		const ALTAR_Y = 2800;
 
 		controller.moveBy(window.innerWidth / 2 - ALTAR_X, window.innerHeight / 2 - ALTAR_Y, false);
-
-		controller.on('panend', () => {
-			wasPanning = true;
-		});
 	}
 
 	async function populate() {
@@ -69,23 +77,7 @@
 		const paths = container.querySelectorAll('path');
 
 		for (let i = 0; i < paths.length; i++) {
-			paths[i].onclick = (event) => {
-				if (wasPanning) {
-					wasPanning = false;
-					return;
-				}
-
-				if (event.currentTarget instanceof SVGPathElement) {
-					const { x, y } = event.currentTarget.getBBox();
-
-					position.x = x;
-					position.y = y;
-				}
-
-				updateSelectedId(entries[i].id);
-				storage.form.open = true;
-			};
-
+			paths[i].id = `${entries[i].id}`;
 			paths[i].tabIndex = 0;
 
 			if (entries[i].entry) {
