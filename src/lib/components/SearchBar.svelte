@@ -119,7 +119,7 @@
 		{#each results as result}
 			<li class="border-t p-2 first:border-0 hover:bg-slate-200">
 				<button
-					class="w-full text-start"
+					class="w-full cursor-pointer text-start"
 					onclick={(event) => {
 						event.currentTarget.blur();
 						query = result.entry?.dedicatedTo ?? '';
