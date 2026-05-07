@@ -45,6 +45,7 @@
 		}
 
 		controller = panzoom(svg, {
+			bounds: true,
 			// TODO Disable double click to expedite `onClick` trigger
 			onClick: (event) => {
 				if (!(event.target instanceof SVGPathElement)) {
