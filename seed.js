@@ -4,13 +4,9 @@ import fs from 'fs/promises';
 
 import { pavestone } from './src/lib/server/db/schema.js';
 
-if (!process.env.DATABASE_URL) {
-	throw new Error('DATABASE_URL is not set');
-}
-
 const database = drizzle({
 	casing: 'snake_case',
-	connection: process.env.DATABASE_URL
+	connection: 'data/data.db'
 });
 
 const file = await fs.readFile('./src/lib/assets/cathedral.svg', { encoding: 'utf8' });

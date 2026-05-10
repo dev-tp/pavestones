@@ -1,12 +1,7 @@
 import { defineRelations } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 
-import { env } from '$env/dynamic/private';
 import * as schema from '$lib/server/db/schema';
-
-if (!env.DATABASE_URL) {
-	throw new Error('DATABASE_URL is not set');
-}
 
 const relations = defineRelations(schema, (relation) => ({
 	donor: {
@@ -34,7 +29,7 @@ const relations = defineRelations(schema, (relation) => ({
 
 export const db = drizzle({
 	casing: 'snake_case',
-	connection: env.DATABASE_URL,
+	connection: 'data/data.db',
 	relations,
 	schema
 });
