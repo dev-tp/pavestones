@@ -1,7 +1,7 @@
 {
 	"name": "pavestones",
 	"private": true,
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
 		"set-commit": "sed -i \"s/COMMIT=.*/COMMIT=`git log -1 --format=%h`/\" .env",
